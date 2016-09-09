@@ -1,0 +1,129 @@
+{
+	"tooltips": {
+		"region": "Geographic areas where climate change/sea level rise vulnerability studies have been conducted.",
+		"hazard": "Spatial extent for different coastal hazards (storm wave impact, coastal flooding, coastal erosion, rising tide levels) that may affect coastal assets.  Impact zones were estimated across multiple planning horizons.",
+		"climate": "Future planning horizons representing the impact of climate change.",
+		"scenario": "Sea level rise scenarios (low, medium, and high) based on the 'Average of Models, Low,' 'Projection,' and 'Average of Models, High, regional sea level rise amounts."
+	},
+	"controls": {
+		"select": {
+			"hazard": []
+		},
+		"slider": {
+			"climate": ["Current", "2030", "2060", "2100"],
+			"scenario":["Low", "Medium", "High"]
+		}
+	},
+	"region": {
+		"Monterey": {
+			"url": "http://dev.services.coastalresilience.org/arcgis/rest/services/California/Monterey_SLR/MapServer",
+			"extent": {
+				"xmin": -1.36189391907E7,
+				"ymin": 4362453.298600003,
+				"xmax": -1.3538941220800001E7,
+				"ymax": 4486926.618699998,
+				"spatialReference": {
+					"wkid": 102100,
+					"latestWkid": 3857
+				}
+			},
+			"controls": {
+				"select": {
+					"hazard": {
+						"options": [
+							{ "name": " -- ", "value": "" },
+							{ "name": "Storm Flooding", "value": "storm_flood" },
+							{ "name": "Dune Erosion", "value": "dune_erosion" },
+							{ "name": "Cliff Erosion", "value": "cliff_erosion" },
+							{ "name": "Rising Tide", "value": "tide" }
+						]
+					}	
+				},
+				"slider": {
+					"scenario": { "disabled": false }
+				},
+				"radiocheck": {
+					"aggregate": { "disabled": false }
+				}
+			},
+			"download": {
+				"report":"methods/SLR_Monterey.pdf",
+				"data":"http://data.coastalresilience.org/California/CA_Monterey_CoastalHazards_Mar2014.zip"
+			}
+		},
+		"Santa Barbara": {
+			"url": "http://dev.services.coastalresilience.org/arcgis/rest/services/California/SantaBarbara_SLR/MapServer",
+			"extent": {
+				"xmin": -1.3414577438099999E7,
+				"ymin": 4078232.8861400406,
+				"xmax": -1.3297306761030903E7,
+				"ymax": 4097986.0139999986,
+				"spatialReference": {
+					"wkid": 102100,
+					"latestWkid": 3857
+				}
+			},
+			"controls": {
+				"select": {
+					"hazard": {
+						"options": [
+							{ "name": " -- ", "value": "" },
+							{ "name": "Storm Flooding", "value": "storm_flood" },
+							{ "name": "Fluvial Flooding", "value": "fluvial_flood" },
+							{ "name": "Dune Erosion", "value": "dune_erosion" },
+							{ "name": "Cliff Erosion", "value": "cliff_erosion" },
+							{ "name": "Rising Tide", "value": "tide" }
+						]
+					}
+				},
+				"slider": {
+					"scenario": { "disabled": false }
+				},
+				"radiocheck": {
+					"aggregate": { "disabled": false }
+				}
+			},
+			"download": {
+				"report":"methods/SLR_SantaBarbara.pdf",
+				"data":"http://data.coastalresilience.org/California/CA_SantaBarbara_Flood_Final_HZ_wMetadata.zip"
+			}
+		},
+		"Ventura": {
+			"url": "http://dev.services.coastalresilience.org/arcgis/rest/services/California/Ventura_SLR/MapServer",
+			"extent": {
+				"xmin": -13288721.369912772,
+				"ymin": 4035936.3860100782,
+				"xmax": -13245012.962495957,
+				"ymax": 4075072.7842828752,
+				"spatialReference": {
+					"wkid": 102100,
+					"latestWkid": 3857
+				}
+			},
+			"controls": {
+				"select": {
+					"hazard": {
+						"options": [
+							{ "name": " -- ", "value": "" },
+							{ "name": "Storm Flooding", "value": "storm_flood" },
+							{ "name": "Fluvial Flooding", "value": "fluvial_flood" },
+							{ "name": "Storm Wave Impact", "value": "storm_wave" },
+							{ "name": "Coastal Erosion", "value": "coastal_erosion" },
+							{ "name": "Rising Tide", "value": "tide" }
+						]
+					}
+				},
+				"slider": {
+					"scenario": { "disabled": false }
+				},
+				"radiocheck": {
+					"aggregate": { "disabled": true }
+				}
+			},
+			"download": {
+				"report":"methods/SLR_Ventura.pdf",
+				"data":"http://data.coastalresilience.org/California/Ventura_CRVHazardZones_15May2013.zip"
+			}
+		}
+	}
+}
