@@ -3,20 +3,155 @@
 		"region": "Geographic areas where climate change/sea level rise vulnerability studies have been conducted.",
 		"hazard": "Spatial extent for different coastal hazards (storm wave impact, coastal flooding, coastal erosion, rising tide levels) that may affect coastal assets.  Impact zones were estimated across multiple planning horizons.",
 		"climate": "Future planning horizons representing the impact of climate change.",
-		"scenario": "Sea level rise scenarios (low, medium, and high) based on the 'Average of Models, Low,' 'Projection,' and 'Average of Models, High, regional sea level rise amounts."
+		"scenario": "Sea level rise scenarios (low, medium, and high) based on the 'Average of Models, Low,' 'Projection,' and 'Average of Models, High, regional sea level rise amounts.",
+		"hurricane": "Hurrican categories (Saffir-Simpson hurricane wind scale, ranging from 1 to 5) used to model storm surge heights.",
+		"dataSource": "Source of hazard data to be mapped in the application."
 	},
 	"controls": {
 		"select": {
-			"hazard": []
+			"hazard": [],
+			"datasource": []
 		},
 		"slider": {
 			"climate": ["Current", "2030", "2060", "2100"],
-			"scenario":["Low", "Medium", "High"]
+			"scenario":["Low", "Medium", "High"],
+			"hurricane":[1,2,3,4,5]
 		}
 	},
 	"region": {
+		"Currituck County": {
+			"url": "http://dev.services.coastalresilience.org/arcgis/rest/services/California/Monterey_SLR/MapServer",
+			"layers": {
+				"main": "http://dev.services.coastalresilience.org/arcgis/rest/services/California/Monterey_SLR/MapServer",
+				"storm_surge": "https://maps.coast.noaa.gov/arcgis/rest/services/FloodExposureMapper/CFEM_StormSurge/MapServer",
+				"shallow_coastal_flooding": "http://services.coastalresilience.org/arcgis/rest/services/North_Carolina/North_Carolina/MapServer",
+				"fema": "http://services.coastalresilience.org/arcgis/rest/services/North_Carolina/North_Carolina/MapServer"
+			},
+			"extent": {
+				"xmin": -8526300.087382287,
+				"ymin": 4304324.538767489,
+				"xmax": -8386038.140479178,
+				"ymax": 4376557.530496882,
+				"spatialReference": {
+					"wkid": 102100,
+					"latestWkid": 3857
+				}
+			},
+			"controls": {
+				"select": {
+					"hazard": {
+						"options": [
+							{
+								"name": " -- ",
+								"value": ""
+							},
+							{
+								"name": "Sea Level Rise",
+								"value": "sea_level_rise"
+							},
+							{
+								"name": "Storm Surge",
+								"value": "storm_surge",
+								"controls": ["hurricane"]
+							},
+							{
+								"name": "Shallow Coastal Flooding",
+								"value": "shallow_coastal_flooding",
+								"controls": []
+							}
+						]
+					},
+					"datasource":{
+						"options": [
+							{ "name": " -- ", "value": "" },
+							{ "name": "NOAA Coastal Flood Exposure", "value": "noaa" },
+							{ "name": "Local or Regional", "value": "local" }
+						]
+					}
+				},
+				"slider": {
+					"climate": { "disabled": false, "show": true, "values": ["Current", "2045", "2060", "2100"]  },
+					"scenario": { "disabled": false, "show": true },
+					"hurricane": { "disabled": false, "show": true }
+				},
+				"radiocheck": {
+					"fema": { "disabled": false, "show": true }
+				}
+			},
+			"download": {
+				"report":"https://coast.noaa.gov/floodexposure/#/services#flood-hazards",
+				"data":"https://coast.noaa.gov/floodexposure/#/services#flood-hazards"
+			}
+		},
+		"Dare County": {
+			"url": "http://dev.services.coastalresilience.org/arcgis/rest/services/California/Monterey_SLR/MapServer",
+			"layers": {
+				"main": "http://dev.services.coastalresilience.org/arcgis/rest/services/California/Monterey_SLR/MapServer",
+				"storm_surge": "https://maps.coast.noaa.gov/arcgis/rest/services/FloodExposureMapper/CFEM_StormSurge/MapServer",
+				"shallow_coastal_flooding": "http://services.coastalresilience.org/arcgis/rest/services/North_Carolina/North_Carolina/MapServer",
+				"fema": "http://services.coastalresilience.org/arcgis/rest/services/North_Carolina/North_Carolina/MapServer"
+			},
+			"extent": {
+				"xmin": -8591653.746566305,
+				"ymin": 4178127.005068734,
+				"xmax": -8311129.8527596,
+				"ymax": 4322592.988527773,
+				"spatialReference": {
+					"wkid": 102100,
+					"latestWkid": 3857
+				}
+			},
+			"controls": {
+				"select": {
+					"hazard": {
+						"options": [
+							{
+								"name": " -- ",
+								"value": ""
+							},
+							{
+								"name": "Sea Level Rise",
+								"value": "sea_level_rise"
+							},
+							{
+								"name": "Storm Surge",
+								"value": "storm_surge",
+								"controls": ["hurricane"]
+							},
+							{
+								"name": "Shallow Coastal Flooding",
+								"value": "shallow_coastal_flooding",
+								"controls": []
+							}
+						]
+					},
+					"datasource":{
+						"options": [
+							{ "name": " -- ", "value": "" },
+							{ "name": "NOAA Coastal Flood Exposure", "value": "noaa" },
+							{ "name": "Local", "value": "local" }
+						]
+					}
+				},
+				"slider": {
+					"climate": { "disabled": false, "show": true, "values": ["Current", "2045", "2060", "2100"] },
+					"scenario": { "disabled": false, "show": true },
+					"hurricane": { "disabled": false, "show": true }
+				},
+				"radiocheck": {
+					"fema": { "disabled": false, "show": true }
+				}
+			},
+			"download": {
+				"report":"https://coast.noaa.gov/floodexposure/#/services#flood-hazards",
+				"data":"https://coast.noaa.gov/floodexposure/#/services#flood-hazards"
+			}
+		},
 		"Monterey": {
 			"url": "http://dev.services.coastalresilience.org/arcgis/rest/services/California/Monterey_SLR/MapServer",
+			"layers": {
+				"main": "http://dev.services.coastalresilience.org/arcgis/rest/services/California/Monterey_SLR/MapServer"
+			},
 			"extent": {
 				"xmin": -1.36189391907E7,
 				"ymin": 4362453.298600003,
@@ -40,19 +175,23 @@
 					}	
 				},
 				"slider": {
-					"scenario": { "disabled": false }
+					"climate": { "disabled": false, "show": true },
+					"scenario": { "disabled": false, "show": true }
 				},
 				"radiocheck": {
-					"aggregate": { "disabled": false }
+					"aggregate": { "disabled": false, "show": true }
 				}
 			},
 			"download": {
-				"report":"methods/SLR_Monterey.pdf",
+				"report":"HOSTNAME-methods/SLR_Monterey.pdf",
 				"data":"http://data.coastalresilience.org/California/CA_Monterey_CoastalHazards_Mar2014.zip"
 			}
 		},
 		"Santa Barbara": {
 			"url": "http://dev.services.coastalresilience.org/arcgis/rest/services/California/SantaBarbara_SLR/MapServer",
+			"layers": {
+				"main": "http://dev.services.coastalresilience.org/arcgis/rest/services/California/SantaBarbara_SLR/MapServer"
+			},
 			"extent": {
 				"xmin": -1.3414577438099999E7,
 				"ymin": 4078232.8861400406,
@@ -77,19 +216,23 @@
 					}
 				},
 				"slider": {
-					"scenario": { "disabled": false }
+					"climate": { "disabled": false, "show": true },
+					"scenario": { "disabled": false, "show": true }
 				},
 				"radiocheck": {
-					"aggregate": { "disabled": false }
+					"aggregate": { "disabled": false, "show": true }
 				}
 			},
 			"download": {
-				"report":"methods/SLR_SantaBarbara.pdf",
+				"report":"HOSTNAME-methods/SLR_SantaBarbara.pdf",
 				"data":"http://data.coastalresilience.org/California/CA_SantaBarbara_Flood_Final_HZ_wMetadata.zip"
 			}
 		},
 		"Ventura": {
 			"url": "http://dev.services.coastalresilience.org/arcgis/rest/services/California/Ventura_SLR/MapServer",
+			"layers": {
+				"main": "http://dev.services.coastalresilience.org/arcgis/rest/services/California/Ventura_SLR/MapServer"
+			},
 			"extent": {
 				"xmin": -13288721.369912772,
 				"ymin": 4035936.3860100782,
@@ -114,14 +257,15 @@
 					}
 				},
 				"slider": {
-					"scenario": { "disabled": false }
+					"climate": { "disabled": false, "show": true },
+					"scenario": { "disabled": false, "show": true }
 				},
 				"radiocheck": {
-					"aggregate": { "disabled": true }
+					"aggregate": { "disabled": true, "show": true }
 				}
 			},
 			"download": {
-				"report":"methods/SLR_Ventura.pdf",
+				"report":"HOSTNAME-methods/SLR_Ventura.pdf",
 				"data":"http://data.coastalresilience.org/California/Ventura_CRVHazardZones_15May2013.zip"
 			}
 		}

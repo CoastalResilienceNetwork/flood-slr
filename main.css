@@ -168,7 +168,7 @@ vertical-align:middle;
 }
 
 .styled-checkbox{
-max-width:125px;
+max-width:175px;
 display:inline-block;
 }
 
@@ -177,7 +177,7 @@ display: none;
 }
 
 .styled-checkbox div {
-max-width:125px;
+max-width:175px;
 }
 
 .styled-checkbox div:before {
@@ -279,7 +279,7 @@ margin-top:-4px;
 .plugin-slr .downloadButton {
 width: 33px;
 height: 35px;
-background:#888888;
+background:#d3d3d3;
 border:1px solid #ffffff;
 line-height: 35px;
 border-radius: 5px;

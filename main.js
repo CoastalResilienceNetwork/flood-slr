@@ -54,6 +54,8 @@ define([
                activate: function () {
 					//process this._state if a populated object from setState exists
 					if (!_.isEmpty(this._state)) {
+						console.log(this._state);
+						
 						this._saveAndShare = true;
 						this.slr.initializeMap();
 						this._saveAndShare = false;
@@ -64,8 +66,12 @@ define([
 								 if (control == "regionSelect") {
 									this.slr._region = this._state.controls.selects[control][property]
 									this.slr.updateInterface();
-									
-									this.slr._mapLayers[this.slr._region].show();
+								 }
+								 if (control == "hazardSelect") {
+									this.slr.updateControls();
+								 }
+								 if (property == "display") {
+									domStyle.set(this.slr[control].parentNode.parentNode, property, this._state.controls.selects[control][property]) 
 								 }
 							 }
 						 }
@@ -73,12 +79,18 @@ define([
 						 for (var slider in this._state.controls.sliders) {
 							 for (property in this._state.controls.sliders[slider]) {
 								this.slr[slider].set(property, this._state.controls.sliders[slider][property]);
+								if (property == "display") {
+									domStyle.set(this.slr[slider].domNode.parentNode, property, this._state.controls.sliders[slider][property]) 
+								 }
 							 }
 						 }
 						 
 						for (var control in this._state.controls.radiocheck) {
 							 for (property in this._state.controls.radiocheck[control]) {
 								 this.slr[control][property] = this._state.controls.radiocheck[control][property];
+								 if (property == "display") {
+									domStyle.set(this.slr[control].parentNode.parentNode, property, this._state.controls.radiocheck[control][property]) 
+								 }
 							 }
 						 }
 						 
@@ -105,7 +117,7 @@ define([
                    };
                    domClass.add(this.container, "claro");
 					this.slr = new slr(this, appData, appConfig);
-					//tool_slr = this.slr;
+					tool_slr = this.slr;
 					this.slr.initialize(this.slr);
 					domStyle.set(this.container.parentNode, {
 						"padding": "0px"
@@ -123,16 +135,27 @@ define([
 				   state.controls.selects.regionSelect = {
 						"value": this.slr.regionSelect.value
 				   }
+				   state.controls.selects.dataSourceSelect = {
+						"value": this.slr.dataSourceSelect.value,
+					   "display": domStyle.get(this.slr.dataSourceSelect.parentNode.parentNode, "display")
+				   }
 				   state.controls.selects.hazardSelect = {
 						"value": this.slr.hazardSelect.value
 				   }
-				   state.controls.sliders.climateYearSlider = {
-						"value": this.slr.climateYearSlider.get("value"),
-					   "disabled": this.slr.climateYearSlider.get("disabled")
+				   state.controls.sliders.climateSlider = {
+						"value": this.slr.climateSlider.get("value"),
+					   "disabled": this.slr.climateSlider.get("disabled"),
+					   "display": domStyle.get(this.slr.climateSlider.domNode.parentNode, "display")
 				   }
 				   state.controls.sliders.scenarioSlider = {
 						"value": this.slr.scenarioSlider.get("value"),
-					   "disabled": this.slr.scenarioSlider.get("disabled")
+					   "disabled": this.slr.scenarioSlider.get("disabled"),
+					   "display": domStyle.get(this.slr.scenarioSlider.domNode.parentNode, "display")
+				   }
+				   state.controls.sliders.hurricaneSlider = {
+						"value": this.slr.hurricaneSlider.get("value"),
+					   "disabled": this.slr.hurricaneSlider.get("disabled"),
+					   "display": domStyle.get(this.slr.hurricaneSlider.domNode.parentNode, "display")
 				   }
 				   state.controls.sliders.opacitySlider = {
 						"value": this.slr.opacitySlider.get("value"),
@@ -140,7 +163,13 @@ define([
 				   }
 				   state.controls.radiocheck.hazardLayerCheckBox = {
 					   "checked": this.slr.hazardLayerCheckBox.checked,
-					   "disabled": this.slr.hazardLayerCheckBox.disabled
+					   "disabled": this.slr.hazardLayerCheckBox.disabled,
+					   "display": domStyle.get(this.slr.hazardLayerCheckBox.parentNode.parentNode, "display")
+				   }
+				   state.controls.radiocheck.femaLayerCheckBox = {
+					   "checked": this.slr.femaLayerCheckBox.checked,
+					   "disabled": this.slr.femaLayerCheckBox.disabled,
+					   "display": domStyle.get(this.slr.femaLayerCheckBox.parentNode.parentNode, "display")
 				   }
 				   
                    return state;

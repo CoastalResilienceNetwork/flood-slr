@@ -1,5 +1,54 @@
 {
 	"region": {
+		"Currituck County": {
+			"storm_surge|1": [7],
+			"storm_surge|2": [7],
+			"storm_surge|3": [7],
+			"storm_surge|4": [7],
+			"storm_surge|5": [7],
+			
+			"shallow_coastal_flooding": [74],
+			
+			"sea_level_rise|current|low": [46],
+			"sea_level_rise|current|medium": [46],
+			"sea_level_rise|current|high": [46],
+			"sea_level_rise|2030|low": [47],
+			"sea_level_rise|2030|medium": [50],
+			"sea_level_rise|2030|high": [53],
+			"sea_level_rise|2060|low": [48],
+			"sea_level_rise|2060|medium": [51],
+			"sea_level_rise|2060|high": [54],
+			"sea_level_rise|2100|low": [49],
+			"sea_level_rise|2100|medium": [52],
+			"sea_level_rise|2100|high": [55],
+			
+			"fema": [54]
+		
+		},
+		"Dare County": {
+			"storm_surge|1": [7],
+			"storm_surge|2": [7],
+			"storm_surge|3": [7],
+			"storm_surge|4": [7],
+			"storm_surge|5": [7],
+			
+			"shallow_coastal_flooding": [74],
+			
+			"sea_level_rise|current|low": [46],
+			"sea_level_rise|current|medium": [46],
+			"sea_level_rise|current|high": [46],
+			"sea_level_rise|2030|low": [47],
+			"sea_level_rise|2030|medium": [50],
+			"sea_level_rise|2030|high": [53],
+			"sea_level_rise|2060|low": [48],
+			"sea_level_rise|2060|medium": [51],
+			"sea_level_rise|2060|high": [54],
+			"sea_level_rise|2100|low": [49],
+			"sea_level_rise|2100|medium": [52],
+			"sea_level_rise|2100|high": [55],
+			
+			"fema": [54]
+		},
 		"Monterey": {
 			"tide|current|low": [122],
 			"tide|current|medium": [122],
