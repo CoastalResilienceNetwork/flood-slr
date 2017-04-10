@@ -40,13 +40,13 @@ define([
            return declare(PluginBase, {
                toolbarName: "Flood and Sea Level Rise",
                toolbarType: "sidebar",
-               resizable: false,
+               hasHelp: false,
                showServiceLayersInLegend: true,
                allowIdentifyWhenActive: true,
                plugin_directory: "plugins/flood-slr",
 			   infoGraphic: "<div><img src='plugins/flood-slr/slr_flooding_c.jpg'/></div>",
-               width: 330,
-			   height: "auto",
+			   size:"custom",
+               width: 320,
 			   _state: {},
 			   _firstLoad: true,
 			   _saveAndShare: false,
@@ -116,6 +116,7 @@ define([
                         parseOnLoad: true
                    };
                    domClass.add(this.container, "claro");
+				   domClass.add(this.container, "plugin-slr");
 					this.slr = new slr(this, appData, appConfig);
 					tool_slr = this.slr;
 					this.slr.initialize(this.slr);

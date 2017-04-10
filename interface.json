@@ -20,12 +20,12 @@
 	},
 	"region": {
 		"Currituck County": {
-			"url": "http://dev.services.coastalresilience.org/arcgis/rest/services/California/Monterey_SLR/MapServer",
+			"url": "http://dev.services2.coastalresilience.org/arcgis/rest/services/North_Carolina/NC_Flood_Slr/MapServer",
 			"layers": {
-				"main": "http://dev.services.coastalresilience.org/arcgis/rest/services/California/Monterey_SLR/MapServer",
-				"storm_surge": "https://maps.coast.noaa.gov/arcgis/rest/services/FloodExposureMapper/CFEM_StormSurge/MapServer",
-				"shallow_coastal_flooding": "http://services.coastalresilience.org/arcgis/rest/services/North_Carolina/North_Carolina/MapServer",
-				"fema": "http://services.coastalresilience.org/arcgis/rest/services/North_Carolina/North_Carolina/MapServer"
+				"main": "http://dev.services2.coastalresilience.org/arcgis/rest/services/North_Carolina/NC_Flood_Slr/MapServer",
+				"storm_surge": "http://dev.services2.coastalresilience.org/arcgis/rest/services/North_Carolina/NC_Flood_Slr/MapServer",
+				"shallow_coastal_flooding": "http://dev.services2.coastalresilience.org/arcgis/rest/services/North_Carolina/NC_Flood_Slr/MapServer",
+				"fema": "http://dev.services2.coastalresilience.org/arcgis/rest/services/North_Carolina/NC_Flood_Slr/MapServer"
 			},
 			"extent": {
 				"xmin": -8526300.087382287,
@@ -47,7 +47,8 @@
 							},
 							{
 								"name": "Sea Level Rise",
-								"value": "sea_level_rise"
+								"value": "sea_level_rise",
+								"description":"Historical sea level trends are available from NOAA tide stations at <a href='https://tidesandcurrents.noaa.gov/sltrends/sltrends_station.shtml?stnid=8651370' target='_blank'>Duck</a> and <a href='https://tidesandcurrents.noaa.gov/sltrends/sltrends_station.shtml?stnid=8652587' target='_blank'>Oregon Inlet</a>."
 							},
 							{
 								"name": "Storm Surge",
@@ -64,8 +65,7 @@
 					"datasource":{
 						"options": [
 							{ "name": " -- ", "value": "" },
-							{ "name": "NOAA Coastal Flood Exposure", "value": "noaa" },
-							{ "name": "Local or Regional", "value": "local" }
+							{ "name": "NOAA Coastal Flood Exposure", "value": "noaa" }
 						]
 					}
 				},
@@ -84,12 +84,12 @@
 			}
 		},
 		"Dare County": {
-			"url": "http://dev.services.coastalresilience.org/arcgis/rest/services/California/Monterey_SLR/MapServer",
+			"url": "http://dev.services2.coastalresilience.org/arcgis/rest/services/North_Carolina/NC_Flood_Slr/MapServer",
 			"layers": {
-				"main": "http://dev.services.coastalresilience.org/arcgis/rest/services/California/Monterey_SLR/MapServer",
-				"storm_surge": "https://maps.coast.noaa.gov/arcgis/rest/services/FloodExposureMapper/CFEM_StormSurge/MapServer",
-				"shallow_coastal_flooding": "http://services.coastalresilience.org/arcgis/rest/services/North_Carolina/North_Carolina/MapServer",
-				"fema": "http://services.coastalresilience.org/arcgis/rest/services/North_Carolina/North_Carolina/MapServer"
+				"main": "http://dev.services2.coastalresilience.org/arcgis/rest/services/North_Carolina/NC_Flood_Slr/MapServer",
+				"storm_surge": "http://dev.services2.coastalresilience.org/arcgis/rest/services/North_Carolina/NC_Flood_Slr/MapServer",
+				"shallow_coastal_flooding": "http://dev.services2.coastalresilience.org/arcgis/rest/services/North_Carolina/NC_Flood_Slr/MapServer",
+				"fema": "http://dev.services2.coastalresilience.org/arcgis/rest/services/North_Carolina/NC_Flood_Slr/MapServer"
 			},
 			"extent": {
 				"xmin": -8591653.746566305,
@@ -128,8 +128,7 @@
 					"datasource":{
 						"options": [
 							{ "name": " -- ", "value": "" },
-							{ "name": "NOAA Coastal Flood Exposure", "value": "noaa" },
-							{ "name": "Local", "value": "local" }
+							{ "name": "NOAA Coastal Flood Exposure", "value": "noaa" }
 						]
 					}
 				},

@@ -8,6 +8,7 @@ define([
 		"dojo/on",
 		"dojo/_base/array",
 		"dojo/_base/html",
+		"dojo/_base/window",
 		"dojo/query",
 		"dojo/dom",
 		"dojo/dom-class",
@@ -36,6 +37,7 @@ define([
 			on,
 			array,
 			html,
+			win,			
 			query,
 			dom,
 			domClass,
@@ -113,7 +115,7 @@ define([
 			this.hideTool = function(){
 				if (this._mapLayer && this._mapLayer.loaded) { 
 					//this._mapLayer.setVisibleLayers([]);
-					this._mapLayer.hide();
+					//this._mapLayer.hide();
 				}
 			}
 			
@@ -197,7 +199,7 @@ define([
 			    this.cp = new ContentPane({
 					id: "plugin-slr-" + self._map.id,
 					style: "position:relative; overflow: visible;",
-					className: 'plugin-slr'
+					className: 'cr-dojo-dijits'
 			    });
 			    this.cp.startup();
 				this._container.appendChild(this.cp.domNode);
@@ -205,7 +207,7 @@ define([
 				this.createInputs();
 				
 				this.tip = domConstruct.create("div", { className: "slr-tooltip interface" });
-				this.cp.containerNode.appendChild(this.tip);
+				win.body().appendChild(this.tip);
 				
 				this.createTooltips();
 			}
@@ -219,7 +221,8 @@ define([
 					"overflow": "visible",
 					"background": "none",
 					"border": "none",
-					"padding": "20px"
+					//"padding": "20px"
+					"padding": "20px 20px 5px 20px"
 				});
 				
 				var regionTd = domConstruct.create("div", {
@@ -231,23 +234,27 @@ define([
 				}, this.inputsPane.containerNode);
 				
 				var hazardTd = domConstruct.create("div", {
-					style:"position:relative; width:100%; margin-bottom:20px;"
+					style:"position:relative; width:100%; height:auto; margin:0px 0px 15px 0px;"
+				}, this.inputsPane.containerNode);
+				
+				var slidersTd = domConstruct.create("div", {
+					style:"position:relative; width:100%; height:auto; padding:1px 0px 0px 0px; margin:0px 0px 0px 0px; display:block;"
 				}, this.inputsPane.containerNode);
 				
 				var climateTd = domConstruct.create("div", {
-					style:"position:relative; width:100%; height:40px; padding:0px; margin:40px 0px 10px 0px; display:block;"
-				}, this.inputsPane.containerNode);
+					style:"position:relative; width:100%; height:40px; padding:0px; margin:15px 0px 15px 0px; display:block;"
+				}, slidersTd);
 				
 				var scenarioTd = domConstruct.create("div", {
-					style:"position:relative; width:100%; height:30px; padding:0px; margin:15px 0px 10px 0px; display:block;"
-				}, this.inputsPane.containerNode);
+					style:"position:relative; width:100%; height:30px; padding:0px; margin:15px 0px 15px 0px; display:block;"
+				}, slidersTd);
 				
 				var hurricaneTd = domConstruct.create("div", {
-					style:"position:relative; width:100%; height:30px; padding:0px; margin:15px 0px 0px 0px; display:none;"
-				}, this.inputsPane.containerNode);
+					style:"position:relative; width:100%; height:30px; padding:0px; margin:15px 0px 15px 0px; display:none;"
+				}, slidersTd);
 				
 				var femaTd = domConstruct.create("div", {
-					style:"position:relative; width:100%; height:15px; padding:0px; margin:10px 0px 0px 0px; display:none;"
+					style:"position:relative; width:100%; height:20px; padding:0px; margin:0px 0px 0px 0px; display:block;"
 				}, this.inputsPane.containerNode);
 				
 				// region control
@@ -281,7 +288,7 @@ define([
 							   xFx.wipeTo({ node: this, duration: 150, width: 80 }),
 							   xFx.wipeTo({ node: regionSelectDiv, duration: 150, width: 153 })
 							]).play();
-							domStyle.set(this, "background", "#59C3CD");
+							domStyle.set(this, "background", "#0096d6");
 						}
 					}
 				});
@@ -292,7 +299,7 @@ define([
 							   xFx.wipeTo({ node: this, duration: 150, width: 33 }),
 							   xFx.wipeTo({ node: regionSelectDiv, duration: 150, width: 200 })
 						   ]).play();
-						   domStyle.set(this, "background", "#888888");
+						   domStyle.set(this, "background", "#2B2E3B");
 						}
 					}
 				});
@@ -313,7 +320,7 @@ define([
 							   xFx.wipeTo({ node: this, duration: 150, width: 75 }),
 							   xFx.wipeTo({ node: regionSelectDiv, duration: 150, width: 158 })
 							]).play();
-						   domStyle.set(this, "background", "#59C3CD");
+						   domStyle.set(this, "background", "#0096d6");
 						}
 				   }
 				});
@@ -324,7 +331,7 @@ define([
 							   xFx.wipeTo({ node: this, duration: 150, width: 33 }),
 							   xFx.wipeTo({ node: regionSelectDiv, duration: 150, width: 200 })
 							]).play();
-						   domStyle.set(this, "background", "#888888");
+						   domStyle.set(this, "background", "#2B2E3B");
 						}
 					}
 				});
@@ -351,9 +358,9 @@ define([
 				domConstruct.create("option", { innerHTML: " -- ", value: "" }, self.dataSourceSelect);
 				on(this.dataSourceSelect, "change", function() { 
 					if (self.regionSelect != "" && self.dataSourceSelect.value != "") {
-						query(".downloadButton").style("backgroundColor", "#888888");
+						query(".downloadButton").style("backgroundColor", "#2B2E3B");
 					} else {
-						query(".downloadButton").style("backgroundColor", "#d3d3d3");
+						query(".downloadButton").style("backgroundColor", "#94959C");
 					}
 				});
 				
@@ -374,10 +381,14 @@ define([
 					self.updateMapLayers();
 				});
 				
-				var checkBoxDiv = domConstruct.create("div", {
-					style:"position:relative; width:100%; height:15px; padding:0px; margin:0px 0px 0px 0px; display:none;"
+				this.hazardDescriptionDiv = domConstruct.create("div", {
+					class: "hazard-description",
+					style:"display:none;"
 				}, hazardTd);
 				
+				var checkBoxDiv = domConstruct.create("div", {
+					style:"position:relative; width:100%; height:20px; padding:0px; margin:0px 0px 0px 0px; display:none;"
+				}, hazardTd);
 				var checkBoxLabel = domConstruct.create("label", { 
 					for: "slr-hazard-layer-" + self._map.id,
 					className:"styled-checkbox",
@@ -410,7 +421,7 @@ define([
 				var checkBoxDiv = domConstruct.create("label", { 
 					for: "slr-fema-layer-" + self._map.id,
 					className:"styled-checkbox",
-					style:"display:block; margin-left: 5px;"
+					style:"display:block;"
 				}, femaTd);
 				this.femaLayerCheckBox = domConstruct.create("input", {
 					type:"checkbox",
@@ -421,7 +432,7 @@ define([
 					checked:false
 				}, checkBoxDiv);
 				var checkBoxLabel = domConstruct.create("div", {
-					innerHTML: '<span>FEMA flood zones</span>'
+					innerHTML: '<span>FEMA zones (as of 2006)</span>'
 				}, checkBoxDiv);
 				on(self.femaLayerCheckBox, "change", function(){
 					if (this.checked) {
@@ -435,8 +446,8 @@ define([
 				
 				//climate year slider
 			    var climateSliderLabel = domConstruct.create("div", {
-					innerHTML: "<i class='fa fa-info-circle slr-" + this._map.id + "-climate'></i>&nbsp;<b>Climate Year: </b>",
-					style:"position:relative; width:105px; top:-7px; display:inline-block;"
+					innerHTML: "<i class='fa fa-question-circle slr-" + this._map.id + "-climate'></i>&nbsp;<b>Climate Year: </b>",
+					style:"position:relative; width:110px; top:-10px; display:inline-block;"
 				}, climateTd);
 				this.climateSlider = new HorizontalSlider({
 			        name: "climateSlider",
@@ -446,7 +457,7 @@ define([
 			        discreteValues: this._interface.controls.slider.climate.length,
 			        showButtons: false,
 					disabled: true,
-			        style: "width:170px; display:inline-block; margin:0px; background:none;",
+			        style: "width:160px; display:inline-block; margin:0px; background:none;",
 			        onChange: function(value){
 						if (value == 0 || self.hazardLayerCheckBox.checked) {
 							self.scenarioSlider.set("value", 0);
@@ -471,8 +482,8 @@ define([
 				
 				//scenario slider
 			    var scenarioSliderLabel = domConstruct.create("div", {
-					innerHTML: "<i class='fa fa-info-circle slr-" + this._map.id + "-scenario'></i>&nbsp;<b>Sea Level Rise: </b>",
-					style:"position:relative; width:105px; top:-7px; display:inline-block;"
+					innerHTML: "<i class='fa fa-question-circle slr-" + this._map.id + "-scenario'></i>&nbsp;<b>Sea Level Rise: </b>",
+					style:"position:relative; width:110px; top:-10px; display:inline-block;"
 				}, scenarioTd);
 				this.scenarioSlider = new HorizontalSlider({
 			        name: "scenarioSlider",
@@ -482,7 +493,7 @@ define([
 			        discreteValues: this._interface.controls.slider.scenario.length,
 			        showButtons: false,
 					disabled: true,
-			        style: "width:170px; display:inline-block; margin:0px; background:none;",
+			        style: "width:160px; display:inline-block; margin:0px; background:none;",
 			        onChange: function(value){
 						if (self._region != "") {
 							self.updateMapLayers();
@@ -501,8 +512,8 @@ define([
 				
 				//hurricane slider
 			    var hurricaneSliderLabel = domConstruct.create("div", {
-					innerHTML: "<i class='fa fa-info-circle slr-" + this._map.id + "-hurricane'></i>&nbsp;<b>Hurricane: </b>",
-					style:"position:relative; width:105px; top:-7px; display:inline-block;"
+					innerHTML: "<i class='fa fa-question-circle slr-" + this._map.id + "-hurricane'></i>&nbsp;<b>Hurricane Surge: </b>",
+					style:"position:relative; width:125px; top:-10px; display:inline-block;"
 				}, hurricaneTd);
 				this.hurricaneSlider = new HorizontalSlider({
 			        name: "hurricaneSlider",
@@ -512,7 +523,7 @@ define([
 			        discreteValues: this._interface.controls.slider.hurricane.length,
 			        showButtons: false,
 					disabled: true,
-			        style: "width:170px; display:inline-block; margin:0px; background:none;",
+			        style: "width:150px; display:inline-block; margin:0px; background:none;",
 			        onChange: function(value){
 						if (self._region != "") {
 							self.updateMapLayers();
@@ -529,60 +540,48 @@ define([
 			    });
 			    this.hurricaneSlider.addChild(hurricaneSliderLabels);
 				
-				/* var radioButtonLabel = domConstruct.create("label", { className:"styled-radio", for: "armor-" + self._map.id }, this.inputsPane.containerNode);
-				this.armorRadioButton = domConstruct.create("input", { type:"radio", value:"armoring", name:"management", id:"armor-" + self._map.id }, radioButtonLabel);
-				domConstruct.create("span", { innerHTML:"Coastal Armoring" }, radioButtonLabel );
+				var opacity = domConstruct.create("div", {
+					className: "utility-control",
+					innerHTML: '<span class="slr-' + this._map.id + '-opacity"><b>Opacity</b>&nbsp;<i class="fa fa-adjust"></i></span>'
+				}, this.inputsPane.containerNode);
 				
-				var radioButtonLabel = domConstruct.create("label", { className:"styled-radio", for: "nature-" + self._map.id }, this.inputsPane.containerNode);
-				this.natureRadioButton = domConstruct.create("input", { type:"radio", value:"nature-based", name:"management", id:"nature-" + self._map.id }, radioButtonLabel);
-				domConstruct.create("span", { innerHTML:"Nature-based" }, radioButtonLabel ); */
+				on(opacity,"click", function() {
+					var status = domStyle.get(self.opacityContainer, "display");
+					var display = (status == "none") ? "block" : "none";
+					domStyle.set(self.opacityContainer, "display", display);
+				})
 				
-				this.utilityPane = new ContentPane({});
-				this.cp.domNode.appendChild(this.utilityPane.domNode);
-			    domStyle.set(this.utilityPane.containerNode, {
-					"position": "relative",
-					"overflow": "visible",
-					"background": "#f3f4f3",
-					"border": "1px dotted #ccc",
-					"padding": "10px 20px 10px 20px"
-				});
-				
-				var opacityTd = domConstruct.create("div", {
-					className: "utility",
-					style:"position:relative; width:100%; height:25px; padding:0px; margin:15px 0px 0px 0px;"
-				}, this.utilityPane.containerNode);
+				this.opacityContainer = domConstruct.create("div", {
+					className: "utility"
+				}, this.inputsPane.containerNode);
 				
 				//opacity slider
-			    var opacitySliderLabel = domConstruct.create("div", {
-					innerHTML: "<b>Layer Opacity: </b>",
-					style:"position:relative; width:105px; top:-7px; display:inline-block; color:#888888;"
-				}, opacityTd);
 				this.opacitySlider = new HorizontalSlider({
 			        name: "opacitySlider",
-			        value: 0,
+			        value: 1,
 			        minimum: 0,
 			        maximum: 1,
 			        intermediateChanges: true,
 			        showButtons: false,
 					disabled: true,
-			        style: "width:170px; display:inline-block; margin:0px; background:none;",
+			        style: "width:75px; display:inline-block; margin:0px; background:none;",
 			        onChange: function(value){
 						array.forEach(_.keys(self._mapLayers), function(region){
 							array.forEach(_.keys(self._mapLayers[region]), function(layer){
-								self._mapLayers[region][layer].setOpacity(Math.abs(value-1));
+								self._mapLayers[region][layer].setOpacity(Math.abs(value));
 							})
 						})
 			        }
 			    });
-				opacityTd.appendChild(this.opacitySlider.domNode);
+				this.opacityContainer.appendChild(this.opacitySlider.domNode);
 
-			    var opacitySliderLabels = new HorizontalRuleLabels({
+			    /* var opacitySliderLabels = new HorizontalRuleLabels({
 			    	container: 'bottomDecoration',
 			    	count: 0,
 			    	labels: ["opaque", "clear"],
 			    	style: "margin-top:5px;"
 			    });
-			    this.opacitySlider.addChild(opacitySliderLabels);
+			    this.opacitySlider.addChild(opacitySliderLabels); */
 				
 				/* var table = domConstruct.create("table", {style:"position:relative;width: 100%;background: none;border: none; margin:0px 0px 10px 0px;"}, this.utilityPane.containerNode);
 				var tr = domConstruct.create("tr", {}, table);
@@ -600,7 +599,7 @@ define([
 				});
 				
 				if (_.has(this._interface.region[this._region].controls.select, "datasource")) {
-					query(".downloadButton").style("backgroundColor", "#d3d3d3");
+					query(".downloadButton").style("backgroundColor", "#94959C");
 					
 					domConstruct.empty(this.dataSourceSelect)
 					array.forEach(this._interface.region[this._region].controls.select.datasource.options, function(item) {
@@ -609,7 +608,7 @@ define([
 					domStyle.set(this.dataSourceSelect.parentNode.parentNode, "display",  "block");
 					_.first(query('.slr-' + this._map.id + '-hazard .info-circle-text')).innerHTML = 3;
 				} else {
-					query(".downloadButton").style("backgroundColor", "#888888");
+					query(".downloadButton").style("backgroundColor", "#2B2E3B");
 					
 					domStyle.set(this.dataSourceSelect.parentNode.parentNode, "display",  "none");
 					_.first(query('.slr-' + this._map.id + '-hazard .info-circle-text')).innerHTML = 2;
@@ -625,20 +624,18 @@ define([
 				if (_.has(this._interface.region[this._region].controls.radiocheck, "aggregate")) {
 					this.hazardLayerCheckBox.checked = false;
 					this.hazardLayerCheckBox.disabled = this._interface.region[this._region].controls.radiocheck.aggregate.disabled;
-					domStyle.set(this.hazardLayerCheckBox.parentNode.parentNode, "display", "block");
-				} else {
-					domStyle.set(this.hazardLayerCheckBox.parentNode.parentNode, "display", "none");
 				}
+				domStyle.set(this.hazardLayerCheckBox.parentNode.parentNode, "display", "none");
 				
 				var display = (_.has(this._interface.region[this._region].controls.radiocheck, "fema")) ? "block" : "none";
-				domStyle.set(this.femaLayerCheckBox.parentNode.parentNode, "display",  display);
+				domStyle.set(this.femaLayerCheckBox.parentNode, "display",  display);
 				
 				this.climateSlider.set("value", 0);
 				this.climateSlider.set("disabled", true);
 				this.scenarioSlider.set("value", 0);
 				this.scenarioSlider.set("disabled", true);
 				
-				this.opacitySlider.set("disabled", false);
+				this.opacitySlider.set("disabled", true);
 				
 				array.forEach(_.keys(this._mapLayers), function(region) {
 					array.forEach(_.keys(self._mapLayers[region]), function(layer) {
@@ -661,29 +658,62 @@ define([
 			
 			this.updateControls = function() {
 				var hazard = this.hazardSelect.value.toLowerCase();
-				var options = this._interface.region[this._region].controls.select.hazard.options
-				var hazardOption = options[array.map(options, function(option) { return option.value }).indexOf(hazard)];
-				
-				domStyle.set(this.climateSlider.domNode.parentNode, "display",  "none");
-				domStyle.set(this.scenarioSlider.domNode.parentNode, "display",  "none");
-				domStyle.set(this.hurricaneSlider.domNode.parentNode, "display",  "none");
-				
-				if (!_.has(hazardOption, "controls") ) {
-					domStyle.set(this.climateSlider.domNode.parentNode, "display",  "block");
-					domStyle.set(this.scenarioSlider.domNode.parentNode, "display",  "block");
+				if (hazard != "") {
+					var options = this._interface.region[this._region].controls.select.hazard.options
+					var hazardOption = options[array.map(options, function(option) { return option.value }).indexOf(hazard)];
+					
+					domStyle.set(this.climateSlider.domNode.parentNode, "display",  "none");
+					domStyle.set(this.scenarioSlider.domNode.parentNode, "display",  "none");
+					domStyle.set(this.hurricaneSlider.domNode.parentNode, "display",  "none");
+					
+					if (!_.has(hazardOption, "controls") ) {
+						domStyle.set(this.climateSlider.domNode.parentNode, "display",  "block");
+						domStyle.set(this.scenarioSlider.domNode.parentNode, "display",  "block");
+					} else {
+						array.forEach(hazardOption.controls, function(control) {
+							domStyle.set(self[control + "Slider"].domNode.parentNode, "display",  "block")
+							self[control + "Slider"].set("disabled", false);
+						});
+					}
+					
+					if (_.has(this._interface.region[this._region].controls.radiocheck, "aggregate")) {
+						domStyle.set(this.hazardLayerCheckBox.parentNode.parentNode, "display", "block");
+					}
+					
+					if (_.has(hazardOption, "description") ) {
+						this.hazardDescriptionDiv.innerHTML = hazardOption.description;
+						domStyle.set(this.hazardDescriptionDiv, "display", "block");
+					} else {
+						this.hazardDescriptionDiv.innerHTML = "";
+						domStyle.set(this.hazardDescriptionDiv, "display", "none");
+					}
+					
+					var disable = (hazard == "") ? true : false;
+					this.climateSlider.set("disabled", disable);
+					this.opacitySlider.set("disabled", false);
 				} else {
-					array.forEach(hazardOption.controls, function(control) {
-						domStyle.set(self[control + "Slider"].domNode.parentNode, "display",  "block")
-						self[control + "Slider"].set("disabled", false);
-					});
+					if (_.has(this._interface.region[this._region].controls.radiocheck, "aggregate")) {
+						this.hazardLayerCheckBox.checked = false;
+						domStyle.set(this.hazardLayerCheckBox.parentNode.parentNode, "display", "none");
+					}
+					
+					this.hazardDescriptionDiv.innerHTML = "";
+					domStyle.set(this.hazardDescriptionDiv, "display", "none");
+					
+					this.climateSlider.set("value", 0);
+					this.climateSlider.set("disabled", true);
+					this.scenarioSlider.set("value", 0);
+					this.scenarioSlider.set("disabled", true);
+					this.hurricaneSlider.set("value", 1);
+					this.hurricaneSlider.set("disabled", true);
+					
+					var disable = (!_.has(this._interface.region[this._region].controls.radiocheck, "fema")) ? true : false;
+					this.opacitySlider.set("disabled", disable);
 				}
-				
-				var disable = (hazard == "") ? true : false;
-				this.climateSlider.set("disabled", disable);
 			}
 			
 			this.resetInterface = function(){
-				query(".downloadButton").style("backgroundColor", "#d3d3d3");
+				query(".downloadButton").style("backgroundColor", "#94959C");
 				
 				domConstruct.empty(this.hazardSelect);
 				domConstruct.create("option", { innerHTML: " -- ", value: "" }, this.hazardSelect);
@@ -697,8 +727,11 @@ define([
 				this.hazardLayerCheckBox.disabled = true;
 				domStyle.set(this.hazardLayerCheckBox.parentNode.parentNode, "display", "none");
 				
+				this.hazardDescriptionDiv.innerHTML = "";
+				domStyle.set(this.hazardDescriptionDiv, "display", "none");
+				
 				this.femaLayerCheckBox.checked = false;
-				domStyle.set(this.femaLayerCheckBox.parentNode.parentNode, "display", "none");
+				domStyle.set(this.femaLayerCheckBox.parentNode, "display", "none");
 				
 				this.climateSlider.set("value", 0);
 				this.climateSlider.set("disabled", true);
@@ -743,7 +776,7 @@ define([
 				self.tip.innerHTML = message;
 				domStyle.set(self.tip, { "display": "block" });
 				
-				var p = domGeom.position(self._container);
+				var p = domGeom.position(win.body());
 				var n = domGeom.position(node);
 				var t = domGeom.getMarginBox(self.tip);
 				
