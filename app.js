@@ -614,6 +614,9 @@ define([
 					_.first(query('.slr-' + this._map.id + '-hazard .info-circle-text')).innerHTML = 2;
 				}
 				
+				this.hazardDescriptionDiv.innerHTML = "";
+				domStyle.set(this.hazardDescriptionDiv, "display", "none");
+				
 				var labels = (_.has(this._interface.region[this._region].controls.slider.climate, "values")) ? this._interface.region[this._region].controls.slider.climate.values : this._interface.controls.slider.climate;
 				array.forEach(query("#" + this.climateSliderLabels.id + " .dijitRuleLabel"), function(label,i) { label.innerHTML = labels[i]; })
 				
