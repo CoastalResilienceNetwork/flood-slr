@@ -97,6 +97,7 @@ define([
 						this._state = {};
 					} else {
 						this.slr.showTool();
+						this.slr.updateInterface("region");
 					}
                },
 
@@ -106,7 +107,7 @@ define([
 
                hibernate: function () {
 				   this.slr.closeTool();
-				   this.slr.regionSelect.value = "";
+				   this.slr.regionSelect.value = _.first(this.slr.regionSelect.options).value;
 				   this.slr.resetInterface();
                },
 

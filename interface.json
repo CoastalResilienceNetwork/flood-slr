@@ -64,7 +64,6 @@
 					},
 					"datasource":{
 						"options": [
-							{ "name": " -- ", "value": "" },
 							{ "name": "NOAA Coastal Flood Exposure", "value": "noaa" }
 						]
 					}
@@ -111,7 +110,8 @@
 							},
 							{
 								"name": "Sea Level Rise",
-								"value": "sea_level_rise"
+								"value": "sea_level_rise",
+								"description":"Historical sea level trends are available from NOAA tide stations at <a href='https://tidesandcurrents.noaa.gov/sltrends/sltrends_station.shtml?stnid=8651370' target='_blank'>Duck</a> and <a href='https://tidesandcurrents.noaa.gov/sltrends/sltrends_station.shtml?stnid=8652587' target='_blank'>Oregon Inlet</a>."
 							},
 							{
 								"name": "Storm Surge",
@@ -127,7 +127,6 @@
 					},
 					"datasource":{
 						"options": [
-							{ "name": " -- ", "value": "" },
 							{ "name": "NOAA Coastal Flood Exposure", "value": "noaa" }
 						]
 					}

@@ -268,18 +268,23 @@ define([
 					style:"width:200px;display:inline-block;" 
 				}, regionTd);
 				this.regionSelect = domConstruct.create("select", { name: "region"}, regionSelectDiv);
-				domConstruct.create("option", { innerHTML: " -- ", value: "" }, this.regionSelect);
+				if (_.keys(this._interface.region).length > 1) {
+					domConstruct.create("option", { innerHTML: " -- ", value: "" }, this.regionSelect);
+				}
 				array.forEach(_.keys(this._interface.region), function(item) {
 					domConstruct.create("option", { innerHTML: item, value: item }, self.regionSelect);
 				});
 				on(this.regionSelect, "change", function() {
 					self._region = this.value;
 					if (self._region != "") {
-						self.updateInterface();
+						self.updateInterface("region");
 					} else {
 						self.resetInterface();
 					}
 				});
+				this.regionSelect.value = _.first(this.regionSelect.options).value;
+				this._region = this.regionSelect.value;
+				
 				this.downloadReport = domConstruct.create("div", { className:"downloadButton", innerHTML:'<i class="fa fa-file-pdf-o downloadIcon"></i><span class="downloadText">Report</span>' }, regionTd);
 				on(this.downloadReport,"mouseover", function(){
 					if (self._region && self._region != "") {
@@ -355,13 +360,13 @@ define([
 					style:"width:275px;display:block;margin-bottom:5px;"
 				}, dataSourceTd);
 				this.dataSourceSelect = domConstruct.create("select", { name: "dataSource" }, dataSourceSelectDiv);
-				domConstruct.create("option", { innerHTML: " -- ", value: "" }, self.dataSourceSelect);
 				on(this.dataSourceSelect, "change", function() { 
 					if (self.regionSelect != "" && self.dataSourceSelect.value != "") {
 						query(".downloadButton").style("backgroundColor", "#2B2E3B");
 					} else {
 						query(".downloadButton").style("backgroundColor", "#94959C");
 					}
+					self.updateInterface("dataSource");
 				});
 				
 				// hazard controls
@@ -574,63 +579,62 @@ define([
 			        }
 			    });
 				this.opacityContainer.appendChild(this.opacitySlider.domNode);
-
-			    /* var opacitySliderLabels = new HorizontalRuleLabels({
-			    	container: 'bottomDecoration',
-			    	count: 0,
-			    	labels: ["opaque", "clear"],
-			    	style: "margin-top:5px;"
-			    });
-			    this.opacitySlider.addChild(opacitySliderLabels); */
-				
-				/* var table = domConstruct.create("table", {style:"position:relative;width: 100%;background: none;border: none; margin:0px 0px 10px 0px;"}, this.utilityPane.containerNode);
-				var tr = domConstruct.create("tr", {}, table);
-				var reportTd = domConstruct.create("td", { style:"position:relative;width:50%; text-align:center;"}, tr);
-				var dataTd = domConstruct.create("td", { style:"position:relative;width:50%; text-align:center;"}, tr);
-				
-				this.downloadReport = domConstruct.create("div", { className:"downloadButton", innerHTML:'<i class="fa fa-file-pdf-o downloadIcon"></i><span class="downloadText">Report</span>' }, reportTd)
-				this.downloadData = domConstruct.create("div", { className:"downloadButton", innerHTML:'<i class="fa fa-file-zip-o downloadIcon"></i><span class="downloadText">Data</span>' }, dataTd) */
 			}
 			
-			this.updateInterface = function(){
-				domConstruct.empty(this.hazardSelect)
-				array.forEach(this._interface.region[this._region].controls.select.hazard.options, function(item) {
-					domConstruct.create("option", { innerHTML: item.name, value: item.value }, self.hazardSelect);
-				});
-				
-				if (_.has(this._interface.region[this._region].controls.select, "datasource")) {
-					query(".downloadButton").style("backgroundColor", "#94959C");
-					
-					domConstruct.empty(this.dataSourceSelect)
-					array.forEach(this._interface.region[this._region].controls.select.datasource.options, function(item) {
-						domConstruct.create("option", { innerHTML: item.name, value: item.value }, self.dataSourceSelect);
+			this.updateInterface = function(control){
+				domConstruct.empty(this.hazardSelect);
+				if (this._region != "") {
+					array.forEach(this._interface.region[this._region].controls.select.hazard.options, function(item) {
+						domConstruct.create("option", { innerHTML: item.name, value: item.value }, self.hazardSelect);
 					});
-					domStyle.set(this.dataSourceSelect.parentNode.parentNode, "display",  "block");
-					_.first(query('.slr-' + this._map.id + '-hazard .info-circle-text')).innerHTML = 3;
 				} else {
-					query(".downloadButton").style("backgroundColor", "#2B2E3B");
-					
-					domStyle.set(this.dataSourceSelect.parentNode.parentNode, "display",  "none");
-					_.first(query('.slr-' + this._map.id + '-hazard .info-circle-text')).innerHTML = 2;
+					domConstruct.create("option", { innerHTML: " -- ", value: "" }, this.hazardSelect);
+				}
+				
+				if (control == "region") {
+					if (this._region != "" && _.has(this._interface.region[this._region].controls.select, "datasource")) {
+						
+						domConstruct.empty(this.dataSourceSelect);
+						var options = this._interface.region[this._region].controls.select.datasource.options;
+						array.forEach(options, function(item) {
+							domConstruct.create("option", { innerHTML: item.name, value: item.value }, self.dataSourceSelect);
+						});
+						
+						var display = (options.length > 1) ? "block" : "none";
+						domStyle.set(this.dataSourceSelect.parentNode.parentNode, "display",  display);
+						
+						var number = (options.length > 1) ? 3 : 2;
+						_.first(query('.slr-' + this._map.id + '-hazard .info-circle-text')).innerHTML = number;
+						
+						var backgroundColor = (this.dataSourceSelect.value != "") ? "#2B2E3B" : "#94959C";
+						query(".downloadButton").style("backgroundColor", backgroundColor);
+						
+					} else {
+						query(".downloadButton").style("backgroundColor", "#2B2E3B");
+						
+						domStyle.set(this.dataSourceSelect.parentNode.parentNode, "display",  "none");
+						_.first(query('.slr-' + this._map.id + '-hazard .info-circle-text')).innerHTML = 2;
+					}
 				}
 				
 				this.hazardDescriptionDiv.innerHTML = "";
 				domStyle.set(this.hazardDescriptionDiv, "display", "none");
 				
-				var labels = (_.has(this._interface.region[this._region].controls.slider.climate, "values")) ? this._interface.region[this._region].controls.slider.climate.values : this._interface.controls.slider.climate;
+				var labels = (this._region != "" && _.has(this._interface.region[this._region].controls.slider.climate, "values")) ? this._interface.region[this._region].controls.slider.climate.values : this._interface.controls.slider.climate;
 				array.forEach(query("#" + this.climateSliderLabels.id + " .dijitRuleLabel"), function(label,i) { label.innerHTML = labels[i]; })
 				
 				domStyle.set(this.climateSlider.domNode.parentNode, "display",  "block");
 				domStyle.set(this.scenarioSlider.domNode.parentNode, "display",  "block");
 				domStyle.set(this.hurricaneSlider.domNode.parentNode, "display",  "none");
 				
-				if (_.has(this._interface.region[this._region].controls.radiocheck, "aggregate")) {
+				if (this._region != "" && _.has(this._interface.region[this._region].controls.radiocheck, "aggregate")) {
 					this.hazardLayerCheckBox.checked = false;
 					this.hazardLayerCheckBox.disabled = this._interface.region[this._region].controls.radiocheck.aggregate.disabled;
 				}
 				domStyle.set(this.hazardLayerCheckBox.parentNode.parentNode, "display", "none");
 				
-				var display = (_.has(this._interface.region[this._region].controls.radiocheck, "fema")) ? "block" : "none";
+				this.femaLayerCheckBox.checked = false;
+				var display = (this._region != "" && _.has(this._interface.region[this._region].controls.radiocheck, "fema")) ? "block" : "none";
 				domStyle.set(this.femaLayerCheckBox.parentNode, "display",  display);
 				
 				this.climateSlider.set("value", 0);
@@ -650,12 +654,11 @@ define([
 				if (this._region != "") {
 					this._mapLayer = this._mapLayers[this._region].main;
 					this._mapLayer.show();
+					var extent = new Extent(this._interface.region[this._region].extent);
+					this._map.setExtent(extent, false);
 				} else {
 					this._mapLayer = {};
 				}
-				
-				var extent = new Extent(this._interface.region[this._region].extent);
-				this._map.setExtent(extent, false);
 				
 			}
 			

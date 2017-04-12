@@ -254,17 +254,20 @@ padding: 0px 3px;
 color: #9a9fa5;
 }
 
-.plugin-slr .hazard-description  a {
-color: #0096d6;	
+.plugin-slr .hazard-description a:link {
+color: #0096d6;
 }
 
-
-.plugin-slr .hazard-description  a:hover {
-color: #80c2de;	
+.plugin-slr .hazard-description a:hover {
+color: #80c2de;
 }
 
-.plugin-slr .hazard-description  a:visited {
-color: #80c2de;	
+.plugin-slr .hazard-description a:visited {
+color: #0096d6;
+}
+
+.plugin-slr .hazard-description a:active {
+color: #e7a938;	
 }
 
 .plugin-slr .utility-control {
