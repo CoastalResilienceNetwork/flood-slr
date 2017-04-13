@@ -517,8 +517,8 @@ define([
 				
 				//hurricane slider
 			    var hurricaneSliderLabel = domConstruct.create("div", {
-					innerHTML: "<i class='fa fa-question-circle slr-" + this._map.id + "-hurricane'></i>&nbsp;<b>Hurricane Surge: </b>",
-					style:"position:relative; width:125px; top:-10px; display:inline-block;"
+					innerHTML: "<i class='fa fa-question-circle slr-" + this._map.id + "-hurricane'></i>&nbsp;<b>Surge Severity: </b>",
+					style:"position:relative; width:115px; top:-10px; display:inline-block;"
 				}, hurricaneTd);
 				this.hurricaneSlider = new HorizontalSlider({
 			        name: "hurricaneSlider",
@@ -528,7 +528,7 @@ define([
 			        discreteValues: this._interface.controls.slider.hurricane.length,
 			        showButtons: false,
 					disabled: true,
-			        style: "width:150px; display:inline-block; margin:0px; background:none;",
+			        style: "width:160px; display:inline-block; margin:0px; background:none;",
 			        onChange: function(value){
 						if (self._region != "") {
 							self.updateMapLayers();
