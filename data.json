@@ -22,7 +22,11 @@
 			"sea_level_rise|2100|medium": [20,29],
 			"sea_level_rise|2100|high": [18,29],
 			
-			"fema": [23]
+			"fema": [23],
+			
+			"model_storm|surge|matthew": [46],
+			"model_storm|track|matthew": [43],
+			"model_storm|swath|matthew": [44]
 		
 		},
 		"Dare County": {
@@ -47,7 +51,11 @@
 			"sea_level_rise|2100|medium": [9,29],
 			"sea_level_rise|2100|high": [7,29],
 			
-			"fema": [24]
+			"fema": [24],
+			
+			"model_storm|surge|matthew": [45],
+			"model_storm|track|matthew": [43],
+			"model_storm|swath|matthew": [44]
 		},
 		"Monterey": {
 			"tide|current|low": [122],

@@ -25,7 +25,8 @@
 				"main": "http://dev.services2.coastalresilience.org/arcgis/rest/services/North_Carolina/NC_Flood_Slr/MapServer",
 				"storm_surge": "http://dev.services2.coastalresilience.org/arcgis/rest/services/North_Carolina/NC_Flood_Slr/MapServer",
 				"shallow_coastal_flooding": "http://dev.services2.coastalresilience.org/arcgis/rest/services/North_Carolina/NC_Flood_Slr/MapServer",
-				"fema": "http://dev.services2.coastalresilience.org/arcgis/rest/services/North_Carolina/NC_Flood_Slr/MapServer"
+				"fema": "http://dev.services2.coastalresilience.org/arcgis/rest/services/North_Carolina/NC_Flood_Slr/MapServer",
+				"model_storm": "http://dev.services2.coastalresilience.org/arcgis/rest/services/North_Carolina/NC_Flood_Slr/MapServer"
 			},
 			"extent": {
 				"xmin": -8526300.087382287,
@@ -75,6 +76,11 @@
 				},
 				"radiocheck": {
 					"fema": { "disabled": false, "show": true }
+				},
+				"tree": {
+					"storm": [
+						{ "label": "Hurricane Matthew", "value": "matthew" }
+					]
 				}
 			},
 			"download": {
@@ -88,7 +94,8 @@
 				"main": "http://dev.services2.coastalresilience.org/arcgis/rest/services/North_Carolina/NC_Flood_Slr/MapServer",
 				"storm_surge": "http://dev.services2.coastalresilience.org/arcgis/rest/services/North_Carolina/NC_Flood_Slr/MapServer",
 				"shallow_coastal_flooding": "http://dev.services2.coastalresilience.org/arcgis/rest/services/North_Carolina/NC_Flood_Slr/MapServer",
-				"fema": "http://dev.services2.coastalresilience.org/arcgis/rest/services/North_Carolina/NC_Flood_Slr/MapServer"
+				"fema": "http://dev.services2.coastalresilience.org/arcgis/rest/services/North_Carolina/NC_Flood_Slr/MapServer",
+				"model_storm": "http://dev.services2.coastalresilience.org/arcgis/rest/services/North_Carolina/NC_Flood_Slr/MapServer"
 			},
 			"extent": {
 				"xmin": -8591653.746566305,
@@ -129,6 +136,11 @@
 						"options": [
 							{ "name": "NOAA Coastal Flood Exposure", "value": "noaa" }
 						]
+					},
+					"model_storm":{
+						"options": [
+							{ "name": "Hurricane Matthew", "value": "matthew" }
+						]
 					}
 				},
 				"slider": {
@@ -138,6 +150,11 @@
 				},
 				"radiocheck": {
 					"fema": { "disabled": false, "show": true }
+				},
+				"tree": {
+					"storm": [
+						{ "label": "Hurricane Matthew", "value": "matthew" }
+					]
 				}
 			},
 			"download": {
