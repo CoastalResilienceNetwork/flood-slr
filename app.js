@@ -606,7 +606,7 @@ define([
 							var checkBoxDiv = domConstruct.create("label", { 
 								for: "slr-storm-track-layer-" + key.replace(" ", "_") + "-" + value.value,
 								className:"styled-checkbox",
-								style:"display:inline-block; margin-left: 20px;"
+								style:"display:inline-block; margin-left: 15px;"
 							}, stormToggleTd);
 							
 							var stormTrackCheckBox = domConstruct.create("input", {
@@ -636,7 +636,7 @@ define([
 							var checkBoxDiv = domConstruct.create("label", { 
 								for: "slr-storm-swath-layer-" + key.replace(" ", "_") + "-" + value.value,
 								className:"styled-checkbox",
-								style:"display:inline-block;margin-left: 20px;"
+								style:"display:inline-block;margin-left: 15px;"
 							}, stormToggleTd);
 							
 							var stormSwathCheckBox = domConstruct.create("input", {
@@ -649,7 +649,7 @@ define([
 							}, checkBoxDiv);
 							
 							var checkBoxLabel = domConstruct.create("div", {
-								innerHTML: '<span>Swath</span>'
+								innerHTML: '<span>Wind Swath</span>'
 							}, checkBoxDiv);
 							
 							on(stormSwathCheckBox, "change", function(){
