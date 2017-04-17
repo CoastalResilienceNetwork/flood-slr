@@ -198,7 +198,7 @@ define([
 				//empty layout containers
 			    this.cp = new ContentPane({
 					id: "plugin-slr-" + self._map.id,
-					style: "position:relative; overflow: visible;",
+					style: "position:relative; overflow: visible; width:100%; height:100%;",
 					className: 'cr-dojo-dijits'
 			    });
 			    this.cp.startup();
@@ -224,6 +224,9 @@ define([
 					"width": "100%",
 					"height": "auto",
 					"padding": "20px 20px 5px 20px"
+				});
+				on(this._map, "resize", function() {
+					domStyle.set(self.inputsPane.containerNode, { "width": "100%", "height": "auto" });
 				});
 				
 				var regionTd = domConstruct.create("div", {
