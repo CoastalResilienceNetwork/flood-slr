@@ -601,6 +601,14 @@ define([
 									visibleLayers = _.difference(visibleLayers, self._data.region[self._region]["model_storm|surge|" + this.value]);
 								}
 								self._mapLayers[self._region].model_storm.setVisibleLayers(visibleLayers);
+								
+								if (array.some(query('input[id*="' + key.replace(" ", "_") + "-" + value.value + '"]'), function(item) { return item.checked })) {
+									self._mapLayers[self._region].storm_surge.hide();
+									self.hurricaneSlider.set("disabled", true);
+								} else {
+									self._mapLayers[self._region].storm_surge.show();
+									self.hurricaneSlider.set("disabled", false);
+								}
 							});
 							
 							var checkBoxDiv = domConstruct.create("label", { 
@@ -631,6 +639,14 @@ define([
 									visibleLayers = _.difference(visibleLayers, self._data.region[self._region]["model_storm|track|" + this.value]);
 								}
 								self._mapLayers[self._region].model_storm.setVisibleLayers(visibleLayers);
+								
+								if (array.some(query('input[id*="' + key.replace(" ", "_") + "-" + value.value + '"]'), function(item) { return item.checked })) {
+									self._mapLayers[self._region].storm_surge.hide();
+									self.hurricaneSlider.set("disabled", true);
+								} else {
+									self._mapLayers[self._region].storm_surge.show();
+									self.hurricaneSlider.set("disabled", false);
+								}
 							});
 							
 							var checkBoxDiv = domConstruct.create("label", { 
@@ -661,6 +677,14 @@ define([
 									visibleLayers = _.difference(visibleLayers, self._data.region[self._region]["model_storm|swath|" + this.value]);
 								}
 								self._mapLayers[self._region].model_storm.setVisibleLayers(visibleLayers);
+								
+								if (array.some(query('input[id*="' + key.replace(" ", "_") + "-" + value.value + '"]'), function(item) { return item.checked })) {
+									self._mapLayers[self._region].storm_surge.hide();
+									self.hurricaneSlider.set("disabled", true);
+								} else {
+									self._mapLayers[self._region].storm_surge.show();
+									self.hurricaneSlider.set("disabled", false);
+								}
 							});
 						});
 						
