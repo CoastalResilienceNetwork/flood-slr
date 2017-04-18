@@ -131,11 +131,16 @@ padding:7px;
 font-size: 14px;
 }
 
+.cr-dojo-dijits .dijitComboButton div.dijitButtonContents {
+text-align:left;
+}
+
 .cr-dojo-dijits .dijitComboButton td.dijitArrowButton {
 border-left:none;
 border-right:1px solid #ddd;
 border-top:1px solid #ddd;
 border-bottom:1px solid #ddd;
+width: 15px;
 }
 
 .cr-dojo-dijits div.dijitArrowButtonInner {
@@ -155,14 +160,14 @@ background:#ffffff;
 pointer-events: none;
 }
 
-.cr-dojo-dijits .dijitMenu {
+.cr-dojo-dijits.dijitMenuPassive.dijitMenu {
 border:1px solid #ddd;	
 }
 
-.cr-dojo-dijits .dijitMenuItemHover {
-border:none;
+.cr-dojo-dijits.dijitMenu tr.dijitMenuItemHover, .cr-dojo-dijits.dijitMenu tr.dijitMenuItemHover td {
+border-color:#ddd;
 background-image:none;
-background:#cccccc;	
+background-color:#cccccc;
 }
 
 /* DIJIT RADIO BUTTON */
