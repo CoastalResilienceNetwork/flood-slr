@@ -24,6 +24,7 @@ define([
 		"dijit/form/HorizontalSlider",
 		"dijit/form/HorizontalRuleLabels",
 		"esri/layers/ArcGISDynamicMapServiceLayer",
+		"esri/layers/ArcGISTiledMapServiceLayer",
 		"esri/geometry/Extent",
 		"dojo/NodeList-traverse"
 		], 
@@ -53,6 +54,7 @@ define([
 			HorizontalSlider,
 			HorizontalRuleLabels,
 			DynamicMapServiceLayer,
+			TiledMapServiceLayer,
 			Extent
 		  ) 
 		
@@ -136,11 +138,15 @@ define([
 					array.forEach(_.keys(this._interface.region), function(region){
 						self._mapLayers[region] = {}
 						array.forEach(_.keys(self._interface.region[region].layers), function(layer) {
-							var mapLayer = new DynamicMapServiceLayer(self._interface.region[region].layers[layer], { id:"slr-layer-" + i });
+							if (!_.isObject(self._interface.region[region].layers[layer])) {
+								var mapLayer = new DynamicMapServiceLayer(self._interface.region[region].layers[layer], { id:"slr-layer-" + i });
+								mapLayer.setVisibleLayers([]);
+							} else {
+								var mapLayer = new TiledMapServiceLayer(self._interface.region[region].layers[layer].url, { id:"slr-layer-" + i });	
+							}
 							self._mapLayers[region][layer] = mapLayer;
 							self._map.addLayer(mapLayer);
 							mapLayer.hide();
-							mapLayer.setVisibleLayers([]);
 							i += 1
 						});
 					});
@@ -160,6 +166,7 @@ define([
 				var hazardOption = options[array.map(options, function(option) { return option.value }).indexOf(parameters.hazard)]
 
 				parameters.climate = this._interface.controls.slider.climate[this.climateSlider.get("value")].toLowerCase();
+				parameters.sealevelrise = this._interface.controls.slider.sealevelrise[this.sealevelriseSlider.get("value")];
 				parameters.scenario = this._interface.controls.slider.scenario[this.scenarioSlider.get("value")].toLowerCase();
 				parameters.hurricane = this.hurricaneSlider.get("value");
 				
@@ -179,9 +186,21 @@ define([
 				if (!_.isEmpty(this._mapLayer)) {
 					this._mapLayer.hide();
 				}
-				this._mapLayer = this._mapLayers[this._region][(_.has(this._mapLayers[this._region], parameters.hazard)) ? parameters.hazard : "main"];
-				var visibleLayers = (parameters.hazard != "") ? this._data.region[this._region][parts.join("|")] : [];
-				this._mapLayer.setVisibleLayers(visibleLayers);
+				
+				if (_.has(this._data.region[this._region], parts.join("|"))) {
+					var dynamic = _.isArray(this._data.region[this._region][parts.join("|")]);
+					if (dynamic) {
+						var layer = (_.has(this._mapLayers[this._region], parameters.hazard)) ? parameters.hazard : "main";
+						this._mapLayer = this._mapLayers[this._region][layer];
+						var visibleLayers = this._data.region[this._region][parts.join("|")];
+						this._mapLayer.setVisibleLayers(visibleLayers);
+					} else {
+						this._mapLayer = this._mapLayers[this._region][this._data.region[this._region][parts.join("|")]];
+					}
+				} else {
+					this._mapLayer = this._mapLayers[this._region]["main"]
+				}
+				
 				this._mapLayer.show();
 			}
 			
@@ -213,7 +232,6 @@ define([
 			}
 			
 			this.createInputs = function(){
-				
 				this.inputsPane = new ContentPane({});
 				this.cp.domNode.appendChild(this.inputsPane.domNode);
 			    domStyle.set(this.inputsPane.containerNode, {
@@ -248,6 +266,10 @@ define([
 				var climateTd = domConstruct.create("div", {
 					style:"position:relative; width:100%; height:40px; padding:0px; margin:15px 0px 15px 0px; display:block;"
 				}, slidersTd);
+				
+				var seaLevelRiseTd = domConstruct.create("div", {
+					style:"position:relative; width:100%; height:40px; padding:0px; margin:15px 0px 15px 0px; display:none;"
+				}, slidersTd)
 				
 				var scenarioTd = domConstruct.create("div", {
 					style:"position:relative; width:100%; height:30px; padding:0px; margin:15px 0px 15px 0px; display:block;"
@@ -492,6 +514,35 @@ define([
 			    	style: "margin-top: 5px; font-size:14px;"
 			    });
 			    this.scenarioSlider.addChild(scenarioSliderLabels);
+				
+				var sealevelriseLabel = domConstruct.create("div", {
+					innerHTML: "<i class='fa fa-question-circle slr-" + this._map.id + "-climate'></i>&nbsp;<b>Sea Level Rise (ft): </b>",
+					style:"position:relative; width:130px; top:-10px; display:inline-block;"
+				}, seaLevelRiseTd);
+				this.sealevelriseSlider = new HorizontalSlider({
+			        name: "sealevelriseSlider",
+			        value: 0,
+			        minimum: 0,
+			        maximum: this._interface.controls.slider.sealevelrise.length-1,
+			        discreteValues: this._interface.controls.slider.sealevelrise.length,
+			        showButtons: false,
+					disabled: true,
+			        style: "width:140px; display:inline-block; margin:0px; background:none;",
+			        onChange: function(value){
+						if (self._region != "") {
+							self.updateMapLayers();
+						}
+					}
+			    });
+			    seaLevelRiseTd.appendChild(this.sealevelriseSlider.domNode);
+
+			    this.sealevelriseSliderLabels = new HorizontalRuleLabels({
+			    	container: 'bottomDecoration',
+			    	count: 0,
+			    	labels: this._interface.controls.slider.sealevelrise,
+			    	style: "margin-top: 5px; font-size:14px;"
+			    });
+			    this.sealevelriseSlider.addChild(this.sealevelriseSliderLabels);
 				
 				//hurricane slider
 			    var hurricaneSliderLabel = domConstruct.create("div", {
@@ -801,11 +852,12 @@ define([
 				domStyle.set(this.hazardLayerCheckBox.parentNode.parentNode, "display", "none");
 				
 				
-				var labels = (this._region != "" && _.has(this._interface.region[this._region].controls.slider.climate, "values")) ? this._interface.region[this._region].controls.slider.climate.values : this._interface.controls.slider.climate;
+				var labels = (this._region != "" && _.has(this._interface.region[this._region].controls.slider.climate, "labels")) ? this._interface.region[this._region].controls.slider.climate.labels : this._interface.controls.slider.climate;
 				array.forEach(query("#" + this.climateSliderLabels.id + " .dijitRuleLabel"), function(label,i) { label.innerHTML = labels[i]; })
 				
 				domStyle.set(this.climateSlider.domNode.parentNode, "display",  "block");
 				domStyle.set(this.scenarioSlider.domNode.parentNode, "display",  "block");
+				domStyle.set(this.sealevelriseSlider.domNode.parentNode, "display",  "none");
 				domStyle.set(this.hurricaneSlider.domNode.parentNode, "display",  "none");
 				
 				if (this._region != "") {
@@ -841,12 +893,16 @@ define([
 				this.climateSlider.set("disabled", true);
 				this.scenarioSlider.set("value", 0);
 				this.scenarioSlider.set("disabled", true);
+				this.sealevelriseSlider.set("value", 0);
+				this.sealevelriseSlider.set("disabled", true);
 				
 				this.opacitySlider.set("disabled", true);
 				
 				array.forEach(_.keys(this._mapLayers), function(region) {
 					array.forEach(_.keys(self._mapLayers[region]), function(layer) {
-						self._mapLayers[region][layer].setVisibleLayers([]);
+						if (!_.isObject(self._interface.region[region].layers[layer]) || (_.has(self._interface.region[region].layers[layer], "type") && self._interface.region[region].layers[layer].type == "dynamic") ) {
+							self._mapLayers[region][layer].setVisibleLayers([]);
+						}
 						self._mapLayers[region][layer].hide()	
 					})
 				})
@@ -869,6 +925,7 @@ define([
 					var hazardOption = options[array.map(options, function(option) { return option.value }).indexOf(hazard)];
 					
 					domStyle.set(this.climateSlider.domNode.parentNode, "display",  "none");
+					domStyle.set(this.sealevelriseSlider.domNode.parentNode, "display",  "none");
 					domStyle.set(this.scenarioSlider.domNode.parentNode, "display",  "none");
 					domStyle.set(this.hurricaneSlider.domNode.parentNode, "display",  "none");
 					
@@ -918,6 +975,7 @@ define([
 					this.opacitySlider.set("disabled", false);
 				} else {
 					domStyle.set(this.climateSlider.domNode.parentNode, "display",  "block");
+					domStyle.set(this.sealevelriseSlider.domNode.parentNode, "display",  "none");
 					domStyle.set(this.scenarioSlider.domNode.parentNode, "display",  "block");
 					domStyle.set(this.hurricaneSlider.domNode.parentNode, "display",  "none");
 				
@@ -968,12 +1026,15 @@ define([
 				
 				this.climateSlider.set("value", 0);
 				this.climateSlider.set("disabled", true);
+				this.sealevelriseSlider.set("value", 0);
+				this.sealevelriseSlider.set("disabled", true);
 				this.scenarioSlider.set("value", 0);
 				this.scenarioSlider.set("disabled", true);
 				this.hurricaneSlider.set("value", 1);
 				this.hurricaneSlider.set("disabled", true);
 				
 				domStyle.set(this.climateSlider.domNode.parentNode, "display",  "block");
+				domStyle.set(this.sealevelriseSlider.domNode.parentNode, "display",  "none");
 				domStyle.set(this.scenarioSlider.domNode.parentNode, "display",  "block");
 				domStyle.set(this.hurricaneSlider.domNode.parentNode, "display",  "none");
 				
@@ -994,7 +1055,9 @@ define([
 				
 				array.forEach(_.keys(this._mapLayers), function(region) {
 					array.forEach(_.keys(self._mapLayers[region]), function(layer) {
-						self._mapLayers[region][layer].setVisibleLayers([]);
+						if (!_.isObject(self._interface.region[region].layers[layer]) || (_.has(self._interface.region[region].layers[layer], "type") && self._interface.region[region].layers[layer].type == "dynamic") ) {
+							self._mapLayers[region][layer].setVisibleLayers([]);
+						}
 						self._mapLayers[region][layer].hide()	
 					})
 				})

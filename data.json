@@ -57,6 +57,14 @@
 			"model_storm|track|matthew": [43],
 			"model_storm|swath|matthew": [44]
 		},
+		"California (statewide)": {
+			"sealevelrise|0": "slr_0ft",
+			"sealevelrise|1": "slr_1ft",
+			"sealevelrise|2": "slr_2ft",
+			"sealevelrise|3": "slr_3ft",
+			"sealevelrise|4": "slr_4ft",
+			"sealevelrise|5": "slr_5ft"
+		},
 		"Monterey": {
 			"tide|current|low": [122],
 			"tide|current|medium": [122],

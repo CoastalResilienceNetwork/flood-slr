@@ -15,7 +15,8 @@
 		"slider": {
 			"climate": ["Current", "2030", "2060", "2100"],
 			"scenario":["Low", "Medium", "High"],
-			"hurricane":[1,2,3,4,5]
+			"hurricane":[1,2,3,4,5],
+			"sealevelrise": [0,1,2,3,4,5]
 		}
 	},
 	"region": {
@@ -70,7 +71,7 @@
 					}
 				},
 				"slider": {
-					"climate": { "disabled": false, "show": true, "values": ["Current", "2045", "2060", "2100"]  },
+					"climate": { "disabled": false, "show": true, "labels": ["Current", "2045", "2060", "2100"]  },
 					"scenario": { "disabled": false, "show": true },
 					"hurricane": { "disabled": false, "show": true }
 				},
@@ -144,7 +145,7 @@
 					}
 				},
 				"slider": {
-					"climate": { "disabled": false, "show": true, "values": ["Current", "2045", "2060", "2100"] },
+					"climate": { "disabled": false, "show": true, "labels": ["Current", "2045", "2060", "2100"] },
 					"scenario": { "disabled": false, "show": true },
 					"hurricane": { "disabled": false, "show": true }
 				},
@@ -161,6 +162,57 @@
 				"report":"https://coast.noaa.gov/floodexposure/#/services#flood-hazards",
 				"data":"https://coast.noaa.gov/floodexposure/#/services#flood-hazards"
 			}
+		},
+		"California (statewide)": {
+			"url": "http://dev.services.coastalresilience.org/arcgis/rest/services/California/California/MapServer",
+			"layers": {
+				"main": "http://dev.services.coastalresilience.org/arcgis/rest/services/California/California/MapServer",
+				"slr_0ft": { "type": "tiled", "url": "http://maps1.coast.noaa.gov/arcgis/rest/services/dc_slr/slr_0ft/MapServer" },
+				"slr_1ft": { "type": "tiled", "url": "http://maps1.coast.noaa.gov/arcgis/rest/services/dc_slr/slr_1ft/MapServer" },
+				"slr_2ft": { "type": "tiled", "url": "http://maps1.coast.noaa.gov/arcgis/rest/services/dc_slr/slr_2ft/MapServer" },
+				"slr_3ft": { "type": "tiled", "url": "http://maps1.coast.noaa.gov/arcgis/rest/services/dc_slr/slr_3ft/MapServer" },
+				"slr_4ft": { "type": "tiled", "url": "http://maps1.coast.noaa.gov/arcgis/rest/services/dc_slr/slr_4ft/MapServer" },
+				"slr_5ft": { "type": "tiled", "url": "http://maps1.coast.noaa.gov/arcgis/rest/services/dc_slr/slr_5ft/MapServer" },
+				"slr_6ft": { "type": "tiled", "url": "http://maps1.coast.noaa.gov/arcgis/rest/services/dc_slr/slr_6ft/MapServer" }
+			},
+			"extent": {
+				"xmin": -13849152,
+				"ymin": 3767250,
+				"xmax": -12705090,
+				"ymax": 5228832,
+				"spatialReference": {
+				  "wkid": 102100
+				}
+			},
+			"controls": {
+				"select": {
+					"hazard": {
+						"options": [
+							{
+								"name": " -- ",
+								"value": ""
+							},
+							{ 	
+								"name": "Sea Level Rise",
+								"value": "sealevelrise",
+								"controls": ["sealevelrise"]
+							}
+						]
+					}
+				},
+				"slider": {
+					"sealevelrise": {
+						"disabled": false,
+						"show": true,
+						"type": "tiled"
+					}
+				}
+			},
+			"download": {
+				"report":"https://coast.noaa.gov/floodexposure/#/services#flood-hazards",
+				"data":"https://coast.noaa.gov/floodexposure/#/services#flood-hazards"
+			}
+		
 		},
 		"Monterey": {
 			"url": "http://dev.services.coastalresilience.org/arcgis/rest/services/California/Monterey_SLR/MapServer",

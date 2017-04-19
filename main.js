@@ -154,6 +154,11 @@ define([
 					   "disabled": this.slr.scenarioSlider.get("disabled"),
 					   "display": domStyle.get(this.slr.scenarioSlider.domNode.parentNode, "display")
 				   }
+				   state.controls.sliders.sealevelriseSlider = {
+						"value": this.slr.sealevelriseSlider.get("value"),
+					   "disabled": this.slr.sealevelriseSlider.get("disabled"),
+					   "display": domStyle.get(this.slr.sealevelriseSlider.domNode.parentNode, "display")
+				   }
 				   state.controls.sliders.hurricaneSlider = {
 						"value": this.slr.hurricaneSlider.get("value"),
 					   "disabled": this.slr.hurricaneSlider.get("disabled"),
