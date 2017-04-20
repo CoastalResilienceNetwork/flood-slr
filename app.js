@@ -102,7 +102,7 @@ define([
 
 			this.showTool = function(){
 				if (this._map.getLayer("slr-layer-0") == undefined) {
-					window.setTimeout(function(){ self.initializeMap(); }, 1000);
+					this.initializeMap();
 				} else {
 					if (this.regionSelect.value != "") {
 						this.updateMapLayers();
@@ -133,26 +133,28 @@ define([
 
 			this.initializeMap = function(){
 				if (this._firstLoad) {
-					var i = 0
-					array.forEach(_.keys(this._interface.region), function(region){
-						self._mapLayers[region] = {}
-						array.forEach(_.keys(self._interface.region[region].layers), function(layer) {
-							if (!_.isObject(self._interface.region[region].layers[layer])) {
-								var mapLayer = new DynamicMapServiceLayer(self._interface.region[region].layers[layer], { id:"slr-layer-" + i });
-								mapLayer.setVisibleLayers([]);
-							} else {
-								var mapLayer = new TiledMapServiceLayer(self._interface.region[region].layers[layer].url, { id:"slr-layer-" + i });	
-							}
-							self._mapLayers[region][layer] = mapLayer;
-							self._map.addLayer(mapLayer);
-							mapLayer.hide();
-							i += 1
-						});
-					});
 					if (!this._plugin._saveAndShare) {
 						this._map.setExtent(new Extent(this._extent), false);
 						this._firstLoad = false;
 					}
+					window.setTimeout(function() {
+						var i = 0
+						array.forEach(_.keys(self._interface.region), function(region){
+							self._mapLayers[region] = {}
+							array.forEach(_.keys(self._interface.region[region].layers), function(layer) {
+								if (!_.isObject(self._interface.region[region].layers[layer])) {
+									var mapLayer = new DynamicMapServiceLayer(self._interface.region[region].layers[layer], { id:"slr-layer-" + i });
+									mapLayer.setVisibleLayers([]);
+								} else {
+									var mapLayer = new TiledMapServiceLayer(self._interface.region[region].layers[layer].url, { id:"slr-layer-" + i });	
+								}
+								self._mapLayers[region][layer] = mapLayer;
+								self._map.addLayer(mapLayer);
+								mapLayer.hide();
+								i += 1
+							});
+						});
+					}, 1000);
 				}
 			}
 			
