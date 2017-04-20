@@ -5,7 +5,8 @@
 		"climate": "Future planning horizons representing the impact of climate change.",
 		"scenario": "Sea level rise scenarios (low, medium, and high) based on the 'Average of Models, Low,' 'Projection,' and 'Average of Models, High, regional sea level rise amounts.",
 		"hurricane": "Hurrican categories (Saffir-Simpson hurricane wind scale, ranging from 1 to 5) used to model storm surge heights.",
-		"dataSource": "Source of hazard data to be mapped in the application."
+		"dataSource": "Source of hazard data to be mapped in the application.",
+		"sealevelrise": "Sea level rise inundation scenarios ranging from zero to six feet above mean higher high water (MHHW). "
 	},
 	"controls": {
 		"select": {

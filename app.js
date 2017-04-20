@@ -102,10 +102,9 @@ define([
 
 			this.showTool = function(){
 				if (this._map.getLayer("slr-layer-0") == undefined) {
-					this.initializeMap();
+					window.setTimeout(function(){ self.initializeMap(); }, 1000);
 				} else {
 					if (this.regionSelect.value != "") {
-						//this._mapLayer = this._mapLayers[this._region][(_.has(this._mapLayers[this._region], parameters.hazard)) ? parameters.hazard : "main"];
 						this.updateMapLayers();
 						this._map.setExtent(new Extent(this._interface.region[this._region].extent), false);
 					} else {
@@ -516,7 +515,7 @@ define([
 			    this.scenarioSlider.addChild(scenarioSliderLabels);
 				
 				var sealevelriseLabel = domConstruct.create("div", {
-					innerHTML: "<i class='fa fa-question-circle slr-" + this._map.id + "-climate'></i>&nbsp;<b>Sea Level Rise (ft): </b>",
+					innerHTML: "<i class='fa fa-question-circle slr-" + this._map.id + "-sealevelrise'></i>&nbsp;<b>Sea Level Rise (ft): </b>",
 					style:"position:relative; width:130px; top:-10px; display:inline-block;"
 				}, seaLevelRiseTd);
 				this.sealevelriseSlider = new HorizontalSlider({

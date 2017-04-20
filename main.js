@@ -112,12 +112,12 @@ define([
                },
 
                initialize: function (frameworkParameters) {
-				   declare.safeMixin(this, frameworkParameters);
-                      var djConfig = {
-                        parseOnLoad: true
-                   };
-                   domClass.add(this.container, "claro");
-				   domClass.add(this.container, "plugin-slr");
+				    declare.safeMixin(this, frameworkParameters);
+					  var djConfig = {
+						parseOnLoad: true
+				    };
+				    domClass.add(this.container, "claro");
+				    domClass.add(this.container, "plugin-slr");
 					this.slr = new slr(this, appData, appConfig);
 					tool_slr = this.slr;
 					this.slr.initialize(this.slr);
