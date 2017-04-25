@@ -57,6 +57,20 @@
 			"model_storm|track|matthew": [43],
 			"model_storm|swath|matthew": [44]
 		},
+		"Virginia": {
+			"sea_level_rise|current|low": [3],
+			"sea_level_rise|current|medium": [7],
+			"sea_level_rise|current|high": [11],
+			"sea_level_rise|2030|low": [2],
+			"sea_level_rise|2030|medium": [6],
+			"sea_level_rise|2030|high": [10],
+			"sea_level_rise|2060|low": [1],
+			"sea_level_rise|2060|medium": [5],
+			"sea_level_rise|2060|high": [9],
+			"sea_level_rise|2100|low": [0],
+			"sea_level_rise|2100|medium": [4],
+			"sea_level_rise|2100|high": [8]
+		},
 		"California (statewide)": {
 			"sealevelrise|0": "slr_0ft",
 			"sealevelrise|1": "slr_1ft",

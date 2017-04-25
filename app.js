@@ -216,11 +216,10 @@ define([
 					this._mapLayers[this._region].fema.setVisibleLayers(this._data.region[this._region].fema)
 					this._mapLayers[this._region].fema.show();
 				} else {
-					this._mapLayers[this._region].fema.hide();
+					if (_.has(this._mapLayers[this._region], "fema")) { this._mapLayers[this._region].fema.hide() };
 				}
 				
-				var modelStorms = query("[id*=slr-model-storm-]");
-				if (modelStorms.length > 0) { 
+				if (_.has(this._mapLayers[this._region], "model_storm")) { 
 					array.forEach(query('input[id*="' + this._region.replace(/ /g,"_").toLowerCase() + '"]'), function(input) {
 						var visibleLayers = self._mapLayers[self._region].model_storm.visibleLayers;
 						var type = _.last(input.name.split("-"));
@@ -547,13 +546,13 @@ define([
 			    });
 				scenarioTd.appendChild(this.scenarioSlider.domNode);
 
-			    var scenarioSliderLabels = new HorizontalRuleLabels({
+			    this.scenarioSliderLabels = new HorizontalRuleLabels({
 			    	container: 'bottomDecoration',
 			    	count: 0,
 			    	labels: this._interface.controls.slider.scenario,
 			    	style: "margin-top: 5px; font-size:14px;"
 			    });
-			    this.scenarioSlider.addChild(scenarioSliderLabels);
+			    this.scenarioSlider.addChild(this.scenarioSliderLabels);
 				
 				var sealevelriseLabel = domConstruct.create("div", {
 					innerHTML: "<i class='fa fa-question-circle slr-" + this._map.id + "-sealevelrise'></i>&nbsp;<b>Sea Level Rise (ft): </b>",
@@ -860,6 +859,9 @@ define([
 				
 				var labels = (this._region != "" && _.has(this._interface.region[this._region].controls.slider.climate, "labels")) ? this._interface.region[this._region].controls.slider.climate.labels : this._interface.controls.slider.climate;
 				array.forEach(query("#" + this.climateSliderLabels.id + " .dijitRuleLabel"), function(label,i) { label.innerHTML = labels[i]; })
+				
+				var labels = (this._region != "" && _.has(this._interface.region[this._region].controls.slider.scenario, "labels")) ? this._interface.region[this._region].controls.slider.scenario.labels : this._interface.controls.slider.scenario;
+				array.forEach(query("#" + this.scenarioSliderLabels.id + " .dijitRuleLabel"), function(label,i) { label.innerHTML = labels[i]; })
 				
 				domStyle.set(this.climateSlider.domNode.parentNode, "display",  "block");
 				domStyle.set(this.scenarioSlider.domNode.parentNode, "display",  "block");

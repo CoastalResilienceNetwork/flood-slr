@@ -164,6 +164,51 @@
 				"data":"https://coast.noaa.gov/floodexposure/#/services#flood-hazards"
 			}
 		},
+		"Virginia": {
+			"url": "http://dev.services2.coastalresilience.org/arcgis/rest/services/Virginia/Inundation/MapServer",
+			"layers": {
+				"main": "http://dev.services2.coastalresilience.org/arcgis/rest/services/Virginia/Inundation/MapServer"
+			},
+			"extent": {
+				"xmin": -8465603.278145544,
+				"ymin": 4449501.684258065,
+				"xmax": -8374321.7741455445,
+				"ymax": 4584528.084258066,
+				"spatialReference": {
+					"wkid": 102100,
+					"latestWkid": 3857
+				}
+			},
+			"controls": {
+				"select": {
+					"hazard": {
+						"options": [
+							{
+								"name": " -- ",
+								"value": ""
+							},
+							{
+								"name": "Sea Level Rise",
+								"value": "sea_level_rise",
+								"description":"Historical sea level trends are available from NOAA tide stations at <a href='http://tidesandcurrents.noaa.gov/sltrends/sltrends_station.shtml?stnid=8631044' target='_blank'>Wachapreague</a> and <a target='_blank' href='http://tidesandcurrents.noaa.gov/sltrends/sltrends_station.shtml?stnid=8632200'>Kiptopeke</a>."
+							},
+							{
+								"name": "Hurricane Storm Surge",
+								"value": "storm_surge"
+							}
+						]
+					}	
+				},
+				"slider": {
+					"climate": { "disabled": false, "show": true, "labels": ["2025", "2040", "2065", "2100"]  },
+					"scenario": { "disabled": false, "show": true, "labels": ["Low", "High", "Highest"]  }
+				}
+			},
+			"download": {
+				"report":"https://coast.noaa.gov/data/digitalcoast/pdf/slr-inundation-methods.pdf",
+				"data":""
+			}
+		},
 		"California (statewide)": {
 			"url": "http://dev.services.coastalresilience.org/arcgis/rest/services/California/California/MapServer",
 			"layers": {
