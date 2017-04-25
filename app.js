@@ -192,10 +192,10 @@ define([
 					});
 				}
 				
-				if (!_.isEmpty(this._mapLayer)) {
+				if (!_.has(this._mapLayer, "tileInfo")) { 
+					this._mapLayer.setVisibleLayers([]);
 					this._mapLayer.hide();
-				}
-				
+				};
 				if (_.has(this._data.region[this._region], parts.join("|"))) {
 					var dynamic = _.isArray(this._data.region[this._region][parts.join("|")]);
 					if (dynamic) {
