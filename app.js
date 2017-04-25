@@ -438,7 +438,7 @@ define([
 				// hazard controls
 				var hazardText = domConstruct.create("div", {
 					style: "position:relative;margin-bottom:5px;",
-					innerHTML: '<span class="info-circle fa-stack fa slr-' + this._map.id + '-hazard"><i class="fa fa-circle fa-stack-1x"></i><span class="fa-stack-1x info-circle-text">3</span></span><b> Select a Hazard:</b>'
+					innerHTML: '<span class="info-circle fa-stack fa slr-' + this._map.id + '-hazard"><i class="fa fa-circle fa-stack-1x"></i><span class="fa-stack-1x info-circle-text">2</span></span><b> Select a Hazard:</b>'
 				}, hazardTd);
 				
 				var hazardSelectDiv = domConstruct.create("div", {
