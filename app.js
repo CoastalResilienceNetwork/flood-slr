@@ -85,6 +85,8 @@ define([
 			this._firstLoad = this._plugin._firstLoad;
 
 			this.initialize = function(){
+				//console.log("initialize - container");
+				
 				this._extent.xmin = _.min(dojo.map(_.keys(this._interface.region), function(region) { return self._interface.region[region].extent.xmin; }));
 				this._extent.ymin = _.min(dojo.map(_.keys(this._interface.region), function(region) { return self._interface.region[region].extent.ymin; }));
 				this._extent.xmax = _.max(dojo.map(_.keys(this._interface.region), function(region) { return self._interface.region[region].extent.xmax; }));
@@ -93,7 +95,11 @@ define([
 				domStyle.set(this._container, {
 					"padding": "0px"
 				});
-				this.loadInterface(this);
+				
+				var loadingDiv = domConstruct.create("div", {
+					innerHTML:"<i class='fa fa-spinner fa-spin fa-3x fa-fw'></i>",
+					style:"position:absolute; left: 110px; top:50%; width:100px; height:100px; line-height:100px; text-align:center;"
+				}, this._container);
 			}
 			
 			this.showIntro = function(){
@@ -101,64 +107,64 @@ define([
 			};
 
 			this.showTool = function(){
-				if (this._map.getLayer("slr-layer-0") == undefined) {
-					this.initializeMap();
+				//console.log("showTool");
+				this._firstLoad = false;
+				/* if (this.regionSelect.value != "") {
+					this.updateMapLayers();
+					this._map.setExtent(new Extent(this._interface.region[this._region].extent), false);
 				} else {
-					if (this.regionSelect.value != "") {
-						this.updateMapLayers();
-						this._map.setExtent(new Extent(this._interface.region[this._region].extent), false);
-					} else {
-						this._map.setExtent(new Extent(this._extent), false);
-					}
-				}
+					this._map.setExtent(new Extent(this._extent), false);
+				} */
 			} 
 
 			this.hideTool = function(){
-				if (this._mapLayer && this._mapLayer.loaded) { 
-					//this._mapLayer.setVisibleLayers([]);
-					//this._mapLayer.hide();
-				}
+				//console.log("hideTool");
+				/* if (this._mapLayer && this._mapLayer.loaded) { 
+					this._mapLayer.setVisibleLayers([]);
+					this._mapLayer.hide();
+				} */
 			}
 			
 			this.closeTool = function(){
-				if (this._mapLayer && this._mapLayer.loaded) { 
+				//console.log("closeTool");
+				//this.slr.regionSelect.value = _.first(this.slr.regionSelect.options).value;
+				//this.slr.resetInterface();
+				if (!_.isEmpty(this._mapLayers)) {
+					//console.log("hide layers");
 					array.forEach(_.keys(this._mapLayers), function(region) {
 						array.forEach(_.keys(self._mapLayers[region]), function(layer) {
-							self._map.removeLayer(self._mapLayers[region][layer]);
+							//self._mapLayers[region][layer].hide();
 						})
 					})
-					this._firstLoad = true;
 				}
 			}
 
-			this.initializeMap = function(){
-				if (this._firstLoad) {
-					if (!this._plugin._saveAndShare) {
-						this._map.setExtent(new Extent(this._extent), false);
-						this._firstLoad = false;
-					}
-					window.setTimeout(function() {
-						var i = 0
-						array.forEach(_.keys(self._interface.region), function(region){
-							self._mapLayers[region] = {}
-							array.forEach(_.keys(self._interface.region[region].layers), function(layer) {
-								if (!_.isObject(self._interface.region[region].layers[layer])) {
-									var mapLayer = new DynamicMapServiceLayer(self._interface.region[region].layers[layer], { id:"slr-layer-" + i });
-									mapLayer.setVisibleLayers([]);
-								} else {
-									var mapLayer = new TiledMapServiceLayer(self._interface.region[region].layers[layer].url, { id:"slr-layer-" + i });	
-								}
-								self._mapLayers[region][layer] = mapLayer;
-								self._map.addLayer(mapLayer);
-								mapLayer.hide();
-								i += 1
-							});
-						});
-					}, 1000);
-				}
+			this.loadLayers = function() {
+				//console.log("loadLayers");
+				this._plugin._firstLoad = false;
+				var i = 0
+				array.forEach(_.keys(self._interface.region), function(region){
+					self._mapLayers[region] = {}
+					array.forEach(_.keys(self._interface.region[region].layers), function(layer) {
+						var id = "slr-layer-" + i;
+						if (!_.isObject(self._interface.region[region].layers[layer])) {
+							var mapLayer = new DynamicMapServiceLayer(self._interface.region[region].layers[layer], { id:id });
+							mapLayer.setVisibleLayers([]);
+						} else {
+							var mapLayer = new TiledMapServiceLayer(self._interface.region[region].layers[layer].url, { id:id });
+						}
+						if (mapLayer) {
+							self._mapLayers[region][layer] = mapLayer;
+							self._map.addLayer(mapLayer);
+							mapLayer.hide();
+						}
+						i += 1
+					});
+				});
 			}
 			
 			this.updateMapLayers = function() {
+				//console.log("updateMapLayers");
 				var parameters = {}
 				
 				parameters.hazard = this.hazardSelect.value.toLowerCase();
@@ -203,6 +209,36 @@ define([
 				}
 				
 				this._mapLayer.show();
+				
+				if (this.femaLayerCheckBox.checked) {
+					this._mapLayers[this._region].fema.setVisibleLayers(this._data.region[this._region].fema)
+					this._mapLayers[this._region].fema.show();
+				} else {
+					this._mapLayers[this._region].fema.hide();
+				}
+				
+				var modelStorms = query("[id*=slr-model-storm-]");
+				if (modelStorms.length > 0) { 
+					array.forEach(query('input[id*="' + this._region.replace(/ /g,"_").toLowerCase() + '"]'), function(input) {
+						var visibleLayers = self._mapLayers[self._region].model_storm.visibleLayers;
+						var type = _.last(input.name.split("-"));
+						if (input.checked) {
+							visibleLayers = _.union(visibleLayers, self._data.region[self._region]["model_storm|" + type + "|" + input.value]);
+						} else {
+							visibleLayers = _.difference(visibleLayers, self._data.region[self._region]["model_storm|" + type + "|" + input.value]);
+						}
+						self._mapLayers[self._region].model_storm.setVisibleLayers(visibleLayers);
+					})
+					
+					if (array.some(query('input[id*="' + this._region.replace(/ /g,"_").toLowerCase() + '"]'), function(item) { return item.checked })) {
+						self._mapLayers[self._region].storm_surge.hide();
+						self._mapLayers[self._region].model_storm.show();
+					} else {
+						self._mapLayers[self._region].storm_surge.show();
+						self._mapLayers[self._region].model_storm.hide();
+					}
+					
+				}
 			}
 			
 			this.updateExtentByRegion = function(region) {
@@ -230,6 +266,7 @@ define([
 				win.body().appendChild(this.tip);
 				
 				this.createTooltips();
+				domStyle.set(_.first(query(".plugin-slr .fa-spinner")).parentNode, "display", "none");
 			}
 			
 			this.createInputs = function(){
@@ -269,7 +306,7 @@ define([
 				}, slidersTd);
 				
 				var seaLevelRiseTd = domConstruct.create("div", {
-					style:"position:relative; width:100%; height:40px; padding:0px; margin:15px 0px 15px 0px; display:none;"
+					style:"position:relative; width:100%; height:30px; padding:0px; margin:15px 0px 15px 0px; display:none;"
 				}, slidersTd)
 				
 				var scenarioTd = domConstruct.create("div", {
@@ -281,7 +318,7 @@ define([
 				}, slidersTd);
 				
 				var femaTd = domConstruct.create("div", {
-					style:"position:relative; width:100%; height:20px; padding:0px; margin:0px 0px 0px 0px; display:block;"
+					style:"position:relative; width:100%; height:20px; padding:0px; margin:0px 0px 0px 0px; visibility:hidden;"
 				}, this.inputsPane.containerNode);
 				
 				// region control
@@ -606,15 +643,15 @@ define([
 					array.forEach(_.keys(this.modelStorms), function(key) {
 						array.forEach(self.modelStorms[key].controls.tree.storm, function(value) {
 							var stormToggle = domConstruct.create("div", {
-								className: "storm-toggle-text storm-toggle-subitem slr-storm-" + key.replace(" ", "_") + "-" + value.value,
+								className: "storm-toggle-text storm-toggle-subitem slr-model-storm-" + key.replace(/ /g,"_").toLowerCase() + "_" + value.value,
 								innerHTML: "<i class='fa fa-caret-right storm-toggle-icon'></i>&nbsp;<i class='fa fa-question-circle'></i>&nbsp" + value.label
 							}, stormsToggleContainer)
 							
 							on(stormToggle, "click", function(evt) {
-								var node = _.first(query(".slr-storm-" + key.replace(" ", "_") + "-" + value.value + " .storm-toggle-td"))
+								var node = _.first(query(".slr-model-storm-" + key.replace(/ /g,"_").toLowerCase() + "_" + value.value + " .storm-toggle-td"))
 								var nodeOpen = domStyle.get(node,"display") == "none";
 								
-								var i = _.first(query(".slr-storm-" + key.replace(" ", "_") + "-" + value.value + " .storm-toggle-icon"));
+								var i = _.first(query(".slr-model-storm-" + key.replace(/ /g,"_").toLowerCase() + "_" + value.value + " .storm-toggle-icon"));
 								var previous = (nodeOpen) ? "right" : "down";
 								var current = (previous == "right") ? "down" : "right";
 								domClass.replace(i, "fa-caret-" + current, "fa-caret-" + previous);
@@ -629,7 +666,7 @@ define([
 							}, stormToggle)
 							
 							var checkBoxDiv = domConstruct.create("label", { 
-								for: "slr-storm-surge-layer-" + key.replace(" ", "_") + "-" + value.value,
+								for: "slr-model-storm-surge-layer-" + key.replace(/ /g,"_").toLowerCase() + "_" + value.value,
 								className:"styled-checkbox",
 								style:"display:inline-block; margin-left: 30px;"
 							}, stormToggleTd);
@@ -638,7 +675,7 @@ define([
 								type:"checkbox",
 								value: value.value,
 								name:"storm-surge",
-								id:"slr-storm-surge-layer-" + key.replace(" ", "_") + "-" + value.value,
+								id:"slr-model-storm-surge-layer-" + key.replace(/ /g,"_").toLowerCase() + "_" + value.value,
 								disabled:false,
 								checked:false
 							}, checkBoxDiv);
@@ -648,26 +685,16 @@ define([
 							}, checkBoxDiv);
 							
 							on(stormSurgeCheckBox, "change", function(){
-								self._mapLayers[self._region].model_storm.show();
-								var visibleLayers = self._mapLayers[self._region].model_storm.visibleLayers;
-								if (this.checked) {
-									visibleLayers = _.union(visibleLayers, self._data.region[self._region]["model_storm|surge|" + this.value]);
-								} else {
-									visibleLayers = _.difference(visibleLayers, self._data.region[self._region]["model_storm|surge|" + this.value]);
-								}
-								self._mapLayers[self._region].model_storm.setVisibleLayers(visibleLayers);
-								
-								if (array.some(query('input[id*="' + key.replace(" ", "_") + "-" + value.value + '"]'), function(item) { return item.checked })) {
-									self._mapLayers[self._region].storm_surge.hide();
+								if (array.some(query('input[id*="' + key.replace(/ /g,"_").toLowerCase() + "_" + value.value + '"]'), function(item) { return item.checked })) {
 									self.hurricaneSlider.set("disabled", true);
 								} else {
-									self._mapLayers[self._region].storm_surge.show();
 									self.hurricaneSlider.set("disabled", false);
 								}
+								self.updateMapLayers();
 							});
 							
 							var checkBoxDiv = domConstruct.create("label", { 
-								for: "slr-storm-track-layer-" + key.replace(" ", "_") + "-" + value.value,
+								for: "slr-model-storm-track-layer-" + key.replace(/ /g,"_").toLowerCase() + "_" + value.value,
 								className:"styled-checkbox",
 								style:"display:inline-block; margin-left: 15px;"
 							}, stormToggleTd);
@@ -676,7 +703,7 @@ define([
 								type:"checkbox",
 								value: value.value,
 								name:"storm-track",
-								id:"slr-storm-track-layer-" + key.replace(" ", "_") + "-" + value.value,
+								id:"slr-model-storm-track-layer-" + key.replace(/ /g,"_").toLowerCase() + "_" + value.value,
 								disabled:false,
 								checked:false
 							}, checkBoxDiv);
@@ -686,35 +713,25 @@ define([
 							}, checkBoxDiv);
 							
 							on(stormTrackCheckBox, "change", function(){
-								self._mapLayers[self._region].model_storm.show();
-								var visibleLayers = self._mapLayers[self._region].model_storm.visibleLayers;
-								if (this.checked) {
-									visibleLayers = _.union(visibleLayers, self._data.region[self._region]["model_storm|track|" + this.value]);
-								} else {
-									visibleLayers = _.difference(visibleLayers, self._data.region[self._region]["model_storm|track|" + this.value]);
-								}
-								self._mapLayers[self._region].model_storm.setVisibleLayers(visibleLayers);
-								
-								if (array.some(query('input[id*="' + key.replace(" ", "_") + "-" + value.value + '"]'), function(item) { return item.checked })) {
-									self._mapLayers[self._region].storm_surge.hide();
+								if (array.some(query('input[id*="' + key.replace(/ /g,"_").toLowerCase() + "_" + value.value + '"]'), function(item) { return item.checked })) {
 									self.hurricaneSlider.set("disabled", true);
 								} else {
-									self._mapLayers[self._region].storm_surge.show();
 									self.hurricaneSlider.set("disabled", false);
 								}
+								self.updateMapLayers();
 							});
 							
 							var checkBoxDiv = domConstruct.create("label", { 
-								for: "slr-storm-swath-layer-" + key.replace(" ", "_") + "-" + value.value,
+								for: "slr-model-storm-swath-layer-" + key.replace(/ /g,"_").toLowerCase() + "_" + value.value,
 								className:"styled-checkbox",
-								style:"display:inline-block;margin-left: 15px;"
+								style:"display:inline-block; margin-left: 15px;"
 							}, stormToggleTd);
 							
 							var stormSwathCheckBox = domConstruct.create("input", {
 								type:"checkbox",
 								value: value.value,
 								name:"storm-swath",
-								id:"slr-storm-swath-layer-" + key.replace(" ", "_") + "-" + value.value,
+								id:"slr-model-storm-swath-layer-" + key.replace(/ /g,"_").toLowerCase() + "_" + value.value,
 								disabled:false,
 								checked:false
 							}, checkBoxDiv);
@@ -724,22 +741,12 @@ define([
 							}, checkBoxDiv);
 							
 							on(stormSwathCheckBox, "change", function(){
-								self._mapLayers[self._region].model_storm.show();
-								var visibleLayers = self._mapLayers[self._region].model_storm.visibleLayers;
-								if (this.checked) {
-									visibleLayers = _.union(visibleLayers, self._data.region[self._region]["model_storm|swath|" + this.value]);
-								} else {
-									visibleLayers = _.difference(visibleLayers, self._data.region[self._region]["model_storm|swath|" + this.value]);
-								}
-								self._mapLayers[self._region].model_storm.setVisibleLayers(visibleLayers);
-								
-								if (array.some(query('input[id*="' + key.replace(" ", "_") + "-" + value.value + '"]'), function(item) { return item.checked })) {
-									self._mapLayers[self._region].storm_surge.hide();
+								if (array.some(query('input[id*="' + key.replace(/ /g,"_").toLowerCase() + "_" + value.value + '"]'), function(item) { return item.checked })) {
 									self.hurricaneSlider.set("disabled", true);
 								} else {
-									self._mapLayers[self._region].storm_surge.show();
 									self.hurricaneSlider.set("disabled", false);
 								}
+								self.updateMapLayers();
 							});
 						});
 						
@@ -762,13 +769,8 @@ define([
 				var checkBoxLabel = domConstruct.create("div", {
 					innerHTML: '<span>FEMA zones (as of 2006)</span>'
 				}, checkBoxDiv);
-				on(self.femaLayerCheckBox, "change", function(){
-					if (this.checked) {
-						self._mapLayers[self._region].fema.setVisibleLayers(self._data.region[self._region].fema)
-						self._mapLayers[self._region].fema.show();
-					} else {
-						self._mapLayers[self._region].fema.hide();
-					}
+				on(this.femaLayerCheckBox, "change", function(){
+					self.updateMapLayers();
 					
 				});
 				
@@ -809,6 +811,7 @@ define([
 			}
 			
 			this.updateInterface = function(control){
+				//console.log("updateInterface");
 				domConstruct.empty(this.hazardSelect);
 				if (this._region != "") {
 					array.forEach(this._interface.region[this._region].controls.select.hazard.options, function(item) {
@@ -871,12 +874,12 @@ define([
 						query(".storm-toggle-td").style("display", "none");
 						
 						query(".storm-toggle-subitem").style("display", "none");
-						query("div[class*=slr-storm-" + this._region.replace(" ", "_") + "]").style("display", "block");
+						query("div[class*=slr-model-storm-" + this._region.replace(/ /g,"_").toLowerCase()  + "]").style("display", "block");
 						
 						array.forEach(this._interface.region[this._region].controls.tree.storm, function(value) {
-							dojo.byId("slr-storm-surge-layer-" + self._region.replace(" ", "_") + "-" + value.value).checked = false;
-							dojo.byId("slr-storm-track-layer-" + self._region.replace(" ", "_") + "-" + value.value).checked = false;
-							dojo.byId("slr-storm-swath-layer-" + self._region.replace(" ", "_") + "-" + value.value).checked = false;
+							dojo.byId("slr-model-storm-surge-layer-" + self._region.replace(/ /g,"_").toLowerCase() + "_" + value.value).checked = false;
+							dojo.byId("slr-model-storm-track-layer-" + self._region.replace(/ /g,"_").toLowerCase() + "_" + value.value).checked = false;
+							dojo.byId("slr-model-storm-swath-layer-" + self._region.replace(/ /g,"_").toLowerCase() + "_" + value.value).checked = false;
 						})
 						self._mapLayers[self._region].model_storm.setVisibleLayers([]);
 					} else {
@@ -887,8 +890,8 @@ define([
 				}
 				
 				this.femaLayerCheckBox.checked = false;
-				var display = (this._region != "" && _.has(this._interface.region[this._region].controls.radiocheck, "fema")) ? "block" : "none";
-				domStyle.set(this.femaLayerCheckBox.parentNode, "display",  display);
+				var visible = (this._region != "" && _.has(this._interface.region[this._region].controls.radiocheck, "fema")) ? "visible" : "hidden";
+				domStyle.set(this.femaLayerCheckBox.parentNode.parentNode, "visibility",  visible);
 				
 				this.climateSlider.set("value", 0);
 				this.climateSlider.set("disabled", true);
@@ -961,12 +964,12 @@ define([
 						query(".storm-toggle-td").style("display", "none");
 						
 						query(".storm-toggle-subitem").style("display", "none");
-						query("div[class*=slr-storm-" + this._region.replace(" ", "_") + "]").style("display", "block");
+						query("div[class*=slr-model-storm-" + this._region.replace(/ /g,"_").toLowerCase()  + "]").style("display", "block");
 						
 						array.forEach(this._interface.region[this._region].controls.tree.storm, function(value) {
-							dojo.byId("slr-storm-surge-layer-" + self._region.replace(" ", "_") + "-" + value.value).checked = false;
-							dojo.byId("slr-storm-track-layer-" + self._region.replace(" ", "_") + "-" + value.value).checked = false;
-							dojo.byId("slr-storm-swath-layer-" + self._region.replace(" ", "_") + "-" + value.value).checked = false;
+							dojo.byId("slr-model-storm-surge-layer-" + self._region.replace(/ /g,"_").toLowerCase() + "_" + value.value).checked = false;
+							dojo.byId("slr-model-storm-track-layer-" + self._region.replace(/ /g,"_").toLowerCase() + "_" + value.value).checked = false;
+							dojo.byId("slr-model-storm-swath-layer-" + self._region.replace(/ /g,"_").toLowerCase() + "_" + value.value).checked = false;
 						})
 						self._mapLayers[self._region].model_storm.setVisibleLayers([]);
 					}
@@ -1043,9 +1046,9 @@ define([
 					query(".storm-toggle").style("display", "none");
 					array.forEach(_.keys(this.modelStorm), function(key) {
 						array.forEach(this._interface.region[this._region].controls.tree.storm, function(value) {
-							dojo.byId("slr-storm-surge-layer-" + key.replace(" ", "_") + "-" + value.value).checked = false;
-							dojo.byId("slr-storm-track-layer-" + key.replace(" ", "_") + "-" + value.value).checked = false;
-							dojo.byId("slr-storm-swath-layer-" + key.replace(" ", "_") + "-" + value.value).checked = false;
+							dojo.byId("slr-model-storm-surge-layer-" + key.replace(/ /g,"_").toLowerCase() + "_" + value.value).checked = false;
+							dojo.byId("slr-model-storm-track-layer-" + key.replace(/ /g,"_").toLowerCase() + "_" + value.value).checked = false;
+							dojo.byId("slr-model-storm-swath-layer-" + key.replace(/ /g,"_").toLowerCase() + "_" + value.value).checked = false;
 							
 						})
 						self._mapLayers[key].model_storm.setVisibleLayers([]);
@@ -1063,8 +1066,9 @@ define([
 					})
 				})
 				
+				/* Do we need the _firsLoad check? */
 				this._mapLayer = {};
-				if (!this._firstLoad) {
+				if (!this._plugin._firstLoad) {
 					this._map.setExtent(new Extent(this._extent), false);
 				}
 			}
