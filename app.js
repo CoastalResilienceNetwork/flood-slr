@@ -100,6 +100,8 @@ define([
 					innerHTML:"<i class='fa fa-spinner fa-spin fa-3x fa-fw'></i>",
 					style:"position:absolute; left: 110px; top:50%; width:100px; height:100px; line-height:100px; text-align:center;"
 				}, this._container);
+				
+				this.loadInterface(this);
 			}
 			
 			this.showIntro = function(){

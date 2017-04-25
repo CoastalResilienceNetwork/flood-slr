@@ -62,7 +62,6 @@ define([
 						window.setTimeout(function() {
 							if (plugin._firstLoad) {
 								plugin.slr.loadLayers();
-								plugin.slr.loadInterface(plugin);
 								plugin.slr.showTool();
 								if (!_.isEmpty(plugin._state)) {
 									plugin.loadState();
@@ -225,7 +224,7 @@ define([
 									query(".downloadButton").style("backgroundColor", backgroundColor);
 								} else {
 									query(".downloadButton").style("backgroundColor", "#2B2E3B");
-									_.first(query('.slr-' + this._map.id + '-hazard .info-circle-text')).innerHTML = 2;
+									_.first(query('.slr-' + plugin._map.id + '-hazard .info-circle-text')).innerHTML = 2;
 								}
 							 }
 							 if (control == "hazardSelect") {
