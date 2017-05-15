@@ -1,0 +1,255 @@
+/* DIJIT HORIZONTAL SLIDER */
+.cr-dojo-dijits .dijitSliderH div.dijitSliderImageHandleH {
+border: 0;
+width: 14px;
+height: 14px;
+background-image: none;
+background-repeat: no-repeat;
+border-radius: 100%;
+border: 1px solid #007fb2;
+background: #0096d6;
+margin-top: 1px;
+}
+
+.cr-dojo-dijits .dijitSliderBarH, .cr-dojo-dijits .dijitSliderBumperH {
+height:8px;	
+}
+
+.cr-dojo-dijits .dijitSliderH div.dijitSliderLeftBumper {
+border-radius: 4px 0px 0px 4px;
+}
+
+.cr-dojo-dijits .dijitSliderH div.dijitSliderRightBumper {
+border-radius: 0px 4px 4px 0px;
+}
+
+.cr-dojo-dijits .dijitSliderH div.dijitSliderProgressBarH , .cr-dojo-dijits .dijitSliderH div.dijitSliderLeftBumper{
+border-color: #0096d6;
+background-color: #E8F5FE;
+background-image: none;
+box-shadow: none;
+}
+
+.cr-dojo-dijits .dijitSliderH div.dijitSliderRemainingBarH , .cr-dojo-dijits .dijitSliderH div.dijitSliderRightBumper {
+box-shadow: none;	
+}
+
+.cr-dojo-dijits .dijitSliderDisabled div.dijitSliderImageHandleH {
+border-color: #d3d3d3;
+background: #d3d3d3;
+}
+
+.cr-dojo-dijits .dijitSliderDisabled div.dijitSliderProgressBarH , .cr-dojo-dijits .dijitSliderDisabled div.dijitSliderLeftBumper{
+border-color: #d3d3d3;
+background-color: #d3d3d3;
+}
+
+/* DIJIT HORIZONTAL SLIDER RULE LABEL */
+.cr-dojo-dijits .dijitRuleLabel  {
+font-size: 12px;
+}
+
+/* DIJIT TAB CONTAINER */
+.cr-dojo-dijits div.dijitTabPaneWrapper.dijitTabContainerTop-container {
+border:none;
+}
+
+.cr-dojo-dijits div.dijitTab {
+background: none;
+border: none;
+transition-property: none;
+}
+
+.cr-dojo-dijits .dijitTabContainerTop-tabs {
+border:none;
+background-color: #CCD5D5;
+}
+
+.cr-dojo-dijits div.dijitTabContainerTop-tabs .dijitTabChecked, .cr-dojo-dijits div.dijitTabContainerTop-tabs .dijitTab {
+background-image: none;
+box-shadow:none;
+padding: 10px 10px 5px 10px;
+color: #5d6165;
+font-size:14px;
+margin-top: 5px;
+}
+
+.cr-dojo-dijits div.dijitTabContainerTop-tabs .dijitTab {
+background-color::none;
+}
+
+.cr-dojo-dijits div.dijitTabChecked {
+background: #fff;
+}
+
+/* DIJIT TITLE PANE */
+.cr-dojo-dijits  div.dijitTitlePaneTitleOpen, .cr-dojo-dijits  div.dijitTitlePaneTitleFixedOpen {
+background-color:#36394a;
+color: #d3d3d3;
+}
+
+.cr-dojo-dijits  div.dijitTitlePaneTitle {
+background-color:#36394a;
+background-image:none;
+font-size: 14px;
+}
+
+/* DIJIT BUTTON */
+.cr-dojo-dijits .dijitButton span.dijitButtonNode {
+box-shadow:none;
+background-image:none;
+background-color:#0096d6;
+border-color:#0084bd;
+font-size:14px;
+color:#fff;
+}
+
+.cr-dojo-dijits span.dijitButtonText {
+padding: 3px 14px;
+}
+
+.cr-dojo-dijits .dijitButtonHover span.dijitButtonNode {
+background-color:#0084bd;
+}
+
+.cr-dojo-dijits .dijitButton.dijitButtonDisabled span.dijitButtonNode {
+background-color:#80c2de;
+border-color:#80c2de;
+}
+
+/* DIJIT COMBO BUTTON */
+.cr-dojo-dijits .dijitComboButton td.dijitButtonNode {
+border-left:1px solid #ddd;
+border-right:none;
+border-top:1px solid #ddd;
+border-bottom:1px solid #ddd;
+box-shadow: none;
+background-color: #fff;
+background-image: none;
+background-repeat: none;
+padding:7px;
+font-size: 14px;
+}
+
+.cr-dojo-dijits .dijitComboButton div.dijitButtonContents {
+text-align:left;
+}
+
+.cr-dojo-dijits .dijitComboButton td.dijitArrowButton {
+border-left:none;
+border-right:1px solid #ddd;
+border-top:1px solid #ddd;
+border-bottom:1px solid #ddd;
+width: 15px;
+}
+
+.cr-dojo-dijits div.dijitArrowButtonInner {
+background-image: none;
+background-repeat: no-repeat;
+}
+
+.cr-dojo-dijits div.dijitArrowButtonInner::before {
+content: '\f078';
+font: 12px FontAwesome;
+color: #ddd;
+right: 0px;
+top: 0px;
+padding: 6px 5px 6px 2px;
+position: relative;
+background:#ffffff;
+pointer-events: none;
+}
+
+.cr-dojo-dijits.dijitMenuPassive.dijitMenu {
+border:1px solid #ddd;	
+}
+
+.cr-dojo-dijits.dijitMenu tr.dijitMenuItemHover, .cr-dojo-dijits.dijitMenu tr.dijitMenuItemHover td {
+border-color:#ddd;
+background-image:none;
+background-color:#cccccc;
+}
+
+/* DIJIT RADIO BUTTON */
+.cr-dojo-dijits div.dijitRadio {
+background-image:none;
+position:relative;
+top:0px;
+width:18px;
+height:18px;
+}
+
+.cr-dojo-dijits .dijitRadio .dijitCheckBoxInput {
+opacity: 0;
+width:18px;
+height:18px;
+}
+
+.cr-dojo-dijits div.dijitRadio::before {
+content:'';
+position:absolute;
+top: 0px;
+left: 2px;
+width: 16px;
+height: 16px;
+border-radius: 100%;
+background: #fff;
+box-shadow: inset 0 0 0 2px #dddddd;
+transition: 0.25s ease all;
+-webkit-font-smoothing: antialiased;
+}
+
+.cr-dojo-dijits div.dijitRadioChecked::before {
+position:absolute;
+top: 0px;
+left: 2px;
+width: 16px;
+height: 16px;
+border-radius: 100%;
+box-shadow: inset 0 0 0 5px #0096d6;
+transition: 0.25s ease all;
+-webkit-font-smoothing: antialiased;
+}
+
+/* DIJIT CHECKBOX INPUT */
+.cr-dojo-dijits div.dijitCheckBox {
+background-image:none;
+position:relative;
+top:0px;
+width:18px;
+height:18px;
+}
+
+.cr-dojo-dijits .dijitCheckBox .dijitCheckBoxInput {
+opacity: 0;
+width:18px;
+height:18px;
+}
+
+.cr-dojo-dijits div.dijitCheckBox::before {
+content:'\f096';
+font-family: "FontAwesome";
+font-size:16px;
+position:absolute;
+top: 0px;
+left: 2px;
+width: 16px;
+height: 16px;
+transition: 0.25s ease all;
+-webkit-font-smoothing: antialiased;
+color: #0096d6;
+}
+
+.cr-dojo-dijits div.dijitCheckBoxChecked::before {
+content:'\f14a';
+font-family: "FontAwesome";
+font-size:16px;
+position:absolute;
+top: 0px;
+left: 2px;
+width: 16px;
+height: 16px;
+transition: 0.25s ease all;
+-webkit-font-smoothing: antialiased;
+color: #0096d6;
+}
