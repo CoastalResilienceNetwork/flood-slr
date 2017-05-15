@@ -1,34 +1,31 @@
 {
 	"tooltips": {
 		"region": "Geographic areas where climate change/sea level rise vulnerability studies have been conducted.",
-		"hazard": "Spatial extent for different coastal hazards (storm wave impact, coastal flooding, coastal erosion, rising tide levels) that may affect coastal assets.  Impact zones were estimated across multiple planning horizons.",
+		"hazard": "Spatial extent for different coastal hazards that may affect coastal assets.  Impact zones were estimated across multiple planning horizons.",
 		"climate": "Future planning horizons representing the impact of climate change.",
-		"scenario": "Sea level rise scenarios (low, medium, and high) based on the 'Average of Models, Low,' 'Projection,' and 'Average of Models, High, regional sea level rise amounts.",
+		"scenario": "Sea level rise scenarios (low, medium, and high) based on the regional sea level rise amounts.",
 		"hurricane": "Hurrican categories (Saffir-Simpson hurricane wind scale, ranging from 1 to 5) used to model storm surge heights.",
 		"dataSource": "Source of hazard data to be mapped in the application.",
 		"sealevelrise": "Sea level rise inundation scenarios ranging from zero to six feet above mean higher high water (MHHW)."
-	},
-	"controls": {
-		"select": {
-			"hazard": [],
-			"datasource": []
-		},
-		"slider": {
-			"climate": ["Current", "2030", "2060", "2100"],
-			"scenario":["Low", "Medium", "High"],
-			"hurricane":[1,2,3,4,5],
-			"sealevelrise": [0,1,2,3,4,5]
-		}
 	},
 	"region": {
 		"Currituck County": {
 			"url": "http://dev.services2.coastalresilience.org/arcgis/rest/services/North_Carolina/NC_Flood_Slr/MapServer",
 			"layers": {
 				"main": "http://dev.services2.coastalresilience.org/arcgis/rest/services/North_Carolina/NC_Flood_Slr/MapServer",
-				"storm_surge": "http://dev.services2.coastalresilience.org/arcgis/rest/services/North_Carolina/NC_Flood_Slr/MapServer",
+				"hurricane": "http://dev.services2.coastalresilience.org/arcgis/rest/services/North_Carolina/NC_Flood_Slr/MapServer",
 				"shallow_coastal_flooding": "http://dev.services2.coastalresilience.org/arcgis/rest/services/North_Carolina/NC_Flood_Slr/MapServer",
 				"fema": "http://dev.services2.coastalresilience.org/arcgis/rest/services/North_Carolina/NC_Flood_Slr/MapServer",
 				"model_storm": "http://dev.services2.coastalresilience.org/arcgis/rest/services/North_Carolina/NC_Flood_Slr/MapServer"
+			},
+			"tooltips": {
+				"region": "Geographic areas where climate change/sea level rise vulnerability studies have been conducted.",
+				"hazard": "Spatial extent for different coastal hazards that may affect coastal assets.  Impact zones were estimated across multiple planning horizons.",
+				"climate": "Future planning horizons representing the impact of climate change.",
+				"scenario": "Sea level rise scenarios (low, medium, and high) based on regional sea level rise amounts.",
+				"hurricane": "Hurrican categories (Saffir-Simpson hurricane wind scale, ranging from 1 to 5) used to model storm surge heights.",
+				"dataSource": "Source of hazard data to be mapped in the application.",
+				"storm_matthew": "Storm surge, track, and wind swath radii of Hurricane Matthew (2016) based on NOAA's National Hurricane Center best estimates of the location, intensity, and size of a tropical cyclone."
 			},
 			"extent": {
 				"xmin": -8526300.087382287,
@@ -51,17 +48,20 @@
 							{
 								"name": "Sea Level Rise",
 								"value": "sea_level_rise",
+								"controls": { 
+									"slider": ["climate", "scenario"]
+								},
 								"description":"Historical sea level trends are available from NOAA tide stations at <a href='https://tidesandcurrents.noaa.gov/sltrends/sltrends_station.shtml?stnid=8651370' target='_blank'>Duck</a> and <a href='https://tidesandcurrents.noaa.gov/sltrends/sltrends_station.shtml?stnid=8652587' target='_blank'>Oregon Inlet</a>."
 							},
 							{
 								"name": "Hurricane Storm Surge",
-								"value": "storm_surge",
-								"controls": ["hurricane"]
+								"value": "hurricane",
+								"controls": { "slider": ["hurricane"], "tree":["storm"]  }
 							},
 							{
 								"name": "Shallow Coastal Flooding",
 								"value": "shallow_coastal_flooding",
-								"controls": []
+								"controls": { "slider": [] }
 							}
 						]
 					},
@@ -73,16 +73,33 @@
 				},
 				"slider": {
 					"climate": { "disabled": false, "show": true, "labels": ["Current", "2045", "2060", "2100"]  },
-					"scenario": { "disabled": false, "show": true },
-					"hurricane": { "disabled": false, "show": true }
+					"scenario": { "disabled": false, "show": true, "labels": ["Low", "Medium", "High"] },
+					"hurricane": { "disabled": false, "show": true, "labels": ["1","2","3","4","5"] }
 				},
 				"radiocheck": {
-					"fema": { "disabled": false, "show": true }
+					"other": { "disabled": false, "show": true, "type": "check", "label": "FEMA Zones (as of 2006)", "layer": "fema", "overlay": true }
 				},
 				"tree": {
-					"storm": [
-						{ "label": "Hurricane Matthew", "value": "matthew" }
-					]
+					"storm": { 
+						"label": "Modeled Potential Storm Surge",
+						"displayLabel": true,
+						"displayType": "toggle",
+						"displayIndent": true,
+						"values": [
+							{ 
+								"label": "Hurricane Matthew",
+								"displayLabel": true,
+								"value": "matthew", 
+								"controls": [{ "value":"surge", "label":"Surge" }, { "value":"track", "label":"Track" }, { "value":"swath", "label":"Swath" }],
+								"dependency": {
+									"slider": {
+										"hurricane": { "disabled": true } 
+									}
+								},
+								"layers": { "show": ["model_storm"], "hide": ["hurricane"]  }
+							}
+						]
+					}
 				}
 			},
 			"download": {
@@ -94,10 +111,19 @@
 			"url": "http://dev.services2.coastalresilience.org/arcgis/rest/services/North_Carolina/NC_Flood_Slr/MapServer",
 			"layers": {
 				"main": "http://dev.services2.coastalresilience.org/arcgis/rest/services/North_Carolina/NC_Flood_Slr/MapServer",
-				"storm_surge": "http://dev.services2.coastalresilience.org/arcgis/rest/services/North_Carolina/NC_Flood_Slr/MapServer",
+				"hurricane": "http://dev.services2.coastalresilience.org/arcgis/rest/services/North_Carolina/NC_Flood_Slr/MapServer",
 				"shallow_coastal_flooding": "http://dev.services2.coastalresilience.org/arcgis/rest/services/North_Carolina/NC_Flood_Slr/MapServer",
 				"fema": "http://dev.services2.coastalresilience.org/arcgis/rest/services/North_Carolina/NC_Flood_Slr/MapServer",
 				"model_storm": "http://dev.services2.coastalresilience.org/arcgis/rest/services/North_Carolina/NC_Flood_Slr/MapServer"
+			},
+			"tooltips": {
+				"region": "Geographic areas where climate change/sea level rise vulnerability studies have been conducted.",
+				"hazard": "Spatial extent for different coastal hazards that may affect coastal assets.  Impact zones were estimated across multiple planning horizons.",
+				"climate": "Future planning horizons representing the impact of climate change.",
+				"scenario": "Sea level rise scenarios (low, medium, and high) based on regional sea level rise amounts.",
+				"hurricane": "Hurrican categories (Saffir-Simpson hurricane wind scale, ranging from 1 to 5) used to model storm surge heights.",
+				"dataSource": "Source of hazard data to be mapped in the application.",
+				"storm_matthew": "Storm surge, track, and wind swath radii of Hurricane Matthew (2016) based on NOAA's National Hurricane Center best estimates of the location, intensity, and size of a tropical cyclone."
 			},
 			"extent": {
 				"xmin": -8591653.746566305,
@@ -120,17 +146,18 @@
 							{
 								"name": "Sea Level Rise",
 								"value": "sea_level_rise",
+								"controls": { "slider": ["climate", "scenario"] },
 								"description":"Historical sea level trends are available from NOAA tide stations at <a href='https://tidesandcurrents.noaa.gov/sltrends/sltrends_station.shtml?stnid=8651370' target='_blank'>Duck</a> and <a href='https://tidesandcurrents.noaa.gov/sltrends/sltrends_station.shtml?stnid=8652587' target='_blank'>Oregon Inlet</a>."
 							},
 							{
 								"name": "Hurricane Storm Surge",
-								"value": "storm_surge",
-								"controls": ["hurricane"]
+								"value": "hurricane",
+								"controls": { "slider": ["hurricane"], "tree":["storm"] }
 							},
 							{
 								"name": "Shallow Coastal Flooding",
 								"value": "shallow_coastal_flooding",
-								"controls": []
+								"controls": { "slider": [] }
 							}
 						]
 					},
@@ -138,25 +165,37 @@
 						"options": [
 							{ "name": "NOAA Coastal Flood Exposure", "value": "noaa" }
 						]
-					},
-					"model_storm":{
-						"options": [
-							{ "name": "Hurricane Matthew", "value": "matthew" }
-						]
 					}
 				},
 				"slider": {
 					"climate": { "disabled": false, "show": true, "labels": ["Current", "2045", "2060", "2100"] },
-					"scenario": { "disabled": false, "show": true },
-					"hurricane": { "disabled": false, "show": true }
+					"scenario": { "disabled": false, "show": true, "labels": ["Low", "Medium", "High"] },
+					"hurricane": { "disabled": false, "show": true, "labels": ["1","2","3","4","5"] }
 				},
 				"radiocheck": {
-					"fema": { "disabled": false, "show": true }
+					"other": { "disabled": false, "show": true, "value": "fema", "type": "check", "label": "FEMA Zones (as of 2006)", "layer": "fema", "overlay": true }
 				},
 				"tree": {
-					"storm": [
-						{ "label": "Hurricane Matthew", "value": "matthew" }
-					]
+					"storm": { 
+						"label": "Modeled Potential Storm Surge",
+						"displayLabel": true,
+						"displayType": "toggle",
+						"displayIndent": true,
+						"values": [
+							{ 
+								"label": "Hurricane Matthew",
+								"displayLabel": true,
+								"value": "matthew", 
+								"controls": [{ "value":"surge", "label":"Surge" }, { "value":"track", "label":"Track" }, { "value":"swath", "label":"Swath" }], 
+								"dependency": {
+									"slider": {
+										"hurricane": { "disabled": true } 
+									}
+								},
+								"layers": { "show": ["model_storm"], "hide": ["hurricane"] }
+							}
+						]
+					}
 				}
 			},
 			"download": {
@@ -167,7 +206,9 @@
 		"Virginia": {
 			"url": "http://dev.services2.coastalresilience.org/arcgis/rest/services/Virginia/Inundation/MapServer",
 			"layers": {
-				"main": "http://dev.services2.coastalresilience.org/arcgis/rest/services/Virginia/Inundation/MapServer"
+				"main": "http://dev.services2.coastalresilience.org/arcgis/rest/services/Virginia/Inundation/MapServer",
+				"storm_surge": "http://dev.services2.coastalresilience.org/arcgis/rest/services/Virginia/Storm_Surge_Complete/MapServer",
+				"model_storm": "http://dev.services2.coastalresilience.org/arcgis/rest/services/Virginia/Storm_Surge_Complete/MapServer"
 			},
 			"extent": {
 				"xmin": -8465603.278145544,
@@ -178,6 +219,14 @@
 					"wkid": 102100,
 					"latestWkid": 3857
 				}
+			},
+			"tooltips": {
+				"hazard": "Spatial extent for different coastal hazards that may affect coastal assets.  Impact zones were estimated across multiple planning horizons.",
+				"climate": "Future planning horizons representing the impact of climate change ranging from <i>Current</i> conditions (storm surge option only) to <i>2065</i>.",
+				"scenario": "Sea level rise scenarios (low, high, and highest) based on regional sea level rise amounts estimated using the same methodology used for <a target='_blank' href='https://coast.noaa.gov/slr/'>NOAA’s Sea Level Rise and Coastal Flooding Impacts</a> viewer.",
+				"stormSurge": "<span style='text-align:left'>Modeled storms based on stakeholder-identified areas of interest, including<br><br><b>Low Intensity:</b> three Category 1 hurricanes with maximum winds of 80 mph;<br><b>Medium Intensity:</b> six Category 1 and 2 hurricanes with maximum winds between 85 and 110 mph;<br><b>High Intensity:</b> seven Category 2 and 3 hurricanes with maximum winds between 95 and 115 mph;<br><a href= 'https://en.wikipedia.org/wiki/November_2009_Mid-Atlantic_nor%27easter' target='_blank'><b>Nor’Ida:</b></a> surge generated by this nor'easter storm only (occurred in 2009).</span>",
+				"radiogroup_storm_surge": "Storm surge modeled for multiple storm and sea-level rise scenarios displayed as the potential maximum storm surge water depth or estimated total economic losses by census block (developed using the FEMA HAZUS-MH risk analysis software). These data should only be used for planning purposes.",
+				"togglegroup_surgedepth":  "<i>Current</i> scenario year only applies to storm surge water depth while future scenario years can also be displayed as the difference between the selected year and current conditions (absolute or percent difference)."
 			},
 			"controls": {
 				"select": {
@@ -190,18 +239,136 @@
 							{
 								"name": "Sea Level Rise",
 								"value": "sea_level_rise",
+								"controls": { "slider": ["climate", "scenario"] },
 								"description":"Historical sea level trends are available from NOAA tide stations at <a href='http://tidesandcurrents.noaa.gov/sltrends/sltrends_station.shtml?stnid=8631044' target='_blank'>Wachapreague</a> and <a target='_blank' href='http://tidesandcurrents.noaa.gov/sltrends/sltrends_station.shtml?stnid=8632200'>Kiptopeke</a>."
 							},
 							{
-								"name": "Hurricane Storm Surge",
-								"value": "storm_surge"
+								"name": "Storm Surge",
+								"value": "storm_surge",
+								"controls": { 
+									"slider": ["climate", "stormSurge"],
+									"radiocheck": ["surgedepth", "economic"],
+									"togglebutton": ["surgedepth"],
+									"tree":["storm"]
+								}
 							}
 						]
-					}	
+					}
 				},
 				"slider": {
-					"climate": { "disabled": false, "show": true, "labels": ["2025", "2040", "2065", "2100"]  },
-					"scenario": { "disabled": false, "show": true, "labels": ["Low", "High", "Highest"]  }
+					"climate": { "disabled": false, "show": true,
+						"labels": { 
+							"sea_level_rise": ["2025", "2040", "2065", "2100"],
+							"storm_surge": ["Current", "2040", "2065"]
+						},
+						"dependency": {
+							"togglebutton": {
+								"surgedepth": { 
+									"Current" : { "whitelist": ["water"] },
+									"2040" : { "whitelist": ["water", "absolute", "percent"]  },
+									"2065" : { "whitelist": ["water", "absolute", "percent"]  }
+								}
+							}
+						}
+					},
+					"scenario": { "disabled": false, "show": true, "labels": ["Low", "High", "Highest"]  },
+					"stormSurge": { "disabled": false, "show": true, "labels": ["Nor'Ida", "Low", "Medium", "High"]  }
+				},
+				"radiocheck": {
+					"surgedepth": { "disabled": false, "show": true, "type": "radio", "group": "storm_surge", "name":"surgedepth", "value":"surgedepth", "label":"Surge Depth", "checked": true,
+						"dependency": {
+							"togglebutton": {
+								"surgedepth": { "display":"block" }
+							}
+						}
+					},
+					"economic": { "disabled": false, "show": true, "type": "radio", "group": "storm_surge", "name":"economic", "value":"economic", "label":"Economic Loss", "checked": false,
+						"dependency": {
+							"togglebutton": {
+								"surgedepth": { "display":"none" }
+							}
+						} 
+					}
+				},
+				"togglebutton": {
+					"surgedepth": {
+						"controls": {
+							"water": {
+								"disabled": false,
+								"show": true,
+								"type": "radio",
+								"group": "surgedepth",
+								"name": "water",
+								"value": "water",
+								"label": "Water Depth",
+								"checked": true,
+								"dependency": {
+									"slider": {
+										"climate": { 
+											"checked": { "whitelist": ["Current", "2040", "2065"] }
+										} 
+									}
+								}
+							},
+							"absolute": {
+								"disabled": false,
+								"show": true,
+								"type": "radio",
+								"group": "surgedepth",
+								"name": "absolute",
+								"value": "absolute",
+								"label": "Absolute Difference",
+								"checked": false,
+								"dependency": {
+									"slider": {
+										"climate": { 
+											"checked": { "whitelist": ["2040", "2065"] }
+										} 
+									}
+								}
+							},
+							"percent": {
+								"disabled": false,
+								"show": true,
+								"type": "radio",
+								"group": "surgedepth",
+								"name": "percent",
+								"value": "percent",
+								"label": "Percent Difference",
+								"checked": false,
+								"dependency": {
+									"slider": {
+										"climate": { 
+											"checked": { "whitelist": ["2040", "2065"] }
+										} 
+									}
+								}
+							}
+						},
+						"label": "Display map values as:",
+						"dependency": {
+							"radiocheck": {
+								"surgedepth": { 
+									"checked": { "display":"block" }
+								}
+							}
+						}
+					}
+				},
+				"tree": {
+					"storm": { 
+						"displayLabel": false,
+						"displayType": "fixed",
+						"displayIndent": false,
+						"values": [
+							{ 
+								"displayLabel": false,
+								"value": "",
+								"controls": [ { "value":"track", "label":"Show storm track", "controls": { "slider":["stormSurge"]} }, { "value":"tide", "label":"Show tidal range" } ],
+								"layers": { "show": ["model_storm"], "hide": [] }
+							}
+						]
+					}
 				}
 			},
 			"download": {
@@ -220,6 +387,11 @@
 				"slr_4ft": { "type": "tiled", "url": "http://maps1.coast.noaa.gov/arcgis/rest/services/dc_slr/slr_4ft/MapServer" },
 				"slr_5ft": { "type": "tiled", "url": "http://maps1.coast.noaa.gov/arcgis/rest/services/dc_slr/slr_5ft/MapServer" },
 				"slr_6ft": { "type": "tiled", "url": "http://maps1.coast.noaa.gov/arcgis/rest/services/dc_slr/slr_6ft/MapServer" }
+			},
+			"tooltips": {
+				"region": "Geographic areas where climate change/sea level rise vulnerability studies have been conducted.",
+				"hazard": "Spatial extent for different coastal hazards that may affect coastal assets.  Impact zones were estimated across multiple planning horizons.",
+				"sealevelrise": "Sea level rise inundation scenarios ranging from zero to six feet above mean higher high water (MHHW)."
 			},
 			"extent": {
 				"xmin": -13849152,
@@ -241,7 +413,7 @@
 							{ 	
 								"name": "Sea Level Rise",
 								"value": "sealevelrise",
-								"controls": ["sealevelrise"]
+								"controls": { "slider": ["sealevelrise"] }
 							}
 						]
 					}
@@ -250,7 +422,8 @@
 					"sealevelrise": {
 						"disabled": false,
 						"show": true,
-						"type": "tiled"
+						"type": "tiled",
+						"labels": ["0","1","2","3","4","5"] 
 					}
 				}
 			},
@@ -260,10 +433,94 @@
 			}
 		
 		},
+		"Los Angeles": {
+			"url": "http://dev.services.coastalresilience.org/arcgis/rest/services/California/Flood_Slr/MapServer",
+			"layers": {
+				"main": "http://dev.services.coastalresilience.org/arcgis/rest/services/California/Flood_Slr/MapServer",
+				"risk": "http://dev.services.coastalresilience.org/arcgis/rest/services/California/Flood_Slr/MapServer"
+			},
+			"tooltips": {
+				"region": "Geographic areas where climate change/sea level rise vulnerability studies have been conducted.",
+				"hazard": "Spatial extent for different coastal hazards (storm wave impact, coastal flooding, coastal erosion, rising tide levels) that may affect coastal assets.  Impact zones were estimated across multiple planning horizons.",
+				"climate": "Future planning horizons representing the impact of climate change.",
+				"scenario": "Sea level rise scenarios (low, medium, and high) based on the 'Average of Models, Low,' 'Projection,' and 'Average of Models, High, regional sea level rise amounts."
+			},
+			"extent": {
+				"xmin": -1.32412461692E7,
+				"ymin": 3988988.8862999976,
+				"xmax": -1.3144208054499999E7,
+				"ymax": 4035302.420500003,
+				"spatialReference": {
+					"wkid": 102100,
+					"latestWkid": 3857
+				}
+			},
+			"controls": {
+				"select": {
+					"hazard": {
+						"options": [
+							{ "name": " -- ", "value": "" },
+							{ "name": "Storm Flooding", "value": "storm_flood", "controls": { "slider": ["climate", "scenario"], "radiocheck": ["hazard"] } },
+							{ "name": "Coastal Erosion", "value": "coastal_erosion", "controls": { "slider": ["climate", "scenario"], "radiocheck": ["hazard"] } },
+							{ "name": "Cliff Erosion", "value": "cliff_erosion", "controls": { "slider": ["climate"] } },
+							{ "name": "Rising Tide", "value": "tide", "controls": { "slider": ["climate", "scenario"] } }
+						]
+					}
+				},
+				"slider": {
+					"climate": { "disabled": false, "show": true,
+						"labels": ["2010", "2030", "2050", "2100"],
+						"dependency": {
+							"slider": {
+								"scenario": { 
+									"2010": { "whitelist": ["Existing"] },
+									"2030": { "whitelist": ["Medium", "High"] },
+									"2050": { "whitelist": ["Medium", "High"] },
+									"2100": { "whitelist": ["Medium", "High"] }
+								} 
+							}
+						}
+					},
+					"scenario": { "disabled": false, "show": true,
+						"labels": ["Existing", "Medium", "High"],
+						"dependency": {
+							"slider": {
+								"climate": { 
+									"Existing": { "whitelist": ["2010"] },
+									"Medium": { "whitelist": ["2030", "2050", "2100"] },
+									"High": { "whitelist": ["2030", "2050", "2100"] }
+								}  
+							}
+						}
+					}
+				},
+				"radiocheck": {
+					"hazard": { "disabled": false, "show": true, "value": "armor", "type":"check", "label":"with armoring" },
+					"other": { "disabled": false, "show": true, "value": "risk", "type": "check", "label": "Relative Risk Zones", "layer": "risk", "overlay": false,
+								"dependency": {
+									"slider": {
+										"climate": { "disabled": true },
+										"scenario": { "disabled": true } 										
+									}
+								}
+							}
+				}
+			},
+			"download": {
+				"report":"HOSTNAME-methods/SLR_LosAngeles.pdf",
+				"data":"http://data.coastalresilience.org/California/CA_LosAngeles_Flood_Final_HZ.zip"
+			}
+		},
 		"Monterey": {
 			"url": "http://dev.services.coastalresilience.org/arcgis/rest/services/California/Monterey_SLR/MapServer",
 			"layers": {
 				"main": "http://dev.services.coastalresilience.org/arcgis/rest/services/California/Monterey_SLR/MapServer"
+			},
+			"tooltips": {
+				"region": "Geographic areas where climate change/sea level rise vulnerability studies have been conducted.",
+				"hazard": "Spatial extent for different coastal hazards (storm wave impact, coastal flooding, coastal erosion, rising tide levels) that may affect coastal assets.  Impact zones were estimated across multiple planning horizons.",
+				"climate": "Future planning horizons representing the impact of climate change.",
+				"scenario": "Sea level rise scenarios (low, medium, and high) based on the 'Average of Models, Low,' 'Projection,' and 'Average of Models, High, regional sea level rise amounts."
 			},
 			"extent": {
 				"xmin": -1.36189391907E7,
@@ -280,19 +537,67 @@
 					"hazard": {
 						"options": [
 							{ "name": " -- ", "value": "" },
-							{ "name": "Storm Flooding", "value": "storm_flood" },
-							{ "name": "Dune Erosion", "value": "dune_erosion" },
-							{ "name": "Cliff Erosion", "value": "cliff_erosion" },
-							{ "name": "Rising Tide", "value": "tide" }
+							{ "name": "Storm Flooding", "value": "storm_flood", "controls": { "slider": ["climate", "scenario"], "radiocheck": ["hazard"] } },
+							{ "name": "Dune Erosion", "value": "dune_erosion", "controls": { "slider": ["climate", "scenario"], "radiocheck": ["hazard"] } },
+							{ "name": "Cliff Erosion", "value": "cliff_erosion", "controls": { "slider": ["climate", "scenario"], "radiocheck": ["hazard"] } },
+							{ "name": "Rising Tide", "value": "tide", "controls": { "slider": ["climate", "scenario"], "radiocheck": ["hazard"] } }
 						]
 					}	
 				},
 				"slider": {
-					"climate": { "disabled": false, "show": true },
-					"scenario": { "disabled": false, "show": true }
+					"climate": { 
+						"disabled": false, "show": true,
+						"labels": ["Current", "2030", "2060", "2100"],
+						"dependency": { 
+							"slider": {
+								"scenario": { 
+									"Current": { "whitelist": ["Low"] },
+									"2030": { "whitelist": ["Low", "Medium", "High"] },
+									"2060": { "whitelist": ["Low", "Medium", "High"] },
+									"2100": { "whitelist": ["Low", "Medium", "High"] }
+								}
+							},
+							"check": {
+								"hazard": { 
+									"checked" : { "control": "scenario", "disabled":true, "whitelist": ["Low"] },
+									"unchecked" : { "control": "scenario", "disabled":false }
+								}
+							}
+						} 
+					},
+					"scenario": { "disabled": false, "show": true,
+						"labels": ["Low", "Medium", "High"],
+						"dependency": { 
+							"slider": {
+								"climate": { 
+									"Low": { "whitelist": ["Current", "2030", "2060", "2100"] },
+									"Medium": { "whitelist": ["2030", "2060", "2100"] },
+									"High": { "whitelist": ["2030", "2060", "2100"] }
+								}
+							},
+							"check": {
+								"hazard": { 
+									"checked" : { "control": "scenario", "disabled":true, "whitelist": ["Low"] },
+									"unchecked" : { "control": "scenario", "disabled":false }
+								}
+							}
+						}
+					}
 				},
 				"radiocheck": {
-					"aggregate": { "disabled": false, "show": true }
+					"hazard": { "disabled": false, "show": true, 
+						"value":"aggregate",
+						"type":"check",
+						"label":"view aggregate data",
+						"dependency": { 
+							"slider": {
+								"scenario": {
+									"checked" : { "disabled":true, "whitelist":["Low"] },
+									"unchecked" : { "disabled":false }
+								}
+							}
+						}
+					}
 				}
 			},
 			"download": {
@@ -304,6 +609,12 @@
 			"url": "http://dev.services.coastalresilience.org/arcgis/rest/services/California/SantaBarbara_SLR/MapServer",
 			"layers": {
 				"main": "http://dev.services.coastalresilience.org/arcgis/rest/services/California/SantaBarbara_SLR/MapServer"
+			},
+			"tooltips": {
+				"region": "Geographic areas where climate change/sea level rise vulnerability studies have been conducted.",
+				"hazard": "Spatial extent for different coastal hazards (storm wave impact, coastal flooding, coastal erosion, rising tide levels) that may affect coastal assets.  Impact zones were estimated across multiple planning horizons.",
+				"climate": "Future planning horizons representing the impact of climate change.",
+				"scenario": "Sea level rise scenarios (low, medium, and high) based on the 'Average of Models, Low,' 'Projection,' and 'Average of Models, High, regional sea level rise amounts."
 			},
 			"extent": {
 				"xmin": -1.3414577438099999E7,
@@ -320,20 +631,68 @@
 					"hazard": {
 						"options": [
 							{ "name": " -- ", "value": "" },
-							{ "name": "Storm Flooding", "value": "storm_flood" },
-							{ "name": "Fluvial Flooding", "value": "fluvial_flood" },
-							{ "name": "Dune Erosion", "value": "dune_erosion" },
-							{ "name": "Cliff Erosion", "value": "cliff_erosion" },
-							{ "name": "Rising Tide", "value": "tide" }
+							{ "name": "Storm Flooding", "value": "storm_flood", "controls": { "slider": ["climate", "scenario"], "radiocheck": ["hazard"] } },
+							{ "name": "Fluvial Flooding", "value": "fluvial_flood", "controls": { "slider": ["climate", "scenario"], "radiocheck": ["hazard"] } },
+							{ "name": "Dune Erosion", "value": "dune_erosion", "controls": { "slider": ["climate", "scenario"], "radiocheck": ["hazard"] } },
+							{ "name": "Cliff Erosion", "value": "cliff_erosion", "controls": { "slider": ["climate", "scenario"], "radiocheck": ["hazard"] } },
+							{ "name": "Rising Tide", "value": "tide", "controls": { "slider": ["climate", "scenario"], "radiocheck": ["hazard"] } }
 						]
 					}
 				},
 				"slider": {
-					"climate": { "disabled": false, "show": true },
-					"scenario": { "disabled": false, "show": true }
+					"climate": { 
+						"disabled": false, "show": true,
+						"labels": ["Current", "2030", "2060", "2100"],
+						"dependency": { 
+							"slider": {
+								"scenario": { 
+									"Current": { "whitelist": ["Low"] },
+									"2030": { "whitelist": ["Low", "Medium", "High"] },
+									"2060": { "whitelist": ["Low", "Medium", "High"] },
+									"2100": { "whitelist": ["Low", "Medium", "High"] }
+								}
+							},
+							"check": {
+								"hazard": { 
+									"checked" : { "control": "scenario", "disabled":true, "whitelist": ["Low"] },
+									"unchecked" : { "control": "scenario", "disabled":false }
+								}
+							}
+						} 
+					},
+					"scenario": { "disabled": false, "show": true,
+						"labels": ["Low", "Medium", "High"],
+						"dependency": { 
+							"slider": {
+								"climate": { 
+									"Low": { "whitelist": ["Current", "2030", "2060", "2100"] },
+									"Medium": { "whitelist": ["2030", "2060", "2100"] },
+									"High": { "whitelist": ["2030", "2060", "2100"] }
+								}
+							},
+							"check": {
+								"hazard": { 
+									"checked" : { "control": "scenario", "disabled":true, "whitelist": ["Low"] },
+									"unchecked" : { "control": "scenario", "disabled":false }
+								}
+							}
+						}
+					}
 				},
 				"radiocheck": {
-					"aggregate": { "disabled": false, "show": true }
+					"hazard": { "disabled": false, "show": true, 
+						"value":"aggregate",
+						"type":"check",
+						"label":"view aggregate data",
+						"dependency": { 
+							"slider": {
+								"scenario": {
+									"checked" : { "disabled":true, "whitelist":["Low"] },
+									"unchecked" : { "disabled":false }
+								}
+							}
+						}
+					}
 				}
 			},
 			"download": {
@@ -345,6 +704,12 @@
 			"url": "http://dev.services.coastalresilience.org/arcgis/rest/services/California/Ventura_SLR/MapServer",
 			"layers": {
 				"main": "http://dev.services.coastalresilience.org/arcgis/rest/services/California/Ventura_SLR/MapServer"
+			},
+			"tooltips": {
+				"region": "Geographic areas where climate change/sea level rise vulnerability studies have been conducted.",
+				"hazard": "Spatial extent for different coastal hazards (storm wave impact, coastal flooding, coastal erosion, rising tide levels) that may affect coastal assets.  Impact zones were estimated across multiple planning horizons.",
+				"climate": "Future planning horizons representing the impact of climate change.",
+				"scenario": "Sea level rise scenarios (low, medium, and high) based on the 'Average of Models, Low,' 'Projection,' and 'Average of Models, High, regional sea level rise amounts."
 			},
 			"extent": {
 				"xmin": -13288721.369912772,
@@ -361,20 +726,41 @@
 					"hazard": {
 						"options": [
 							{ "name": " -- ", "value": "" },
-							{ "name": "Storm Flooding", "value": "storm_flood" },
-							{ "name": "Fluvial Flooding", "value": "fluvial_flood" },
-							{ "name": "Storm Wave Impact", "value": "storm_wave" },
-							{ "name": "Coastal Erosion", "value": "coastal_erosion" },
-							{ "name": "Rising Tide", "value": "tide" }
+							{ "name": "Storm Flooding", "value": "storm_flood", "controls": { "slider": ["climate", "scenario"] } },
+							{ "name": "Fluvial Flooding", "value": "fluvial_flood", "controls": { "slider": ["climate", "scenario"] } },
+							{ "name": "Storm Wave Impact", "value": "storm_wave", "controls": { "slider": ["climate", "scenario"] } },
+							{ "name": "Coastal Erosion", "value": "coastal_erosion", "controls": { "slider": ["climate", "scenario"] } },
+							{ "name": "Rising Tide", "value": "tide", "controls": { "slider": ["climate", "scenario"] } }
 						]
 					}
 				},
 				"slider": {
-					"climate": { "disabled": false, "show": true },
-					"scenario": { "disabled": false, "show": true }
-				},
-				"radiocheck": {
-					"aggregate": { "disabled": true, "show": true }
+					"climate": { 
+						"disabled": false, "show": true,
+						"labels": ["Current", "2030", "2060", "2100"],
+						"dependency": { 
+							"slider": {
+								"scenario": { 
+									"Current": { "whitelist": ["Low"] },
+									"2030": { "whitelist": ["Low", "Medium", "High"] },
+									"2060": { "whitelist": ["Low", "Medium", "High"] },
+									"2100": { "whitelist": ["Low", "Medium", "High"] }
+								}
+							}
+						} 
+					},
+					"scenario": { "disabled": false, "show": true,
+						"labels": ["Low", "Medium", "High"],
+						"dependency": { 
+							"slider": {
+								"climate": { 
+									"Low": { "whitelist": ["Current", "2030", "2060", "2100"] },
+									"Medium": { "whitelist": ["2030", "2060", "2100"] },
+									"High": { "whitelist": ["2030", "2060", "2100"] }
+								}
+							}
+						}
+					}
 				}
 			},
 			"download": {

@@ -101,12 +101,15 @@ define([
                },
 
                getState: function () {
-                   var state = new Object();
+                   var plugin = this;
+				   var state = new Object();
 				   
 				   state.controls = {};
 				   state.controls.selects = {};
 				   state.controls.sliders = {};
-				   state.controls.radiocheck = {};
+				   state.controls.checkbox = {};
+				   state.controls.radiobutton = {};
+				   state.controls.togglebutton = {};
 				   
 				   state.controls.selects.regionSelect = {
 						"value": this.slr.regionSelect.value
@@ -124,39 +127,86 @@ define([
 					}
 					
 				   state.controls.sliders.climateSlider = {
+						"labels": this.slr.climateSliderLabels.labels,
 						"value": this.slr.climateSlider.get("value"),
 					   "disabled": this.slr.climateSlider.get("disabled"),
 					   "display": domStyle.get(this.slr.climateSlider.domNode.parentNode, "display")
+					   
 				   }
 				   state.controls.sliders.scenarioSlider = {
+						"labels": this.slr.scenarioSliderLabels.labels,
 						"value": this.slr.scenarioSlider.get("value"),
 					   "disabled": this.slr.scenarioSlider.get("disabled"),
 					   "display": domStyle.get(this.slr.scenarioSlider.domNode.parentNode, "display")
+					   
 				   }
 				   state.controls.sliders.sealevelriseSlider = {
+						"labels": this.slr.sealevelriseSliderLabels.labels,
 						"value": this.slr.sealevelriseSlider.get("value"),
 					   "disabled": this.slr.sealevelriseSlider.get("disabled"),
 					   "display": domStyle.get(this.slr.sealevelriseSlider.domNode.parentNode, "display")
+					   
 				   }
 				   state.controls.sliders.hurricaneSlider = {
+						"labels": this.slr.hurricaneSliderLabels.labels,
 						"value": this.slr.hurricaneSlider.get("value"),
 					   "disabled": this.slr.hurricaneSlider.get("disabled"),
 					   "display": domStyle.get(this.slr.hurricaneSlider.domNode.parentNode, "display")
+					   
+				   }
+				   state.controls.sliders.stormSurgeSlider = {
+						"labels": this.slr.stormSurgeSliderLabels.labels,
+						"value": this.slr.stormSurgeSlider.get("value"),
+					   "disabled": this.slr.stormSurgeSlider.get("disabled"),
+					   "display": domStyle.get(this.slr.stormSurgeSlider.domNode.parentNode, "display")
+					   
 				   }
 				   state.controls.sliders.opacitySlider = {
 						"value": this.slr.opacitySlider.get("value"),
 					   "disabled": this.slr.opacitySlider.get("disabled")
 				   }
-				   state.controls.radiocheck.hazardLayerCheckBox = {
-					   "checked": this.slr.hazardLayerCheckBox.checked,
-					   "disabled": this.slr.hazardLayerCheckBox.disabled,
-					   "display": domStyle.get(this.slr.hazardLayerCheckBox.parentNode.parentNode, "display")
+				   state.controls.checkbox.hazardCheckBox = {
+					   "checked": this.slr.hazardCheckBox.checked,
+					   "disabled": this.slr.hazardCheckBox.disabled,
+					   "value": this.slr.hazardCheckBox.value,
+					   "display": domStyle.get(this.slr.hazardCheckBox.parentNode.parentNode, "display"),
+					   "label": this.slr.hazardCheckBoxLabel.innerHTML
 				   }
-				   state.controls.radiocheck.femaLayerCheckBox = {
-					   "checked": this.slr.femaLayerCheckBox.checked,
-					   "disabled": this.slr.femaLayerCheckBox.disabled,
-					   "visibility": domStyle.get(this.slr.femaLayerCheckBox.parentNode.parentNode, "visibility")
+				   state.controls.checkbox.otherCheckBox = {
+					   "checked": this.slr.otherCheckBox.checked,
+					   "disabled": this.slr.otherCheckBox.disabled,
+					   "value": this.slr.otherCheckBox.value,
+					   "display": domStyle.get(this.slr.otherCheckBox.parentNode.parentNode, "display"),
+					   "visibility": domStyle.get(this.slr.otherCheckBox.parentNode.parentNode, "visibility"),
+					   "label": this.slr.otherCheckBoxLabel.innerHTML
 				   }
+				   
+				   array.forEach(_.keys(this.slr._interface.region), function(key) { 
+					if (!_.isUndefined(plugin.slr._interface.region[key].controls.radiocheck)) {
+						var rbs = _.where(plugin.slr._interface.region[key].controls.radiocheck, { "type":"radio" });
+						array.forEach(rbs, function(rb) {
+							state.controls.radiobutton[rb.name + "RadioButton"] = {
+								"checked": plugin.slr[rb.name + "RadioButton"].checked,
+								"disabled": plugin.slr[rb.name + "RadioButton"].disabled,
+								"display": domStyle.get(plugin.slr[rb.name + "RadioButton"].parentNode.parentNode.parentNode, "display")
+							}
+						});
+					}
+				   });
+				   
+				   array.forEach(_.keys(this.slr._interface.region), function(key) { 
+					if (!_.isUndefined(plugin.slr._interface.region[key].controls.togglebutton)) {
+						array.forEach(_.keys(plugin.slr._interface.region[key].controls.togglebutton), function(group) {
+							array.forEach(_.keys(plugin.slr._interface.region[key].controls.togglebutton[group].controls), function(name) {
+								state.controls.togglebutton[name + "ToggleButton"] = {
+									"checked": plugin.slr[name + "ToggleButton"].checked,
+									"disabled": plugin.slr[name + "ToggleButton"].disabled,
+									"display": domStyle.get(plugin.slr[name + "ToggleButton"].parentNode.parentNode.parentNode, "display")
+								}
+							});
+						});
+					}
+				   });
 				   
 				   var modelStorms = query("[id*=slr-model-storm-]");
 				   if (modelStorms.length > 0) { 
@@ -164,12 +214,18 @@ define([
 						state.controls.storm.container = {};
 						state.controls.storm.subitems = {};
 						
-						state.controls.storm.container["storm-toggle"] = { 
-							"display": domStyle.get(_.first(query(".storm-toggle")), "display"),
+						state.controls.storm.container["storm-toggle parentNode"] = { 
+							"display": domStyle.get(_.first(query(".storm-toggle")).parentNode, "display"),
+							"margin-bottom": domStyle.get(_.first(query(".storm-toggle")).parentNode, "margin-bottom")
 						}
 						
 						state.controls.storm.container["storm-toggle-header"] = { 
-							"toggleClass": domAttr.get(_.first(query(".storm-toggle-header i")),"class")
+							"toggleClass": domAttr.get(_.first(query(".storm-toggle-header i")),"class"),
+							"display": domStyle.get(_.first(query(".storm-toggle-header")), "display")
+						}
+						
+						state.controls.storm.container["storm-toggle-header-label"] = { 
+							"label": _.first(query(".storm-toggle-header-label")).innerHTML
 						}
 						
 						state.controls.storm.container["storm-toggle-container"] = { 
@@ -180,9 +236,21 @@ define([
 						array.forEach(subitems, function(node) {
 							var id = domAttr.get(node, "class").split(" ").pop();
 							state.controls.storm.subitems[id] = { 
-								"display": domStyle.get(node, "display"),
-								"toggleClass": domAttr.get(node.firstChild, "class")
+								"css": { "display": domStyle.get(node, "display"), "padding-left": domStyle.get(node, "padding-left") }
 							}
+							
+							var textNode = _.first(query("div[class*=" + id +"] .storm-toggle-text"))
+							state.controls.storm.subitems[id]["storm-toggle-text"] = {
+								"css": { "display": domStyle.get(textNode, "display") },
+								"class": domAttr.get(textNode, "class")
+							}
+							
+							var tdNode = _.first(query("div[class*=" + id +"] .storm-toggle-td"))
+							state.controls.storm.subitems[id]["storm-toggle-td"] = {
+								"css": { "display": domStyle.get(tdNode, "display"), "padding-left": domStyle.get(tdNode, "padding-left") },
+								"firstChild": { "margin-left": domStyle.get(tdNode.firstChild, "display") }
+							}
+							
 							state.controls.storm.subitems[id].radiocheck = {}
 							array.forEach(modelStorms, function(input) {
 								if (input.id.indexOf(id.split("-").pop()) > -1) {
@@ -247,18 +315,53 @@ define([
 
 					 for (var slider in this._state.controls.sliders) {
 						 for (var property in this._state.controls.sliders[slider]) {
-							plugin[slider].set(property, this._state.controls.sliders[slider][property]);
-							if (property == "display") {
-								domStyle.set(plugin[slider].domNode.parentNode, property, this._state.controls.sliders[slider][property]) 
+							switch(property) {
+								case "display":
+									domStyle.set(plugin[slider].domNode.parentNode, property, this._state.controls.sliders[slider][property]) 
+									break;
+								case "labels":
+									var labels = this._state.controls.sliders[slider][property];
+									plugin[slider].set("maximum", labels.length-1);
+									plugin[slider].set("discreteValues", labels.length);
+									plugin[slider + "Labels"].set("labels",labels);
+									plugin[slider + "Labels"].set("count", labels.length);
+									plugin[slider + "Labels"].buildRendering();
+									break;
+								default:
+									plugin[slider].set(property, this._state.controls.sliders[slider][property]);
+									break;
+							}
+						 }
+					 }
+					 
+					for (var control in this._state.controls.checkbox) {
+						 for (var property in this._state.controls.checkbox[control]) {
+							 if (property == "display" || property == "visibility") {
+								domStyle.set(plugin[control].parentNode.parentNode, property, this._state.controls.checkbox[control][property]) 
+							 } else if (property == "label") {
+								plugin[control + "Label"].innerHTML = this._state.controls.checkbox[control][property];
+							 } else {
+								plugin[control][property] = this._state.controls.checkbox[control][property];
 							 }
 						 }
 					 }
 					 
-					for (var control in this._state.controls.radiocheck) {
-						 for (var property in this._state.controls.radiocheck[control]) {
-							 plugin[control][property] = this._state.controls.radiocheck[control][property];
-							 if (property == "display" || property == "visibility") {
-								domStyle.set(plugin[control].parentNode.parentNode, property, this._state.controls.radiocheck[control][property]) 
+					 for (var control in this._state.controls.radiobutton) {
+						 for (var property in this._state.controls.radiobutton[control]) {
+							 if (property == "display") {
+								domStyle.set(plugin[control].parentNode.parentNode.parentNode, property, this._state.controls.radiobutton[control][property]) 
+							 } else {
+								plugin[control][property] = this._state.controls.radiobutton[control][property];
+							 }
+						 }
+					 }
+					 
+					 for (var control in this._state.controls.togglebutton) {
+						 for (var property in this._state.controls.togglebutton[control]) {
+							 if (property == "display") {
+								domStyle.set(plugin[control].parentNode.parentNode.parentNode, property, this._state.controls.togglebutton[control][property]) 
+							 } else {
+								plugin[control][property] = this._state.controls.togglebutton[control][property]; 
 							 }
 						 }
 					 }
@@ -266,11 +369,13 @@ define([
 					 if (_.has(this._state.controls, "storm")) {
 						for (var item in this._state.controls.storm) {
 							for (var control in this._state.controls.storm[item]) {
-								var node = _.first(query("." + control));
+								var parts = control.split(" ");
+								var node = _.first(query("." + _.first(parts)));
 								for (var property in this._state.controls.storm[item][control]) {
-									if (property == "toggleClass") {
-										domAttr.set(node.firstChild, "class", this._state.controls.storm[item][control][property]);
-									} else if (property == "display") {
+									if (property == "display") {
+										if (_.last(parts) == "parentNode") {
+											domStyle.set(node.parentNode, "display", this._state.controls.storm[item][control][property]);
+										}
 										domStyle.set(node, "display", this._state.controls.storm[item][control][property]);
 										domStyle.set(node.lastChild, "display", this._state.controls.storm[item][control][property]);
 									} else if (property == "radiocheck") {
@@ -280,6 +385,29 @@ define([
 												input[attr] = this._state.controls.storm[item][control].radiocheck[id][attr];
 											}
 										}
+									} else if (property == "label") {
+										node.innerHTML = this._state.controls.storm[item][control][property];
+									} else if (property == "css") {
+										domStyle.set(node, this._state.controls.storm[item][control][property]);
+									} else if (property == "storm-toggle-text") {
+										var textNode = _.first(query("div[class*=" + control +"] ." + property));
+										for(var attr in this._state.controls.storm[item][control][property]) {
+											if (attr == "css") {
+												domStyle.set(textNode, this._state.controls.storm[item][control][property][attr]);
+											}
+											if (attr == "class") {
+												domAttr.set(textNode, attr, this._state.controls.storm[item][control][property][attr]);
+											}
+										}	
+									} else if (property == "storm-toggle-td") {
+										var tdNode = _.first(query("div[class*=" + control +"] ." + property));
+										for(var attr in this._state.controls.storm[item][control][property]) {
+											if (attr == "css") {
+												domStyle.set(tdNode, this._state.controls.storm[item][control][property][attr]);
+											} else if (attr == "firstChild") {
+												domStyle.set(tdNode.firstChild, this._state.controls.storm[item][control][property][attr]);
+											}
+										}	
 									}
 								}
 							}
