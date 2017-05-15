@@ -1313,10 +1313,14 @@ define([
 						
 						this._mapLayers[this._region].model_storm.setVisibleLayers([]);
 					} else {
-						domStyle.set(_.first(query(".storm-toggle")).parentNode, "display", "none");
+						if (query(".storm-toggle").length > 0) {
+							domStyle.set(_.first(query(".storm-toggle")).parentNode, "display", "none");
+						}
 					}
 				} else {
-					domStyle.set(_.first(query(".storm-toggle")).parentNode, "display", "none");
+					if (query(".storm-toggle").length > 0) {
+						domStyle.set(_.first(query(".storm-toggle")).parentNode, "display", "none");
+					}
 				}
 				
 				if (this._region != "" && _.has(this._interface.region[this._region].controls, "radiocheck") && _.has(this._interface.region[this._region].controls.radiocheck, "hazard")) {
@@ -1383,7 +1387,9 @@ define([
 					domStyle.set(this.hurricaneSlider.domNode.parentNode, "display",  "none");
 					domStyle.set(this.stormSurgeSlider.domNode.parentNode, "display",  "none");
 					
-					domStyle.set(_.first(query(".storm-toggle")).parentNode, "display", "none");
+					if (query(".storm-toggle").length > 0) {
+						domStyle.set(_.first(query(".storm-toggle")).parentNode, "display", "none");
+					}
 					
 					array.forEach(options, function(opt) { 
 						if (_.has(opt, "controls")) {
