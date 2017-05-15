@@ -339,6 +339,10 @@ define([
 				
 				this.createInputs();
 				
+				if (_.keys(this._interface.region).length == 1) {
+					this.updateInterface("region");
+				}
+				
 				this.tip = domConstruct.create("div", { className: "plugin-slr slr-tooltip interface" });
 				win.body().appendChild(this.tip);
 				
@@ -1310,8 +1314,9 @@ define([
 								dojo.byId("slr-model-storm-" + control.value + "-layer-" + self._region.replace(/ /g,"_").toLowerCase() + "_" + value.value).checked = false;
 							});
 						});
-						
-						this._mapLayers[this._region].model_storm.setVisibleLayers([]);
+						if (!_.isEmpty(this._mapLayers)) {
+							this._mapLayers[this._region].model_storm.setVisibleLayers([]);
+						}
 					} else {
 						if (query(".storm-toggle").length > 0) {
 							domStyle.set(_.first(query(".storm-toggle")).parentNode, "display", "none");
@@ -1364,7 +1369,7 @@ define([
 					})
 				})
 				
-				if (this._region != "") {
+				if (this._region != "" && !_.isEmpty(this._mapLayers)) {
 					this._mapLayer = this._mapLayers[this._region].main;
 					this._mapLayer.show();
 					var extent = new Extent(this._interface.region[this._region].extent);
