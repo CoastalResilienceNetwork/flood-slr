@@ -48,7 +48,6 @@ define([
                showServiceLayersInLegend: true,
                allowIdentifyWhenActive: true,
                plugin_directory: "plugins/flood-slr",
-			   infoGraphic: "<div><img src='plugins/flood-slr/slr_flooding_c.jpg'/></div>",
 			   size:"custom",
                width: 320,
 			   _state: {},
@@ -86,6 +85,7 @@ define([
 
                initialize: function (frameworkParameters) {
 				   //console.log("initialize - plugin");
+					var plugin = this;
 					declare.safeMixin(this, frameworkParameters);
 					  var djConfig = {
 						parseOnLoad: true
