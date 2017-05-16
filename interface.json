@@ -1,4 +1,5 @@
 {
+	"showInfoGraphic": true,
 	"tooltips": {
 		"region": "Geographic areas where climate change/sea level rise vulnerability studies have been conducted.",
 		"hazard": "Spatial extent for different coastal hazards that may affect coastal assets.  Impact zones were estimated across multiple planning horizons.",

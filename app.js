@@ -103,6 +103,26 @@ define([
 					"padding": "0px"
 				});
 				
+				if (this._interface.showInfoGraphic) {
+					var node = _.first(query("#" + this._container.parentNode.id + " .sidebar-nav"));
+					var infoGraphicButton = domConstruct.create("button", {
+						class: "button button-default plugin-slr info-graphic",
+						innerHTML: '<img src="' + this._plugin_directory + '/InfographicIcon_v1_23x23.png" alt="show overview graphic">'
+					}, node, "first")
+					
+					var plugin = this;
+					on(infoGraphicButton, "click", function(c){
+						var imageSource = plugin._plugin_directory + '/slr_flooding_c.jpg';
+						TINY.box.show({
+							animate: true,
+							html: '<img style="margin:20px;" src="' + imageSource + '"/>',
+							fixed: true,
+							width: 640,
+							height: 450
+						});
+					})
+				}
+				
 				var loadingDiv = domConstruct.create("div", {
 					innerHTML:"<i class='fa fa-spinner fa-spin fa-3x fa-fw'></i>",
 					style:"position:absolute; left: 110px; top:50%; width:100px; height:100px; line-height:100px; text-align:center;"
