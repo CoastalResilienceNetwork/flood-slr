@@ -103,25 +103,40 @@ define([
 					"padding": "0px"
 				});
 				
-				if (this._interface.showInfoGraphic) {
-					var node = _.first(query("#" + this._container.parentNode.id + " .sidebar-nav"));
-					var infoGraphicButton = domConstruct.create("button", {
-						class: "button button-default plugin-slr info-graphic",
-						innerHTML: '<img src="' + this._plugin_directory + '/InfographicIcon_v1_23x23.png" alt="show overview graphic">'
-					}, node, "first")
+				
+				var node = _.first(query("#" + this._container.parentNode.id + " .sidebar-nav"));
+				this.infoGraphicButton = domConstruct.create("button", {
+					class: "button button-default plugin-slr info-graphic",
+					style: "display:none",
+					innerHTML: '<img src="' + this._plugin_directory + '/InfographicIcon_v1_23x23.png" alt="show overview graphic">'
+				}, node, "first")
+				
+				if (_.has(this._interface, "infoGraphic")) {
+					domAttr.set(this.infoGraphicButton, "data-popup", JSON.stringify(this._interface.infoGraphic.popup));
+					domAttr.set(this.infoGraphicButton, "data-url", this._interface.infoGraphic.url);
 					
-					var plugin = this;
-					on(infoGraphicButton, "click", function(c){
-						var imageSource = plugin._plugin_directory + '/slr_flooding_c.jpg';
+					var display = (this._interface.infoGraphic.show) ? "block" : "none";
+					domStyle.set(this.infoGraphicButton, "display", display);
+				}
+				
+				var plugin = this;
+				on(this.infoGraphicButton, "click", function(c){
+					var popup = JSON.parse(domAttr.get(this, "data-popup"));
+					var url = domAttr.get(this, "data-url");
+					if (popup) {
+						var html = url.replace("PLUGIN-DIRECTORY", plugin._plugin_directory);
 						TINY.box.show({
 							animate: true,
-							html: '<img style="margin:20px;" src="' + imageSource + '"/>',
+							html: html,
 							fixed: true,
 							width: 640,
 							height: 450
 						});
-					})
-				}
+					} else {
+						window.open(url, "_blank");
+					}
+					
+				})
 				
 				var loadingDiv = domConstruct.create("div", {
 					innerHTML:"<i class='fa fa-spinner fa-spin fa-3x fa-fw'></i>",
@@ -195,146 +210,158 @@ define([
 			this.updateMapLayers = function() {
 				//console.log("updateMapLayers");
 				var parameters = {}
-				
 				parameters.hazard = this.hazardSelect.value.toLowerCase();
 				
-				var options = this._interface.region[this._region].controls.select.hazard.options
-				var hazardOption = options[array.map(options, function(option) { return option.value }).indexOf(parameters.hazard)]
+				if (parameters.hazard != "") {
 				
-				parameters.climate = (!_.has(this._interface.region[this._region].controls.slider, "climate")) ? this.climateSlider.get("value") : (_.isArray(this._interface.region[this._region].controls.slider.climate.labels)) ? this._interface.region[this._region].controls.slider.climate.labels[this.climateSlider.get("value")].toLowerCase() : this._interface.region[this._region].controls.slider.climate.labels[parameters.hazard][this.climateSlider.get("value")].toLowerCase();
-				
-				parameters.sealevelrise = (!_.has(this._interface.region[this._region].controls.slider, "sealevelrise")) ? this.sealevelriseSlider.get("value") : (_.isArray(this._interface.region[this._region].controls.slider.sealevelrise.labels)) ? this._interface.region[this._region].controls.slider.sealevelrise.labels[this.sealevelriseSlider.get("value")].toLowerCase() : this._interface.region[this._region].controls.slider.sealevelrise.labels[parameters.hazard][this.sealevelriseSlider.get("value")].toLowerCase();
-				
-				parameters.scenario = (!_.has(this._interface.region[this._region].controls.slider, "scenario")) ? this.scenarioSlider.get("value") : (_.isArray(this._interface.region[this._region].controls.slider.scenario.labels)) ? this._interface.region[this._region].controls.slider.scenario.labels[this.scenarioSlider.get("value")].toLowerCase() : this._interface.region[this._region].controls.slider.scenario.labels[parameters.hazard][this.scenarioSlider.get("value")].toLowerCase();
-				
-				parameters.hurricane = (!_.has(this._interface.region[this._region].controls.slider, "hurricane")) ? this.hurricaneSlider.get("value") : (_.isArray(this._interface.region[this._region].controls.slider.hurricane.labels)) ? this._interface.region[this._region].controls.slider.hurricane.labels[this.hurricaneSlider.get("value")].toLowerCase() : this._interface.region[this._region].controls.slider.hurricane.labels[parameters.hazard][this.hurricaneSlider.get("value")].toLowerCase();
-				
-				parameters.stormSurge = (!_.has(this._interface.region[this._region].controls.slider, "stormSurge")) ? this.stormSurgeSlider.get("value") : (_.isArray(this._interface.region[this._region].controls.slider.stormSurge.labels)) ? this._interface.region[this._region].controls.slider.stormSurge.labels[this.stormSurgeSlider.get("value")].toLowerCase() : this._interface.region[this._region].controls.slider.stormSurge.labels[parameters.hazard][this.stormSurgeSlider.get("value")].toLowerCase();
-				
-				var parts = [parameters.hazard];
-				array.forEach(_.keys(hazardOption.controls), function(key) {
-					array.forEach(hazardOption.controls[key], function(control) {
-						if (key == "slider") {
-							parts.push(parameters[control]);
-						}
-						if (key == "radiocheck") {
-							if (self[control + "RadioButton"] && self[control + "RadioButton"].checked) {
-								parts.push(self._interface.region[self._region].controls.radiocheck[control].value);
+					var options = this._interface.region[this._region].controls.select.hazard.options
+					var hazardOption = options[array.map(options, function(option) { return option.value }).indexOf(parameters.hazard)]
+					
+					parameters.climate = (!_.has(this._interface.region[this._region].controls.slider, "climate")) ? this.climateSlider.get("value") : (_.isArray(this._interface.region[this._region].controls.slider.climate.labels)) ? this._interface.region[this._region].controls.slider.climate.labels[this.climateSlider.get("value")].toLowerCase() : this._interface.region[this._region].controls.slider.climate.labels[parameters.hazard][this.climateSlider.get("value")].toLowerCase();
+					
+					parameters.sealevelrise = (!_.has(this._interface.region[this._region].controls.slider, "sealevelrise")) ? this.sealevelriseSlider.get("value") : (_.isArray(this._interface.region[this._region].controls.slider.sealevelrise.labels)) ? this._interface.region[this._region].controls.slider.sealevelrise.labels[this.sealevelriseSlider.get("value")].toLowerCase() : this._interface.region[this._region].controls.slider.sealevelrise.labels[parameters.hazard][this.sealevelriseSlider.get("value")].toLowerCase();
+					
+					parameters.scenario = (!_.has(this._interface.region[this._region].controls.slider, "scenario")) ? this.scenarioSlider.get("value") : (_.isArray(this._interface.region[this._region].controls.slider.scenario.labels)) ? this._interface.region[this._region].controls.slider.scenario.labels[this.scenarioSlider.get("value")].toLowerCase() : this._interface.region[this._region].controls.slider.scenario.labels[parameters.hazard][this.scenarioSlider.get("value")].toLowerCase();
+					
+					parameters.hurricane = (!_.has(this._interface.region[this._region].controls.slider, "hurricane")) ? this.hurricaneSlider.get("value") : (_.isArray(this._interface.region[this._region].controls.slider.hurricane.labels)) ? this._interface.region[this._region].controls.slider.hurricane.labels[this.hurricaneSlider.get("value")].toLowerCase() : this._interface.region[this._region].controls.slider.hurricane.labels[parameters.hazard][this.hurricaneSlider.get("value")].toLowerCase();
+					
+					parameters.stormSurge = (!_.has(this._interface.region[this._region].controls.slider, "stormSurge")) ? this.stormSurgeSlider.get("value") : (_.isArray(this._interface.region[this._region].controls.slider.stormSurge.labels)) ? this._interface.region[this._region].controls.slider.stormSurge.labels[this.stormSurgeSlider.get("value")].toLowerCase() : this._interface.region[this._region].controls.slider.stormSurge.labels[parameters.hazard][this.stormSurgeSlider.get("value")].toLowerCase();
+					
+					var parts = [parameters.hazard];
+					array.forEach(_.keys(hazardOption.controls), function(key) {
+						array.forEach(hazardOption.controls[key], function(control) {
+							if (key == "slider") {
+								parts.push(parameters[control]);
 							}
-							if (self[control + "CheckBox"] && self[control + "CheckBox"].checked) {
-								parts.push(self._interface.region[self._region].controls.radiocheck[control].value);
-							}
-						} 
-						if (key == "togglebutton") {
-							var tbs = _.keys(self._interface.region[self._region].controls.togglebutton);
-							array.forEach(tbs, function(tb) {
-								if (_.has(self._interface.region[self._region].controls.togglebutton[tb], "dependency") && _.has(self._interface.region[self._region].controls.togglebutton[tb].dependency, "radiocheck")) {
-									var rcs = _.keys(self._interface.region[self._region].controls.togglebutton[tb].dependency.radiocheck);
-									if (_.contains(rcs, tb)) {
-										array.forEach(_.keys(self._interface.region[self._region].controls.togglebutton[tb].dependency.radiocheck[tb]), function(p) {
-											if (self[tb + "RadioButton"] && self[control + "RadioButton"][p]) {
-												parts.push(_.first(query(".plugin-slr .toggle-btn." + self._region.replace(/ /g,"_").toLowerCase() + "." + tb + " input:checked")).value);
-											}
-											if (self[tb + "CheckBox"] && self[control + "CheckBox"][p]) {
-												parts.push(_.first(query(".plugin-slr .toggle-btn." + self._region.replace(/ /g,"_").toLowerCase() + "." + tb + " input:checked")).value);
-											}
-										});
-									}
-								}	
-							})
-						}
-					})
-				});
-				
-				if (!_.isEmpty(this._mapLayer) && !_.has(this._mapLayer, "tileInfo")) {
-					this._mapLayer.setVisibleLayers([]);
-				};
-				if (!_.isEmpty(this._mapLayer)) {
-					this._mapLayer.hide();
-				}
-				if (_.has(this._data.region[this._region], parts.join("|"))) {
-					var dynamic = _.isArray(this._data.region[this._region][parts.join("|")]);
-					if (dynamic) {
-						var layer = (_.has(this._mapLayers[this._region], parameters.hazard)) ? parameters.hazard : "main";
-						this._mapLayer = this._mapLayers[this._region][layer];
-						var visibleLayers = this._data.region[this._region][parts.join("|")];
-						this._mapLayer.setVisibleLayers(visibleLayers);
-					} else {
-						this._mapLayer = this._mapLayers[this._region][this._data.region[this._region][parts.join("|")]];
-					}
-				} else {
-					this._mapLayer = this._mapLayers[this._region]["main"]
-				}
-				
-				this._mapLayer.show();
-				
-				if (_.has(this._interface.region[this._region].controls.radiocheck, "other")) {
-					 if (_.has(this._interface.region[this._region].controls.radiocheck.other, "layer") && _.has(this._mapLayers[this._region], this._interface.region[this._region].controls.radiocheck.other.layer)) {
-						 if (this.otherCheckBox.checked) {
-							this._mapLayers[this._region][this._interface.region[this._region].controls.radiocheck.other.layer].setVisibleLayers(this._data.region[this._region][this._interface.region[this._region].controls.radiocheck.other.layer])
-							this._mapLayers[this._region][this._interface.region[this._region].controls.radiocheck.other.layer].show();
-							if (!this._interface.region[this._region].controls.radiocheck.other.overlay) {
-								this._mapLayer.hide();
-							}
-						} else {
-							this._mapLayers[this._region][this._interface.region[this._region].controls.radiocheck.other.layer].hide();
-						}
-					}
-				}
-				
-				if (_.has(this._mapLayers[this._region], "model_storm")) { 
-					self._mapLayers[self._region].model_storm.setVisibleLayers([]);
-					var storm = "";
-					array.forEach(query('input[id*="' + this._region.replace(/ /g,"_").toLowerCase() + '"]'), function(input) {
-						var visibleLayers = self._mapLayers[self._region].model_storm.visibleLayers;
-						storm = input.value;
-						var type = _.last(input.name.split("-"));
-						var data = domAttr.get(input, "data-controls");
-						if (!_.isNull(data)) {
-							var items = []
-							var controls = data.split("+");
-							array.forEach(controls, function(control){
-								var type = _.first(control.split("@"));
-								if (type == "slider") {
-									array.forEach(_.last(control.split("@")).split("|"), function(c) {
-										items.push(parameters[c])
-									})
+							if (key == "radiocheck") {
+								if (self[control + "RadioButton"] && self[control + "RadioButton"].checked) {
+									parts.push(self._interface.region[self._region].controls.radiocheck[control].value);
 								}
-							});
-							var suffix = (storm != "") ? ("|" + storm) : "";
-							var key = "model_storm|" + type + "|" + items.join("|") + suffix;
-						} else {
-							var suffix = (storm != "") ? ("|" + storm) : "";
-							var key = "model_storm|" + type + suffix;
-						}
-						if (input.checked) {
-							visibleLayers = _.union(visibleLayers, self._data.region[self._region][key]);
-						} else {
-							visibleLayers = _.difference(visibleLayers, self._data.region[self._region][key]);
-						}
-						self._mapLayers[self._region].model_storm.setVisibleLayers(visibleLayers);
-					})
+								if (self[control + "CheckBox"] && self[control + "CheckBox"].checked) {
+									parts.push(self._interface.region[self._region].controls.radiocheck[control].value);
+								}
+							} 
+							if (key == "togglebutton") {
+								var tbs = _.keys(self._interface.region[self._region].controls.togglebutton);
+								array.forEach(tbs, function(tb) {
+									if (_.has(self._interface.region[self._region].controls.togglebutton[tb], "dependency") && _.has(self._interface.region[self._region].controls.togglebutton[tb].dependency, "radiocheck")) {
+										var rcs = _.keys(self._interface.region[self._region].controls.togglebutton[tb].dependency.radiocheck);
+										if (_.contains(rcs, tb)) {
+											array.forEach(_.keys(self._interface.region[self._region].controls.togglebutton[tb].dependency.radiocheck[tb]), function(p) {
+												if (self[tb + "RadioButton"] && self[control + "RadioButton"][p]) {
+													parts.push(_.first(query(".plugin-slr .toggle-btn." + self._region.replace(/ /g,"_").toLowerCase() + "." + tb + " input:checked")).value);
+												}
+												if (self[tb + "CheckBox"] && self[control + "CheckBox"][p]) {
+													parts.push(_.first(query(".plugin-slr .toggle-btn." + self._region.replace(/ /g,"_").toLowerCase() + "." + tb + " input:checked")).value);
+												}
+											});
+										}
+									}	
+								})
+							}
+						})
+					});
 					
-					if (array.some(query('input[id*="' + this._region.replace(/ /g,"_").toLowerCase() + '"]'), function(item) { return item.checked })) {
-						array.forEach(self._interface.region[self._region].controls.tree.storm.values, function(item) {
-							array.forEach(item.layers.hide, function(layer) {
-								self._mapLayers[self._region][layer].hide();
-							});
-							array.forEach(item.layers.show, function(layer) {
-								self._mapLayers[self._region][layer].show();
-							});
-						});
+					if (!_.isEmpty(this._mapLayer) && !_.has(this._mapLayer, "tileInfo")) {
+						this._mapLayer.setVisibleLayers([]);
+					};
+					if (!_.isEmpty(this._mapLayer)) {
+						this._mapLayer.hide();
+					}
+					if (_.has(this._data.region[this._region], parts.join("|"))) {
+						var dynamic = _.isArray(this._data.region[this._region][parts.join("|")]);
+						if (dynamic) {
+							var layer = (_.has(this._mapLayers[this._region], parameters.hazard)) ? parameters.hazard : "main";
+							this._mapLayer = this._mapLayers[this._region][layer];
+							var visibleLayers = this._data.region[this._region][parts.join("|")];
+							this._mapLayer.setVisibleLayers(visibleLayers);
+						} else {
+							this._mapLayer = this._mapLayers[this._region][this._data.region[this._region][parts.join("|")]];
+						}
 					} else {
-						array.forEach(self._interface.region[self._region].controls.tree.storm.values, function(item) {
-							array.forEach(item.layers.show, function(layer) {
-								self._mapLayers[self._region][layer].hide();
-							});
-							array.forEach(item.layers.hide, function(layer) {
-								self._mapLayers[self._region][layer].show();
-							});
-						});
+						this._mapLayer = this._mapLayers[this._region]["main"]
 					}
 					
+					this._mapLayer.show();
+					
+					if (_.has(this._interface.region[this._region].controls.radiocheck, "other")) {
+						 if (_.has(this._interface.region[this._region].controls.radiocheck.other, "layer") && _.has(this._mapLayers[this._region], this._interface.region[this._region].controls.radiocheck.other.layer)) {
+							 if (this.otherCheckBox.checked) {
+								this._mapLayers[this._region][this._interface.region[this._region].controls.radiocheck.other.layer].setVisibleLayers(this._data.region[this._region][this._interface.region[this._region].controls.radiocheck.other.layer])
+								this._mapLayers[this._region][this._interface.region[this._region].controls.radiocheck.other.layer].show();
+								if (!this._interface.region[this._region].controls.radiocheck.other.overlay) {
+									this._mapLayer.hide();
+								}
+							} else {
+								this._mapLayers[this._region][this._interface.region[this._region].controls.radiocheck.other.layer].hide();
+							}
+						}
+					}
+					
+					if (_.has(this._mapLayers[this._region], "model_storm")) { 
+						self._mapLayers[self._region].model_storm.setVisibleLayers([]);
+						var storm = "";
+						array.forEach(query('input[id*="' + this._region.replace(/ /g,"_").toLowerCase() + '"]'), function(input) {
+							var visibleLayers = self._mapLayers[self._region].model_storm.visibleLayers;
+							storm = input.value;
+							var type = _.last(input.name.split("-"));
+							var data = domAttr.get(input, "data-controls");
+							if (!_.isNull(data)) {
+								var items = []
+								var controls = data.split("+");
+								array.forEach(controls, function(control){
+									var type = _.first(control.split("@"));
+									if (type == "slider") {
+										array.forEach(_.last(control.split("@")).split("|"), function(c) {
+											items.push(parameters[c])
+										})
+									}
+								});
+								var suffix = (storm != "") ? ("|" + storm) : "";
+								var key = "model_storm|" + type + "|" + items.join("|") + suffix;
+							} else {
+								var suffix = (storm != "") ? ("|" + storm) : "";
+								var key = "model_storm|" + type + suffix;
+							}
+							if (input.checked) {
+								visibleLayers = _.union(visibleLayers, self._data.region[self._region][key]);
+							} else {
+								visibleLayers = _.difference(visibleLayers, self._data.region[self._region][key]);
+							}
+							self._mapLayers[self._region].model_storm.setVisibleLayers(visibleLayers);
+						})
+						
+						if (array.some(query('input[id*="' + this._region.replace(/ /g,"_").toLowerCase() + '"]'), function(item) { return item.checked })) {
+							array.forEach(self._interface.region[self._region].controls.tree.storm.values, function(item) {
+								array.forEach(item.layers.hide, function(layer) {
+									self._mapLayers[self._region][layer].hide();
+								});
+								array.forEach(item.layers.show, function(layer) {
+									self._mapLayers[self._region][layer].show();
+								});
+							});
+						} else {
+							array.forEach(self._interface.region[self._region].controls.tree.storm.values, function(item) {
+								array.forEach(item.layers.show, function(layer) {
+									self._mapLayers[self._region][layer].hide();
+								});
+								array.forEach(item.layers.hide, function(layer) {
+									self._mapLayers[self._region][layer].show();
+								});
+							});
+						}
+						
+					}
+				
+				} else {
+					array.forEach(_.keys(this._mapLayers[this._region]), function(layer) {
+						if (!_.isEmpty(self._mapLayers[self._region][layer]) && !_.has(self._mapLayers[self._region][layer], "tileInfo")) {
+							self._mapLayers[self._region][layer].setVisibleLayers([]);
+						};
+						if (!_.isEmpty(self._mapLayers[self._region][layer])) {
+							self._mapLayers[self._region][layer].hide();
+						}
+					});
 				}
 			}
 			
@@ -363,7 +390,7 @@ define([
 					this.updateInterface("region");
 				}
 				
-				this.tip = domConstruct.create("div", { className: "plugin-slr slr-tooltip interface" });
+				this.tip = domConstruct.create("div", { className: "plugin-slr slr-tooltip interface", tabindex: -1 });
 				win.body().appendChild(this.tip);
 				
 				this.createTooltips();
@@ -484,8 +511,14 @@ define([
 				on(this.downloadReport,"click", function(){
 					 if (self._region && self._region != "") {
 						if (!_.has(self._interface.region[self._region].controls.select, "datasource") || (_.has(self._interface.region[self._region].controls.select, "datasource") && self.dataSourceSelect.value != "")) {
-							var url = self._interface.region[self._region].download.report.replace("HOSTNAME-", window.location.href);
+							if (_.isObject(self._interface.region[self._region].download.report) && _.has(self._interface.region[self._region].download.report, self.hazardSelect.value)) {
+								var url = self._interface.region[self._region].download.report[self.hazardSelect.value];
+							} else {
+								var url = self._interface.region[self._region].download.report;
+							}
+							url = url.replace("HOSTNAME-", window.location.href);
 							window.open(url, "_blank");
+							
 						}
 					 }
 				});
@@ -890,16 +923,19 @@ define([
 							}, stormsToggleContainer)
 							
 							on(stormToggle, "click", function(evt) {
-								var node = _.first(query(".slr-model-storm-" + key.replace(/ /g,"_").toLowerCase() + "_" + value.value + " .storm-toggle-td"))
-								var nodeOpen = domStyle.get(node,"display") == "none";
-								
-								var i = _.first(query(".slr-model-storm-" + key.replace(/ /g,"_").toLowerCase() + "_" + value.value + " .storm-toggle-icon"));
-								var previous = (nodeOpen) ? "right" : "down";
-								var current = (previous == "right") ? "down" : "right";
-								domClass.replace(i, "fa-caret-" + current, "fa-caret-" + previous);
-								
-								var display = (nodeOpen) ? "block" : "none";
-								domStyle.set(node,"display", display);
+								var type = (_.has(self._interface.region[self._region].controls.tree.storm, "displayType")) ? self._interface.region[self._region].controls.tree.storm.displayType : "fixed";
+								if (type != "fixed") {
+									var node = _.first(query(".slr-model-storm-" + key.replace(/ /g,"_").toLowerCase() + "_" + value.value + " .storm-toggle-td"))
+									var nodeOpen = domStyle.get(node,"display") == "none";
+									
+									var i = _.first(query(".slr-model-storm-" + key.replace(/ /g,"_").toLowerCase() + "_" + value.value + " .storm-toggle-icon"));
+									var previous = (nodeOpen) ? "right" : "down";
+									var current = (previous == "right") ? "down" : "right";
+									domClass.replace(i, "fa-caret-" + current, "fa-caret-" + previous);
+									
+									var display = (nodeOpen) ? "block" : "none";
+									domStyle.set(node,"display", display);
+								}
 							})
 							
 							var stormToggleTd = domConstruct.create("div", {
@@ -908,11 +944,20 @@ define([
 							}, stormToggle)
 							
 							array.forEach(value.controls, function(control){
+								var help = (_.has(control, "help") && control.help) ? "<i style='margin-left:0px;' class='fa fa-question-circle slr-" + self._map.id + "-label-storm_" + control.value +  "_" + value.value + "'></i>&nbsp;" : "";
 								var checkBoxDiv = domConstruct.create("label", { 
 									for: "slr-model-storm-" + control.value + "-layer-" + key.replace(/ /g,"_").toLowerCase() + "_" + value.value,
 									className:"styled-checkbox",
-									style:"display:inline-block; margin-left: 15px;"
+									style:"display:inline-block; margin-left: 15px;",
+									innerHTML: help
 								}, stormToggleTd);
+								
+								on(checkBoxDiv,"click", function(evt){
+									var target = domAttr.get(evt.target,"class");
+									if (target.indexOf("fa-question") > 0) {
+										evt.preventDefault();
+									}
+								})
 								
 								var checkBox = domConstruct.create("input", {
 									type:"checkbox",
@@ -931,7 +976,8 @@ define([
 								}
 								
 								var checkBoxLabel = domConstruct.create("div", {
-									innerHTML: '<span>' + control.label + '</span>'
+									innerHTML: "<span>" + control.label + "</span>",
+									style:"display:inline-block;"
 								}, checkBoxDiv);
 								
 								on(checkBox, "change", function(){
@@ -1401,6 +1447,7 @@ define([
 			}
 			
 			this.updateControls = function() {
+				domStyle.set(this.infoGraphicButton, "display", "none");
 				var hazard = this.hazardSelect.value.toLowerCase();
 				if (hazard != "") {
 					var options = this._interface.region[this._region].controls.select.hazard.options
@@ -1415,6 +1462,7 @@ define([
 					if (query(".storm-toggle").length > 0) {
 						domStyle.set(_.first(query(".storm-toggle")).parentNode, "display", "none");
 					}
+					
 					
 					array.forEach(options, function(opt) { 
 						if (_.has(opt, "controls")) {
@@ -1480,6 +1528,12 @@ define([
 						domStyle.set(this.hazardDescriptionDiv, "display", "none");
 					}
 					
+					if (_.has(hazardOption.controls, "infoGraphic") && hazardOption.controls.infoGraphic) {
+						domStyle.set(this.infoGraphicButton, "display", "block");
+						domAttr.set(this.infoGraphicButton, "data-popup", JSON.stringify(this._interface.region[this._region].controls.infoGraphic[hazard].popup));
+						domAttr.set(this.infoGraphicButton, "data-url", this._interface.region[this._region].controls.infoGraphic[hazard].url)
+					}
+					
 					if (_.has(this._interface.region[this._region].controls, "tree") && _.has(this._interface.region[this._region].controls.tree, "storm")) {
 						
 						
@@ -1527,6 +1581,7 @@ define([
 					}
 					
 					domStyle.set(this.radioButtonDiv, "display", "none");
+					domStyle.set(this.toggleDiv, "display", "none");
 					
 					this.hazardDescriptionDiv.innerHTML = "";
 					domStyle.set(this.hazardDescriptionDiv, "display", "none");
@@ -1535,9 +1590,9 @@ define([
 					this.climateSlider.set("disabled", true);
 					this.scenarioSlider.set("value", 0);
 					this.scenarioSlider.set("disabled", true);
-					this.hurricaneSlider.set("value", 1);
+					this.hurricaneSlider.set("value", 0);
 					this.hurricaneSlider.set("disabled", true);
-					this.stormSurgeSlider.set("value", 1);
+					this.stormSurgeSlider.set("value", 0);
 					this.stormSurgeSlider.set("disabled", true);
 					
 					if (_.has(this._interface.region[this._region].controls, "tree") && _.has(this._interface.region[this._region].controls.tree, "storm")) {
@@ -1645,12 +1700,42 @@ define([
 					var tooltips = (self._interface.region[self._region] && _.has(self._interface.region[self._region], "tooltips")) ? self._interface.region[self._region].tooltips : self._interface.tooltips;
 					var message = tooltips[control];
 					if (!_.isUndefined(message)) {
-						self.showMessageDialog(this, message);
+						if (_.isObject(message)) {
+							var value = self[message.control + "Select"].value;
+							var popup = (_.has(message.values[value], "popup") && message.values[value].popup) ? message.values[value].popup : false;
+							var url = (_.has(message.values[value], "url")) ? message.values[value].url : "";
+							
+							if (popup) {
+								var html = url.replace("PLUGIN-DIRECTORY", self._plugin_directory);
+								var width = (_.has(message.values[value], "width")) ? message.values[value].width : 600;
+								var height = (_.has(message.values[value], "height")) ? message.values[value].height : 400;
+								TINY.box.show({
+									animate: true,
+									html: html,
+									fixed: true,
+									width: width + 40,
+									height: height + 40
+								});
+							} else {
+								self.showMessageDialog(this, value);
+							}
+							
+						} else {
+							self.showMessageDialog(this, message);
+						}
 					}
 				});
 				
-				on(query('*.fa[class*="slr-' + this._map.id + '"]'), "mouseout", function() {
-					self.hideMessageDialog();
+				on(this.tip, "blur", function() {
+					window.setTimeout(function() {
+						self.hideMessageDialog();
+					}, 250);
+				});
+				
+				on(this.tip, "click", function() {
+					window.setTimeout(function() {
+						self.hideMessageDialog();
+					}, 250);
 				});
 			}
 
@@ -1675,6 +1760,8 @@ define([
 					"left": left + "px",
 					"top": top + "px"
 				});
+				
+				self.tip.focus();
             }
 
             this.hideMessageDialog = function() {
