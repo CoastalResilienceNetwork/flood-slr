@@ -57,7 +57,7 @@
 			"model_storm|track|matthew": [43],
 			"model_storm|swath|matthew": [44]
 		},
-		"Virginia": {
+		"Virginia Eastern Shore": {
 			"sea_level_rise|2025|low": [3],
 			"sea_level_rise|2025|high": [7],
 			"sea_level_rise|2025|highest": [11],
@@ -123,11 +123,11 @@
 			"storm_surge|2040|nor'ida|economic": [34],
 			"storm_surge|2065|nor'ida|economic": [35],
 			
-			"model_storm|tide": [0],
-			"model_storm|track|low": [1],
-			"model_storm|track|medium": [2],
-			"model_storm|track|high": [3],
-			"model_storm|track|nor'ida": [4]
+			"model_storm|tide|na": [0],
+			"model_storm|track|low|na": [1],
+			"model_storm|track|medium|na": [2],
+			"model_storm|track|high|na": [3],
+			"model_storm|track|nor'ida|na": [4]
 			
 		},
 		"California (statewide)": {
