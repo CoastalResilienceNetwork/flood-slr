@@ -90,6 +90,13 @@ define([
 				sealevelrise: ["0","1","2","3","4","5"],
 				stormSurge: ["Low", "Medium", "High", "Highest"]
 			}
+			this._defaultTitles = {
+				climate:"Climate Year",
+				scenario:"Sea Level Rise",
+				hurricane:"Surge Severity",
+				sealevelrise:"Sea Level Rise (ft)",
+				stormSurge:"Storm Type"
+			}
 
 			this.initialize = function(){
 				//console.log("initialize - container");
@@ -764,7 +771,7 @@ define([
 				
 				//climate year slider
 			    var climateSliderLabel = domConstruct.create("div", {
-					innerHTML: "<i class='fa fa-question-circle slr-" + this._map.id + "-climate'></i>&nbsp;<b>Climate Year: </b>",
+					innerHTML: "<i class='fa fa-question-circle slr-" + this._map.id + "-climate'></i>&nbsp;<b><span class='slr-control-title climate'>" + this._defaultTitles.climate + "</span>: </b>",
 					style:"position:relative; width:110px; top:-10px; display:inline-block;"
 				}, climateTd);
 				this.climateSlider = new HorizontalSlider({
@@ -795,7 +802,7 @@ define([
 				
 				//scenario slider
 			    var scenarioSliderLabel = domConstruct.create("div", {
-					innerHTML: "<i class='fa fa-question-circle slr-" + this._map.id + "-scenario'></i>&nbsp;<b>Sea Level Rise: </b>",
+					innerHTML: "<i class='fa fa-question-circle slr-" + this._map.id + "-scenario'></i>&nbsp;<b><span class='slr-control-title scenario'>" + this._defaultTitles.scenario + "</span>: </b>",
 					style:"position:relative; width:110px; top:-10px; display:inline-block;"
 				}, scenarioTd);
 				this.scenarioSlider = new HorizontalSlider({
@@ -825,7 +832,7 @@ define([
 			    this.scenarioSlider.addChild(this.scenarioSliderLabels);
 				
 				var sealevelriseLabel = domConstruct.create("div", {
-					innerHTML: "<i class='fa fa-question-circle slr-" + this._map.id + "-sealevelrise'></i>&nbsp;<b>Sea Level Rise (ft): </b>",
+					innerHTML: "<i class='fa fa-question-circle slr-" + this._map.id + "-sealevelrise'></i>&nbsp;<b><span class='slr-control-title sealevelrise'>" + this._defaultTitles.sealevelrise + "</span>: </b>",
 					style:"position:relative; width:130px; top:-10px; display:inline-block;"
 				}, seaLevelRiseTd);
 				this.sealevelriseSlider = new HorizontalSlider({
@@ -855,7 +862,7 @@ define([
 				
 				//hurricane slider
 			    var hurricaneSliderLabel = domConstruct.create("div", {
-					innerHTML: "<i class='fa fa-question-circle slr-" + this._map.id + "-hurricane'></i>&nbsp;<b>Surge Severity: </b>",
+					innerHTML: "<i class='fa fa-question-circle slr-" + this._map.id + "-hurricane'></i>&nbsp;<b><span class='slr-control-title hurricane'>" + this._defaultTitles.hurricane + "</span>: </b>",
 					style:"position:relative; width:115px; top:-10px; display:inline-block;"
 				}, hurricaneTd);
 				this.hurricaneSlider = new HorizontalSlider({
@@ -1007,7 +1014,7 @@ define([
 				
 				//stormSurge slider
 			    var stormSurgeSliderLabel = domConstruct.create("div", {
-					innerHTML: "<i class='fa fa-question-circle slr-" + this._map.id + "-stormSurge'></i>&nbsp;<b>Storm Type: </b>",
+					innerHTML: "<i class='fa fa-question-circle slr-" + this._map.id + "-stormSurge'></i>&nbsp;<b><span class='slr-control-title stormSurge'>" + this._defaultTitles.stormSurge + "</span>: </b>",
 					style:"position:relative; width:110px; top:-10px; display:inline-block;"
 				}, stormSurgeTd);
 				this.stormSurgeSlider = new HorizontalSlider({
@@ -1270,6 +1277,8 @@ define([
 				this.climateSliderLabels.set("labels",labels);
 				this.climateSliderLabels.set("count", labels.length);
 				this.climateSliderLabels.buildRendering();
+				var title = (this._region != "" && _.has(this._interface.region[this._region].controls.slider.climate, "title")) ? this._interface.region[this._region].controls.slider.climate.title : this._defaultTitles.climate;
+				_.first(query("span.slr-control-title.climate")).innerHTML = title;
 				
 				if (this._region != "" && _.has(this._interface.region[this._region].controls.slider.scenario, "labels")) {
 					var labels = (_.isArray(this._interface.region[this._region].controls.slider.scenario.labels)) ? this._interface.region[this._region].controls.slider.scenario.labels : this._interface.region[this._region].controls.slider.scenario.labels[_.first(_.keys(this._interface.region[this._region].controls.slider.scenario.labels))]
@@ -1281,6 +1290,8 @@ define([
 				this.scenarioSliderLabels.set("labels",labels);
 				this.scenarioSliderLabels.set("count", labels.length);
 				this.scenarioSliderLabels.buildRendering();
+				var title = (this._region != "" && _.has(this._interface.region[this._region].controls.slider.scenario, "title")) ? this._interface.region[this._region].controls.slider.scenario.title : this._defaultTitles.scenario;
+				_.first(query("span.slr-control-title.scenario")).innerHTML = title;
 				
 				if (this._region != "" && _.has(this._interface.region[this._region].controls.slider.stormSurge, "labels")) {
 					var labels = (_.isArray(this._interface.region[this._region].controls.slider.stormSurge.labels)) ? this._interface.region[this._region].controls.slider.stormSurge.labels : this._interface.region[this._region].controls.slider.stormSurge.labels[_.first(_.keys(this._interface.region[this._region].controls.slider.stormSurge.labels))]
@@ -1292,6 +1303,8 @@ define([
 				this.stormSurgeSliderLabels.set("labels",labels);
 				this.stormSurgeSliderLabels.set("count", labels.length);
 				this.stormSurgeSliderLabels.buildRendering();
+				var title = (this._region != "" && _.has(this._interface.region[this._region].controls.slider.stormSurge, "title")) ? this._interface.region[this._region].controls.slider.stormSurge.title : this._defaultTitles.stormSurge;
+				_.first(query("span.slr-control-title.stormSurge")).innerHTML = title;
 				
 				if (this._region != "" && _.has(this._interface.region[this._region].controls.slider.hurricane, "labels")) {
 					var labels = (_.isArray(this._interface.region[this._region].controls.slider.hurricane.labels)) ? this._interface.region[this._region].controls.slider.hurricane.labels : this._interface.region[this._region].controls.slider.hurricane.labels[_.first(_.keys(this._interface.region[this._region].controls.slider.hurricane.labels))]
@@ -1303,6 +1316,8 @@ define([
 				this.hurricaneSliderLabels.set("labels",labels);
 				this.hurricaneSliderLabels.set("count", labels.length);
 				this.hurricaneSliderLabels.buildRendering();
+				var title = (this._region != "" && _.has(this._interface.region[this._region].controls.slider.hurricane, "title")) ? this._interface.region[this._region].controls.slider.hurricane.title : this._defaultTitles.hurricane;
+				_.first(query("span.slr-control-title.hurricane")).innerHTML = title;
 				
 				if (this._region != "" && _.has(this._interface.region[this._region].controls.slider.sealevelrise, "labels")) {
 					var labels = (_.isArray(this._interface.region[this._region].controls.slider.sealevelrise.labels)) ? this._interface.region[this._region].controls.slider.sealevelrise.labels : this._interface.region[this._region].controls.slider.sealevelrise.labels[_.first(_.keys(this._interface.region[this._region].controls.slider.sealevelrise.labels))]
@@ -1314,6 +1329,8 @@ define([
 				this.sealevelriseSliderLabels.set("labels",labels);
 				this.sealevelriseSliderLabels.set("count", labels.length);
 				this.sealevelriseSliderLabels.buildRendering();
+				var title = (this._region != "" && _.has(this._interface.region[this._region].controls.slider.sealevelrise, "title")) ? this._interface.region[this._region].controls.slider.sealevelrise.title : this._defaultTitles.sealevelrise;
+				_.first(query("span.slr-control-title.sealevelrise")).innerHTML = title;
 				
 				domStyle.set(this.climateSlider.domNode.parentNode, "display",  "block");
 				domStyle.set(this.scenarioSlider.domNode.parentNode, "display",  "block");
