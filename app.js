@@ -70,6 +70,7 @@ define([
 			this._map = this._plugin.map;
 			this._mapLayers = {};
 			this._mapLayer = {};
+			this._mapLayers_closeState = {};
 			this._extent = {
 				"xmin": 0,
 				"ymin": 0,
@@ -89,6 +90,13 @@ define([
 				hurricane:["1","2","3","4","5"],
 				sealevelrise: ["0","1","2","3","4","5"],
 				stormSurge: ["Low", "Medium", "High", "Highest"]
+			}
+			this._defaultTitles = {
+				climate:"Climate Year",
+				scenario:"Sea Level Rise",
+				hurricane:"Surge Severity",
+				sealevelrise:"Sea Level Rise (ft)",
+				stormSurge:"Storm Type"
 			}
 
 			this.initialize = function(){
@@ -118,6 +126,14 @@ define([
 					var display = (this._interface.infoGraphic.show) ? "block" : "none";
 					domStyle.set(this.infoGraphicButton, "display", display);
 				}
+				
+				on(this.infoGraphicButton, "mouseover", function(){
+					self.showMessageDialog(this, "Learn more");
+				})
+				
+				on(this.infoGraphicButton, "mouseout", function(){
+					self.hideMessageDialog();
+				})
 				
 				var plugin = this;
 				on(this.infoGraphicButton, "click", function(c){
@@ -153,12 +169,15 @@ define([
 			this.showTool = function(){
 				//console.log("showTool");
 				this._firstLoad = false;
-				/* if (this.regionSelect.value != "") {
-					this.updateMapLayers();
-					this._map.setExtent(new Extent(this._interface.region[this._region].extent), false);
-				} else {
-					this._map.setExtent(new Extent(this._extent), false);
-				} */
+				if (!_.isEmpty(this._mapLayers_closeState)) {
+					array.forEach(_.keys(this._mapLayers_closeState), function(region) {
+						array.forEach(_.keys(self._mapLayers_closeState[region]), function(layer) {
+							if (self._mapLayers_closeState[region][layer]) {
+								self._mapLayers[region][layer].show();
+							}
+						})
+					})
+				}
 			} 
 
 			this.hideTool = function(){
@@ -171,13 +190,12 @@ define([
 			
 			this.closeTool = function(){
 				//console.log("closeTool");
-				//this.slr.regionSelect.value = _.first(this.slr.regionSelect.options).value;
-				//this.slr.resetInterface();
 				if (!_.isEmpty(this._mapLayers)) {
-					//console.log("hide layers");
 					array.forEach(_.keys(this._mapLayers), function(region) {
+						self._mapLayers_closeState[region] = {};
 						array.forEach(_.keys(self._mapLayers[region]), function(layer) {
-							//self._mapLayers[region][layer].hide();
+							self._mapLayers_closeState[region][layer] = self._mapLayers[region][layer].visible;
+							self._mapLayers[region][layer].hide();
 						})
 					})
 				}
@@ -485,72 +503,89 @@ define([
 				this.regionSelect.value = _.first(this.regionSelect.options).value;
 				this._region = this.regionSelect.value;
 				
-				this.downloadReport = domConstruct.create("div", { className:"downloadButton", innerHTML:'<i class="fa fa-file-pdf-o downloadIcon"></i><span class="downloadText">Report</span>' }, regionTd);
+				this.downloadReport = domConstruct.create("div", { className:"downloadButton slr-report", innerHTML:'<i class="fa fa-file-pdf-o downloadIcon"></i><span class="downloadText">Report</span>' }, regionTd);
 				on(this.downloadReport,"mouseover", function(){
+					// self._interface.region[self._region].download.report.default != "")
 					if (self._region && self._region != "") {
 						if (!_.has(self._interface.region[self._region].controls.select, "datasource") || (_.has(self._interface.region[self._region].controls.select, "datasource") && self.dataSourceSelect.value != "")) {
-							coreFx.combine([
-							   xFx.wipeTo({ node: this, duration: 150, width: 80 }),
-							   xFx.wipeTo({ node: regionSelectDiv, duration: 150, width: 153 })
-							]).play();
-							domStyle.set(this, "background", "#0096d6");
+							
+							if ((!_.isObject(self._interface.region[self._region].download.report) && self._interface.region[self._region].download.report != "") || (_.isObject(self._interface.region[self._region].download.report) && _.has(self._interface.region[self._region].download.report, "default") && self._interface.region[self._region].download.report.default != "") || (_.isObject(self._interface.region[self._region].download.report) && _.has(self._interface.region[self._region].download.report, self.hazardSelect.value))) {
+								coreFx.combine([
+								   xFx.wipeTo({ node: this, duration: 150, width: 80 }),
+								   xFx.wipeTo({ node: regionSelectDiv, duration: 150, width: 153 })
+								]).play();
+								domStyle.set(this, "background", "#0096d6");
+							}
 						}
 					}
 				});
 				on(this.downloadReport,"mouseout", function(){
 					if (self._region && self._region != "") {
 						if (!_.has(self._interface.region[self._region].controls.select, "datasource") || (_.has(self._interface.region[self._region].controls.select, "datasource") && self.dataSourceSelect.value != "")) {
-							coreFx.combine([
-							   xFx.wipeTo({ node: this, duration: 150, width: 33 }),
-							   xFx.wipeTo({ node: regionSelectDiv, duration: 150, width: 200 })
-						   ]).play();
-						   domStyle.set(this, "background", "#2B2E3B");
+							if ((!_.isObject(self._interface.region[self._region].download.report) && self._interface.region[self._region].download.report != "") || (_.isObject(self._interface.region[self._region].download.report) && _.has(self._interface.region[self._region].download.report, "default") && self._interface.region[self._region].download.report.default != "") || (_.isObject(self._interface.region[self._region].download.report) && _.has(self._interface.region[self._region].download.report, self.hazardSelect.value))) {
+								coreFx.combine([
+								   xFx.wipeTo({ node: this, duration: 150, width: 33 }),
+								   xFx.wipeTo({ node: regionSelectDiv, duration: 150, width: 200 })
+							   ]).play();
+							   domStyle.set(this, "background", "#2B2E3B");
+							}
 						}
 					}
 				});
 				on(this.downloadReport,"click", function(){
 					 if (self._region && self._region != "") {
 						if (!_.has(self._interface.region[self._region].controls.select, "datasource") || (_.has(self._interface.region[self._region].controls.select, "datasource") && self.dataSourceSelect.value != "")) {
-							if (_.isObject(self._interface.region[self._region].download.report) && _.has(self._interface.region[self._region].download.report, self.hazardSelect.value)) {
-								var url = self._interface.region[self._region].download.report[self.hazardSelect.value];
-							} else {
-								var url = self._interface.region[self._region].download.report;
+							
+							if ((!_.isObject(self._interface.region[self._region].download.report) && self._interface.region[self._region].download.report != "") || (_.isObject(self._interface.region[self._region].download.report) && _.has(self._interface.region[self._region].download.report, "default") && self._interface.region[self._region].download.report.default != "") || (_.isObject(self._interface.region[self._region].download.report) && _.has(self._interface.region[self._region].download.report, self.hazardSelect.value))) {
+								
+								var url = (_.isObject(self._interface.region[self._region].download.report) && _.has(self._interface.region[self._region].download.report, self.hazardSelect.value)) ? self._interface.region[self._region].download.report[self.hazardSelect.value] : self._interface.region[self._region].download.report;
+								url = url.replace("HOSTNAME-", window.location.href);
+								window.open(url, "_blank");
 							}
-							url = url.replace("HOSTNAME-", window.location.href);
-							window.open(url, "_blank");
 							
 						}
 					 }
 				});
 				
-				this.downloadData = domConstruct.create("div", { className:"downloadButton", innerHTML:'<i class="fa fa-file-zip-o downloadIcon"></i><span class="downloadText">Data</span>' }, regionTd);
+				this.downloadData = domConstruct.create("div", { className:"downloadButton slr-data", innerHTML:'<i class="fa fa-file-zip-o downloadIcon"></i><span class="downloadText">Data</span>' }, regionTd);
 				on(this.downloadData,"mouseover", function(){
 					if (self._region && self._region != "") {
 						if (!_.has(self._interface.region[self._region].controls.select, "datasource") || (_.has(self._interface.region[self._region].controls.select, "datasource") && self.dataSourceSelect.value != "")) {
-							coreFx.combine([
-							   xFx.wipeTo({ node: this, duration: 150, width: 75 }),
-							   xFx.wipeTo({ node: regionSelectDiv, duration: 150, width: 158 })
-							]).play();
-						   domStyle.set(this, "background", "#0096d6");
+							
+							if ((!_.isObject(self._interface.region[self._region].download.data) && self._interface.region[self._region].download.data != "") || (_.isObject(self._interface.region[self._region].download.data) && _.has(self._interface.region[self._region].download.data, "default") && self._interface.region[self._region].download.data.default != "") || (_.isObject(self._interface.region[self._region].download.data) && _.has(self._interface.region[self._region].download.data, self.hazardSelect.value))) {
+								coreFx.combine([
+								   xFx.wipeTo({ node: this, duration: 150, width: 75 }),
+								   xFx.wipeTo({ node: regionSelectDiv, duration: 150, width: 158 })
+								]).play();
+							   domStyle.set(this, "background", "#0096d6");
+						   
+							}
 						}
 				   }
 				});
 				on(this.downloadData,"mouseout", function(){
 					if (self._region && self._region != "") {
 						if (!_.has(self._interface.region[self._region].controls.select, "datasource") || (_.has(self._interface.region[self._region].controls.select, "datasource") && self.dataSourceSelect.value != "")) {
-							coreFx.combine([
-							   xFx.wipeTo({ node: this, duration: 150, width: 33 }),
-							   xFx.wipeTo({ node: regionSelectDiv, duration: 150, width: 200 })
-							]).play();
-						   domStyle.set(this, "background", "#2B2E3B");
+							if ((!_.isObject(self._interface.region[self._region].download.data) && self._interface.region[self._region].download.data != "") || (_.isObject(self._interface.region[self._region].download.data) && _.has(self._interface.region[self._region].download.data, "default") && self._interface.region[self._region].download.data.default != "") || (_.isObject(self._interface.region[self._region].download.data) && _.has(self._interface.region[self._region].download.data, self.hazardSelect.value))) {
+								coreFx.combine([
+								   xFx.wipeTo({ node: this, duration: 150, width: 33 }),
+								   xFx.wipeTo({ node: regionSelectDiv, duration: 150, width: 200 })
+								]).play();
+							   domStyle.set(this, "background", "#2B2E3B");
+							}
 						}
 					}
 				});
 				on(this.downloadData,"click", function(){
 					 if (self._region && self._region != "") {
 						if (!_.has(self._interface.region[self._region].controls.select, "datasource") || (_.has(self._interface.region[self._region].controls.select, "datasource") && self.dataSourceSelect.value != "")) {
-							var url = self._interface.region[self._region].download.data;
-							window.open(url, "_blank");
+							
+							if ((!_.isObject(self._interface.region[self._region].download.data) && self._interface.region[self._region].download.data != "") || (_.isObject(self._interface.region[self._region].download.data) && _.has(self._interface.region[self._region].download.data, "default") && self._interface.region[self._region].download.data.default != "") || (_.isObject(self._interface.region[self._region].download.data) && _.has(self._interface.region[self._region].download.data, self.hazardSelect.value))) {
+								
+								var url = (_.isObject(self._interface.region[self._region].download.data) && _.has(self._interface.region[self._region].download.data, self.hazardSelect.value)) ? self._interface.region[self._region].download.data[self.hazardSelect.value] : self._interface.region[self._region].download.data;
+								url = url.replace("HOSTNAME-", window.location.href);
+								window.open(url, "_blank");
+							}
 						}
 					 }
 				});
@@ -764,7 +799,7 @@ define([
 				
 				//climate year slider
 			    var climateSliderLabel = domConstruct.create("div", {
-					innerHTML: "<i class='fa fa-question-circle slr-" + this._map.id + "-climate'></i>&nbsp;<b>Climate Year: </b>",
+					innerHTML: "<i class='fa fa-question-circle slr-" + this._map.id + "-climate'></i>&nbsp;<b><span class='slr-control-title climate'>" + this._defaultTitles.climate + "</span>: </b>",
 					style:"position:relative; width:110px; top:-10px; display:inline-block;"
 				}, climateTd);
 				this.climateSlider = new HorizontalSlider({
@@ -795,7 +830,7 @@ define([
 				
 				//scenario slider
 			    var scenarioSliderLabel = domConstruct.create("div", {
-					innerHTML: "<i class='fa fa-question-circle slr-" + this._map.id + "-scenario'></i>&nbsp;<b>Sea Level Rise: </b>",
+					innerHTML: "<i class='fa fa-question-circle slr-" + this._map.id + "-scenario'></i>&nbsp;<b><span class='slr-control-title scenario'>" + this._defaultTitles.scenario + "</span>: </b>",
 					style:"position:relative; width:110px; top:-10px; display:inline-block;"
 				}, scenarioTd);
 				this.scenarioSlider = new HorizontalSlider({
@@ -825,7 +860,7 @@ define([
 			    this.scenarioSlider.addChild(this.scenarioSliderLabels);
 				
 				var sealevelriseLabel = domConstruct.create("div", {
-					innerHTML: "<i class='fa fa-question-circle slr-" + this._map.id + "-sealevelrise'></i>&nbsp;<b>Sea Level Rise (ft): </b>",
+					innerHTML: "<i class='fa fa-question-circle slr-" + this._map.id + "-sealevelrise'></i>&nbsp;<b><span class='slr-control-title sealevelrise'>" + this._defaultTitles.sealevelrise + "</span>: </b>",
 					style:"position:relative; width:130px; top:-10px; display:inline-block;"
 				}, seaLevelRiseTd);
 				this.sealevelriseSlider = new HorizontalSlider({
@@ -855,7 +890,7 @@ define([
 				
 				//hurricane slider
 			    var hurricaneSliderLabel = domConstruct.create("div", {
-					innerHTML: "<i class='fa fa-question-circle slr-" + this._map.id + "-hurricane'></i>&nbsp;<b>Surge Severity: </b>",
+					innerHTML: "<i class='fa fa-question-circle slr-" + this._map.id + "-hurricane'></i>&nbsp;<b><span class='slr-control-title hurricane'>" + this._defaultTitles.hurricane + "</span>: </b>",
 					style:"position:relative; width:115px; top:-10px; display:inline-block;"
 				}, hurricaneTd);
 				this.hurricaneSlider = new HorizontalSlider({
@@ -1007,7 +1042,7 @@ define([
 				
 				//stormSurge slider
 			    var stormSurgeSliderLabel = domConstruct.create("div", {
-					innerHTML: "<i class='fa fa-question-circle slr-" + this._map.id + "-stormSurge'></i>&nbsp;<b>Storm Type: </b>",
+					innerHTML: "<i class='fa fa-question-circle slr-" + this._map.id + "-stormSurge'></i>&nbsp;<b><span class='slr-control-title stormSurge'>" + this._defaultTitles.stormSurge + "</span>: </b>",
 					style:"position:relative; width:110px; top:-10px; display:inline-block;"
 				}, stormSurgeTd);
 				this.stormSurgeSlider = new HorizontalSlider({
@@ -1253,7 +1288,11 @@ define([
 						query(".downloadButton").style("backgroundColor", backgroundColor);
 						
 					} else {
-						query(".downloadButton").style("backgroundColor", "#2B2E3B");
+						var backgroundColor = ((!_.isObject(self._interface.region[self._region].download.report) && self._interface.region[self._region].download.report != "") || (_.isObject(self._interface.region[self._region].download.report) && _.has(self._interface.region[self._region].download.report, "default") && self._interface.region[self._region].download.report.default != "")) ? "#2B2E3B" : "#94959C";
+						query(".downloadButton.slr-report").style("backgroundColor", backgroundColor);
+						
+						var backgroundColor = ((!_.isObject(self._interface.region[self._region].download.data) && self._interface.region[self._region].download.data != "") || (_.isObject(self._interface.region[self._region].download.data) && _.has(self._interface.region[self._region].download.data, "default") && self._interface.region[self._region].download.data.default != "")) ? "#2B2E3B" : "#94959C";
+						query(".downloadButton.slr-data").style("backgroundColor", backgroundColor);
 						
 						domStyle.set(this.dataSourceSelect.parentNode.parentNode, "display",  "none");
 						_.first(query('.slr-' + this._map.id + '-hazard .info-circle-text')).innerHTML = 2;
@@ -1270,6 +1309,8 @@ define([
 				this.climateSliderLabels.set("labels",labels);
 				this.climateSliderLabels.set("count", labels.length);
 				this.climateSliderLabels.buildRendering();
+				var title = (this._region != "" && _.has(this._interface.region[this._region].controls.slider.climate, "title")) ? this._interface.region[this._region].controls.slider.climate.title : this._defaultTitles.climate;
+				_.first(query("span.slr-control-title.climate")).innerHTML = title;
 				
 				if (this._region != "" && _.has(this._interface.region[this._region].controls.slider.scenario, "labels")) {
 					var labels = (_.isArray(this._interface.region[this._region].controls.slider.scenario.labels)) ? this._interface.region[this._region].controls.slider.scenario.labels : this._interface.region[this._region].controls.slider.scenario.labels[_.first(_.keys(this._interface.region[this._region].controls.slider.scenario.labels))]
@@ -1281,6 +1322,8 @@ define([
 				this.scenarioSliderLabels.set("labels",labels);
 				this.scenarioSliderLabels.set("count", labels.length);
 				this.scenarioSliderLabels.buildRendering();
+				var title = (this._region != "" && _.has(this._interface.region[this._region].controls.slider.scenario, "title")) ? this._interface.region[this._region].controls.slider.scenario.title : this._defaultTitles.scenario;
+				_.first(query("span.slr-control-title.scenario")).innerHTML = title;
 				
 				if (this._region != "" && _.has(this._interface.region[this._region].controls.slider.stormSurge, "labels")) {
 					var labels = (_.isArray(this._interface.region[this._region].controls.slider.stormSurge.labels)) ? this._interface.region[this._region].controls.slider.stormSurge.labels : this._interface.region[this._region].controls.slider.stormSurge.labels[_.first(_.keys(this._interface.region[this._region].controls.slider.stormSurge.labels))]
@@ -1292,6 +1335,8 @@ define([
 				this.stormSurgeSliderLabels.set("labels",labels);
 				this.stormSurgeSliderLabels.set("count", labels.length);
 				this.stormSurgeSliderLabels.buildRendering();
+				var title = (this._region != "" && _.has(this._interface.region[this._region].controls.slider.stormSurge, "title")) ? this._interface.region[this._region].controls.slider.stormSurge.title : this._defaultTitles.stormSurge;
+				_.first(query("span.slr-control-title.stormSurge")).innerHTML = title;
 				
 				if (this._region != "" && _.has(this._interface.region[this._region].controls.slider.hurricane, "labels")) {
 					var labels = (_.isArray(this._interface.region[this._region].controls.slider.hurricane.labels)) ? this._interface.region[this._region].controls.slider.hurricane.labels : this._interface.region[this._region].controls.slider.hurricane.labels[_.first(_.keys(this._interface.region[this._region].controls.slider.hurricane.labels))]
@@ -1303,6 +1348,8 @@ define([
 				this.hurricaneSliderLabels.set("labels",labels);
 				this.hurricaneSliderLabels.set("count", labels.length);
 				this.hurricaneSliderLabels.buildRendering();
+				var title = (this._region != "" && _.has(this._interface.region[this._region].controls.slider.hurricane, "title")) ? this._interface.region[this._region].controls.slider.hurricane.title : this._defaultTitles.hurricane;
+				_.first(query("span.slr-control-title.hurricane")).innerHTML = title;
 				
 				if (this._region != "" && _.has(this._interface.region[this._region].controls.slider.sealevelrise, "labels")) {
 					var labels = (_.isArray(this._interface.region[this._region].controls.slider.sealevelrise.labels)) ? this._interface.region[this._region].controls.slider.sealevelrise.labels : this._interface.region[this._region].controls.slider.sealevelrise.labels[_.first(_.keys(this._interface.region[this._region].controls.slider.sealevelrise.labels))]
@@ -1314,6 +1361,8 @@ define([
 				this.sealevelriseSliderLabels.set("labels",labels);
 				this.sealevelriseSliderLabels.set("count", labels.length);
 				this.sealevelriseSliderLabels.buildRendering();
+				var title = (this._region != "" && _.has(this._interface.region[this._region].controls.slider.sealevelrise, "title")) ? this._interface.region[this._region].controls.slider.sealevelrise.title : this._defaultTitles.sealevelrise;
+				_.first(query("span.slr-control-title.sealevelrise")).innerHTML = title;
 				
 				domStyle.set(this.climateSlider.domNode.parentNode, "display",  "block");
 				domStyle.set(this.scenarioSlider.domNode.parentNode, "display",  "block");
@@ -1568,6 +1617,13 @@ define([
 					var disable = (hazard == "") ? true : false;
 					this.climateSlider.set("disabled", disable);
 					this.opacitySlider.set("disabled", false);
+					
+					var backgroundColor = ((!_.isObject(self._interface.region[self._region].download.report) && self._interface.region[self._region].download.report != "") || (_.isObject(self._interface.region[self._region].download.report) && _.has(self._interface.region[self._region].download.report, "default") && self._interface.region[self._region].download.report.default != "") || (_.isObject(self._interface.region[self._region].download.report) && _.has(self._interface.region[self._region].download.report, self.hazardSelect.value)))  ? "#2B2E3B" : "#94959C";
+					query(".downloadButton").style("backgroundColor", backgroundColor);
+					
+					var backgroundColor = ((!_.isObject(self._interface.region[self._region].download.data) && self._interface.region[self._region].download.data != "") || (_.isObject(self._interface.region[self._region].download.data) && _.has(self._interface.region[self._region].download.data, "default") && self._interface.region[self._region].download.data.default != "") || (_.isObject(self._interface.region[self._region].download.data) && _.has(self._interface.region[self._region].download.data, self.hazardSelect.value)))  ? "#2B2E3B" : "#94959C";
+					query(".downloadButton.slr-data").style("backgroundColor", backgroundColor);
+					
 				} else {
 					domStyle.set(this.climateSlider.domNode.parentNode, "display",  "block");
 					domStyle.set(this.sealevelriseSlider.domNode.parentNode, "display",  "none");
@@ -1606,6 +1662,12 @@ define([
 					
 					var disable = (!_.has(this._interface.region[this._region].controls.radiocheck, "other")) ? true : false;
 					this.opacitySlider.set("disabled", disable);
+					
+					var backgroundColor = ((!_.isObject(self._interface.region[self._region].download.report) && self._interface.region[self._region].download.report != "") || (_.isObject(self._interface.region[self._region].download.report) && _.has(self._interface.region[self._region].download.report, "default") && self._interface.region[self._region].download.report.default != ""))  ? "#2B2E3B" : "#94959C";
+					query(".downloadButton.slr-report").style("backgroundColor", backgroundColor);
+					
+					var backgroundColor = ((!_.isObject(self._interface.region[self._region].download.data) && self._interface.region[self._region].download.data != "") || (_.isObject(self._interface.region[self._region].download.data) && _.has(self._interface.region[self._region].download.data, "default") && self._interface.region[self._region].download.data.default != ""))  ? "#2B2E3B" : "#94959C";
+					query(".downloadButton.slr-data").style("backgroundColor", backgroundColor);
 				}
 			}
 			
