@@ -70,6 +70,7 @@ define([
 			this._map = this._plugin.map;
 			this._mapLayers = {};
 			this._mapLayer = {};
+			this._mapLayers_closeState = {};
 			this._extent = {
 				"xmin": 0,
 				"ymin": 0,
@@ -126,6 +127,14 @@ define([
 					domStyle.set(this.infoGraphicButton, "display", display);
 				}
 				
+				on(this.infoGraphicButton, "mouseover", function(){
+					self.showMessageDialog(this, "Learn more");
+				})
+				
+				on(this.infoGraphicButton, "mouseout", function(){
+					self.hideMessageDialog();
+				})
+				
 				var plugin = this;
 				on(this.infoGraphicButton, "click", function(c){
 					var popup = JSON.parse(domAttr.get(this, "data-popup"));
@@ -160,12 +169,15 @@ define([
 			this.showTool = function(){
 				//console.log("showTool");
 				this._firstLoad = false;
-				/* if (this.regionSelect.value != "") {
-					this.updateMapLayers();
-					this._map.setExtent(new Extent(this._interface.region[this._region].extent), false);
-				} else {
-					this._map.setExtent(new Extent(this._extent), false);
-				} */
+				if (!_.isEmpty(this._mapLayers_closeState)) {
+					array.forEach(_.keys(this._mapLayers_closeState), function(region) {
+						array.forEach(_.keys(self._mapLayers_closeState[region]), function(layer) {
+							if (self._mapLayers_closeState[region][layer]) {
+								self._mapLayers[region][layer].show();
+							}
+						})
+					})
+				}
 			} 
 
 			this.hideTool = function(){
@@ -178,13 +190,12 @@ define([
 			
 			this.closeTool = function(){
 				//console.log("closeTool");
-				//this.slr.regionSelect.value = _.first(this.slr.regionSelect.options).value;
-				//this.slr.resetInterface();
 				if (!_.isEmpty(this._mapLayers)) {
-					//console.log("hide layers");
 					array.forEach(_.keys(this._mapLayers), function(region) {
+						self._mapLayers_closeState[region] = {};
 						array.forEach(_.keys(self._mapLayers[region]), function(layer) {
-							//self._mapLayers[region][layer].hide();
+							self._mapLayers_closeState[region][layer] = self._mapLayers[region][layer].visible;
+							self._mapLayers[region][layer].hide();
 						})
 					})
 				}
@@ -492,72 +503,89 @@ define([
 				this.regionSelect.value = _.first(this.regionSelect.options).value;
 				this._region = this.regionSelect.value;
 				
-				this.downloadReport = domConstruct.create("div", { className:"downloadButton", innerHTML:'<i class="fa fa-file-pdf-o downloadIcon"></i><span class="downloadText">Report</span>' }, regionTd);
+				this.downloadReport = domConstruct.create("div", { className:"downloadButton slr-report", innerHTML:'<i class="fa fa-file-pdf-o downloadIcon"></i><span class="downloadText">Report</span>' }, regionTd);
 				on(this.downloadReport,"mouseover", function(){
+					// self._interface.region[self._region].download.report.default != "")
 					if (self._region && self._region != "") {
 						if (!_.has(self._interface.region[self._region].controls.select, "datasource") || (_.has(self._interface.region[self._region].controls.select, "datasource") && self.dataSourceSelect.value != "")) {
-							coreFx.combine([
-							   xFx.wipeTo({ node: this, duration: 150, width: 80 }),
-							   xFx.wipeTo({ node: regionSelectDiv, duration: 150, width: 153 })
-							]).play();
-							domStyle.set(this, "background", "#0096d6");
+							
+							if ((!_.isObject(self._interface.region[self._region].download.report) && self._interface.region[self._region].download.report != "") || (_.isObject(self._interface.region[self._region].download.report) && _.has(self._interface.region[self._region].download.report, "default") && self._interface.region[self._region].download.report.default != "") || (_.isObject(self._interface.region[self._region].download.report) && _.has(self._interface.region[self._region].download.report, self.hazardSelect.value))) {
+								coreFx.combine([
+								   xFx.wipeTo({ node: this, duration: 150, width: 80 }),
+								   xFx.wipeTo({ node: regionSelectDiv, duration: 150, width: 153 })
+								]).play();
+								domStyle.set(this, "background", "#0096d6");
+							}
 						}
 					}
 				});
 				on(this.downloadReport,"mouseout", function(){
 					if (self._region && self._region != "") {
 						if (!_.has(self._interface.region[self._region].controls.select, "datasource") || (_.has(self._interface.region[self._region].controls.select, "datasource") && self.dataSourceSelect.value != "")) {
-							coreFx.combine([
-							   xFx.wipeTo({ node: this, duration: 150, width: 33 }),
-							   xFx.wipeTo({ node: regionSelectDiv, duration: 150, width: 200 })
-						   ]).play();
-						   domStyle.set(this, "background", "#2B2E3B");
+							if ((!_.isObject(self._interface.region[self._region].download.report) && self._interface.region[self._region].download.report != "") || (_.isObject(self._interface.region[self._region].download.report) && _.has(self._interface.region[self._region].download.report, "default") && self._interface.region[self._region].download.report.default != "") || (_.isObject(self._interface.region[self._region].download.report) && _.has(self._interface.region[self._region].download.report, self.hazardSelect.value))) {
+								coreFx.combine([
+								   xFx.wipeTo({ node: this, duration: 150, width: 33 }),
+								   xFx.wipeTo({ node: regionSelectDiv, duration: 150, width: 200 })
+							   ]).play();
+							   domStyle.set(this, "background", "#2B2E3B");
+							}
 						}
 					}
 				});
 				on(this.downloadReport,"click", function(){
 					 if (self._region && self._region != "") {
 						if (!_.has(self._interface.region[self._region].controls.select, "datasource") || (_.has(self._interface.region[self._region].controls.select, "datasource") && self.dataSourceSelect.value != "")) {
-							if (_.isObject(self._interface.region[self._region].download.report) && _.has(self._interface.region[self._region].download.report, self.hazardSelect.value)) {
-								var url = self._interface.region[self._region].download.report[self.hazardSelect.value];
-							} else {
-								var url = self._interface.region[self._region].download.report;
+							
+							if ((!_.isObject(self._interface.region[self._region].download.report) && self._interface.region[self._region].download.report != "") || (_.isObject(self._interface.region[self._region].download.report) && _.has(self._interface.region[self._region].download.report, "default") && self._interface.region[self._region].download.report.default != "") || (_.isObject(self._interface.region[self._region].download.report) && _.has(self._interface.region[self._region].download.report, self.hazardSelect.value))) {
+								
+								var url = (_.isObject(self._interface.region[self._region].download.report) && _.has(self._interface.region[self._region].download.report, self.hazardSelect.value)) ? self._interface.region[self._region].download.report[self.hazardSelect.value] : self._interface.region[self._region].download.report;
+								url = url.replace("HOSTNAME-", window.location.href);
+								window.open(url, "_blank");
 							}
-							url = url.replace("HOSTNAME-", window.location.href);
-							window.open(url, "_blank");
 							
 						}
 					 }
 				});
 				
-				this.downloadData = domConstruct.create("div", { className:"downloadButton", innerHTML:'<i class="fa fa-file-zip-o downloadIcon"></i><span class="downloadText">Data</span>' }, regionTd);
+				this.downloadData = domConstruct.create("div", { className:"downloadButton slr-data", innerHTML:'<i class="fa fa-file-zip-o downloadIcon"></i><span class="downloadText">Data</span>' }, regionTd);
 				on(this.downloadData,"mouseover", function(){
 					if (self._region && self._region != "") {
 						if (!_.has(self._interface.region[self._region].controls.select, "datasource") || (_.has(self._interface.region[self._region].controls.select, "datasource") && self.dataSourceSelect.value != "")) {
-							coreFx.combine([
-							   xFx.wipeTo({ node: this, duration: 150, width: 75 }),
-							   xFx.wipeTo({ node: regionSelectDiv, duration: 150, width: 158 })
-							]).play();
-						   domStyle.set(this, "background", "#0096d6");
+							
+							if ((!_.isObject(self._interface.region[self._region].download.data) && self._interface.region[self._region].download.data != "") || (_.isObject(self._interface.region[self._region].download.data) && _.has(self._interface.region[self._region].download.data, "default") && self._interface.region[self._region].download.data.default != "") || (_.isObject(self._interface.region[self._region].download.data) && _.has(self._interface.region[self._region].download.data, self.hazardSelect.value))) {
+								coreFx.combine([
+								   xFx.wipeTo({ node: this, duration: 150, width: 75 }),
+								   xFx.wipeTo({ node: regionSelectDiv, duration: 150, width: 158 })
+								]).play();
+							   domStyle.set(this, "background", "#0096d6");
+						   
+							}
 						}
 				   }
 				});
 				on(this.downloadData,"mouseout", function(){
 					if (self._region && self._region != "") {
 						if (!_.has(self._interface.region[self._region].controls.select, "datasource") || (_.has(self._interface.region[self._region].controls.select, "datasource") && self.dataSourceSelect.value != "")) {
-							coreFx.combine([
-							   xFx.wipeTo({ node: this, duration: 150, width: 33 }),
-							   xFx.wipeTo({ node: regionSelectDiv, duration: 150, width: 200 })
-							]).play();
-						   domStyle.set(this, "background", "#2B2E3B");
+							if ((!_.isObject(self._interface.region[self._region].download.data) && self._interface.region[self._region].download.data != "") || (_.isObject(self._interface.region[self._region].download.data) && _.has(self._interface.region[self._region].download.data, "default") && self._interface.region[self._region].download.data.default != "") || (_.isObject(self._interface.region[self._region].download.data) && _.has(self._interface.region[self._region].download.data, self.hazardSelect.value))) {
+								coreFx.combine([
+								   xFx.wipeTo({ node: this, duration: 150, width: 33 }),
+								   xFx.wipeTo({ node: regionSelectDiv, duration: 150, width: 200 })
+								]).play();
+							   domStyle.set(this, "background", "#2B2E3B");
+							}
 						}
 					}
 				});
 				on(this.downloadData,"click", function(){
 					 if (self._region && self._region != "") {
 						if (!_.has(self._interface.region[self._region].controls.select, "datasource") || (_.has(self._interface.region[self._region].controls.select, "datasource") && self.dataSourceSelect.value != "")) {
-							var url = self._interface.region[self._region].download.data;
-							window.open(url, "_blank");
+							
+							if ((!_.isObject(self._interface.region[self._region].download.data) && self._interface.region[self._region].download.data != "") || (_.isObject(self._interface.region[self._region].download.data) && _.has(self._interface.region[self._region].download.data, "default") && self._interface.region[self._region].download.data.default != "") || (_.isObject(self._interface.region[self._region].download.data) && _.has(self._interface.region[self._region].download.data, self.hazardSelect.value))) {
+								
+								var url = (_.isObject(self._interface.region[self._region].download.data) && _.has(self._interface.region[self._region].download.data, self.hazardSelect.value)) ? self._interface.region[self._region].download.data[self.hazardSelect.value] : self._interface.region[self._region].download.data;
+								url = url.replace("HOSTNAME-", window.location.href);
+								window.open(url, "_blank");
+							}
 						}
 					 }
 				});
@@ -1260,7 +1288,11 @@ define([
 						query(".downloadButton").style("backgroundColor", backgroundColor);
 						
 					} else {
-						query(".downloadButton").style("backgroundColor", "#2B2E3B");
+						var backgroundColor = ((!_.isObject(self._interface.region[self._region].download.report) && self._interface.region[self._region].download.report != "") || (_.isObject(self._interface.region[self._region].download.report) && _.has(self._interface.region[self._region].download.report, "default") && self._interface.region[self._region].download.report.default != "")) ? "#2B2E3B" : "#94959C";
+						query(".downloadButton.slr-report").style("backgroundColor", backgroundColor);
+						
+						var backgroundColor = ((!_.isObject(self._interface.region[self._region].download.data) && self._interface.region[self._region].download.data != "") || (_.isObject(self._interface.region[self._region].download.data) && _.has(self._interface.region[self._region].download.data, "default") && self._interface.region[self._region].download.data.default != "")) ? "#2B2E3B" : "#94959C";
+						query(".downloadButton.slr-data").style("backgroundColor", backgroundColor);
 						
 						domStyle.set(this.dataSourceSelect.parentNode.parentNode, "display",  "none");
 						_.first(query('.slr-' + this._map.id + '-hazard .info-circle-text')).innerHTML = 2;
@@ -1585,6 +1617,13 @@ define([
 					var disable = (hazard == "") ? true : false;
 					this.climateSlider.set("disabled", disable);
 					this.opacitySlider.set("disabled", false);
+					
+					var backgroundColor = ((!_.isObject(self._interface.region[self._region].download.report) && self._interface.region[self._region].download.report != "") || (_.isObject(self._interface.region[self._region].download.report) && _.has(self._interface.region[self._region].download.report, "default") && self._interface.region[self._region].download.report.default != "") || (_.isObject(self._interface.region[self._region].download.report) && _.has(self._interface.region[self._region].download.report, self.hazardSelect.value)))  ? "#2B2E3B" : "#94959C";
+					query(".downloadButton").style("backgroundColor", backgroundColor);
+					
+					var backgroundColor = ((!_.isObject(self._interface.region[self._region].download.data) && self._interface.region[self._region].download.data != "") || (_.isObject(self._interface.region[self._region].download.data) && _.has(self._interface.region[self._region].download.data, "default") && self._interface.region[self._region].download.data.default != "") || (_.isObject(self._interface.region[self._region].download.data) && _.has(self._interface.region[self._region].download.data, self.hazardSelect.value)))  ? "#2B2E3B" : "#94959C";
+					query(".downloadButton.slr-data").style("backgroundColor", backgroundColor);
+					
 				} else {
 					domStyle.set(this.climateSlider.domNode.parentNode, "display",  "block");
 					domStyle.set(this.sealevelriseSlider.domNode.parentNode, "display",  "none");
@@ -1623,6 +1662,12 @@ define([
 					
 					var disable = (!_.has(this._interface.region[this._region].controls.radiocheck, "other")) ? true : false;
 					this.opacitySlider.set("disabled", disable);
+					
+					var backgroundColor = ((!_.isObject(self._interface.region[self._region].download.report) && self._interface.region[self._region].download.report != "") || (_.isObject(self._interface.region[self._region].download.report) && _.has(self._interface.region[self._region].download.report, "default") && self._interface.region[self._region].download.report.default != ""))  ? "#2B2E3B" : "#94959C";
+					query(".downloadButton.slr-report").style("backgroundColor", backgroundColor);
+					
+					var backgroundColor = ((!_.isObject(self._interface.region[self._region].download.data) && self._interface.region[self._region].download.data != "") || (_.isObject(self._interface.region[self._region].download.data) && _.has(self._interface.region[self._region].download.data, "default") && self._interface.region[self._region].download.data.default != ""))  ? "#2B2E3B" : "#94959C";
+					query(".downloadButton.slr-data").style("backgroundColor", backgroundColor);
 				}
 			}
 			
