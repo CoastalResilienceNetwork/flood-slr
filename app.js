@@ -861,7 +861,7 @@ define([
 				
 				var sealevelriseLabel = domConstruct.create("div", {
 					innerHTML: "<i class='fa fa-question-circle slr-" + this._map.id + "-sealevelrise'></i>&nbsp;<b><span class='slr-control-title sealevelrise'>" + this._defaultTitles.sealevelrise + "</span>: </b>",
-					style:"position:relative; width:130px; top:-10px; display:inline-block;"
+					style:"position:relative; width:135px; top:-10px; display:inline-block;"
 				}, seaLevelRiseTd);
 				this.sealevelriseSlider = new HorizontalSlider({
 			        name: "sealevelriseSlider",
@@ -871,7 +871,7 @@ define([
 			        discreteValues: this._defaultLabels.sealevelrise.length,
 			        showButtons: false,
 					disabled: true,
-			        style: "width:140px; display:inline-block; margin:0px; background:none;",
+			        style: "width:135px; display:inline-block; margin:0px; background:none;",
 			        onChange: function(value){
 						if (self._region != "") {
 							self.updateMapLayers();
