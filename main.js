@@ -43,6 +43,7 @@ define([
        function (declare, PluginBase, parser, on, registry, array, domConstruct, query, dom, domClass, domStyle, domAttr, d3, _, slr, appData, appConfig) {
            return declare(PluginBase, {
                toolbarName: "Flood and Sea Level Rise",
+			   fullName: "Flood and Sea Level Rise",
                toolbarType: "sidebar",
                hasHelp: false,
                showServiceLayersInLegend: true,
