@@ -43,6 +43,7 @@ define([
        function (declare, PluginBase, parser, on, registry, array, domConstruct, query, dom, domClass, domStyle, domAttr, d3, _, slr, appData, appConfig) {
            return declare(PluginBase, {
                toolbarName: "Flood and Sea Level Rise",
+			   fullName: "Flood and Sea Level Rise",
                toolbarType: "sidebar",
                hasHelp: false,
                showServiceLayersInLegend: true,
@@ -75,7 +76,11 @@ define([
 
                deactivate: function () {
                    //console.log("deactivate");
-				   this.slr.hideTool();
+				    if (_.has(this.slr._interface, "includeMinimize") && !this.slr._interface.includeMinimize) {
+					   this.slr.closeTool();
+				   } else {
+					   this.slr.hideTool();
+				   }
                },
 
                hibernate: function () {
