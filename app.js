@@ -1243,11 +1243,13 @@ define([
 									var hazard = self.hazardSelect.value;
 									var labels = (_.isArray(self._interface.region[self._region].controls[c][name].labels)) ? self._interface.region[self._region].controls[c][name].labels : self._interface.region[self._region].controls[c][name].labels[hazard];
 									var v = _.pick(d[control], labels[value]);
-									var y = _.first(_.values(v));
-									var w = y.whitelist;
-									var z = _.first(query(".plugin-slr .toggle-btn." + self._region.replace(/ /g,"_").toLowerCase() + "." + control + " input:checked")).value;
-									if (!_.isUndefined(w) && w.length > 0 && _.indexOf(w, z) < 0) {
-										self[ _.first(w) + suffix[type]].checked = true;
+									if (!_.isEmpty(v)) {
+										var y = _.first(_.values(v));
+										var w = y.whitelist;
+										var z = _.first(query(".plugin-slr .toggle-btn." + self._region.replace(/ /g,"_").toLowerCase() + "." + control + " input:checked")).value;
+										if (!_.isUndefined(w) && w.length > 0 && _.indexOf(w, z) < 0) {
+											self[ _.first(w) + suffix[type]].checked = true;
+										}
 									}
 								}
 							

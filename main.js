@@ -75,7 +75,11 @@ define([
 
                deactivate: function () {
                    //console.log("deactivate");
-				   this.slr.hideTool();
+				    if (_.has(this.slr._interface, "includeMinimize") && !this.slr._interface.includeMinimize) {
+					   this.slr.closeTool();
+				   } else {
+					   this.slr.hideTool();
+				   }
                },
 
                hibernate: function () {
