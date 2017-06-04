@@ -397,7 +397,7 @@
 					"storm_surge": "https://tnc.app.box.com/s/fiya9hirlr28a96b0rwfmdzpb55hcx1i",
 					"default": ""
 				},
-				"data":""
+				"data":"http://data.coastalresilience.org/Virginia/VA_FloodSLR_gdb.zip"
 			}
 		},
 		"California (statewide)": {
