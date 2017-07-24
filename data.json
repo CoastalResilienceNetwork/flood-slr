@@ -478,6 +478,42 @@
 			"hurricane|3": [2],
 			"hurricane|4": [3],
 			"hurricane|sandy": [4]
+		},
+		"Gray's Harbor County": {
+			"sea_level_rise|current|low": [13],
+			"sea_level_rise|current|medium": [13],
+			"sea_level_rise|current|high": [13],
+			"sea_level_rise|current|extreme": [13],
+			"sea_level_rise|2030|low": [1],
+			"sea_level_rise|2030|medium": [4],
+			"sea_level_rise|2030|high": [7],
+			"sea_level_rise|2030|extreme": [10],
+			"sea_level_rise|2050|low": [2],
+			"sea_level_rise|2050|medium": [5],
+			"sea_level_rise|2050|high": [8],
+			"sea_level_rise|2050|extreme": [11],
+			"sea_level_rise|2100|low": [3],
+			"sea_level_rise|2100|medium": [6],
+			"sea_level_rise|2100|high": [9],
+			"sea_level_rise|2100|extreme": [12]
+		},
+		"Pacific County": {
+			"sea_level_rise|current|low": [13],
+			"sea_level_rise|current|medium": [13],
+			"sea_level_rise|current|high": [13],
+			"sea_level_rise|current|extreme": [13],
+			"sea_level_rise|2030|low": [1],
+			"sea_level_rise|2030|medium": [4],
+			"sea_level_rise|2030|high": [7],
+			"sea_level_rise|2030|extreme": [10],
+			"sea_level_rise|2050|low": [2],
+			"sea_level_rise|2050|medium": [5],
+			"sea_level_rise|2050|high": [8],
+			"sea_level_rise|2050|extreme": [11],
+			"sea_level_rise|2100|low": [3],
+			"sea_level_rise|2100|medium": [6],
+			"sea_level_rise|2100|high": [9],
+			"sea_level_rise|2100|extreme": [12]
 		}
 	}
 }

@@ -859,6 +859,102 @@
 				},
 				"data":""
 			}
+		},
+		"Gray's Harbor County": {
+			"url": "http://dev.services.coastalresilience.org/arcgis/rest/services/Washington/Flood_SLR/MapServer",
+			"layers": {
+				"main": "http://dev.services.coastalresilience.org/arcgis/rest/services/Washington/Flood_SLR/MapServer"
+			},
+			"tooltips": {
+				"region": "Geographic areas where climate change/sea level rise vulnerability studies have been conducted.",
+				"hazard": "Spatial extent for different coastal hazards that may affect coastal assets.  Impact zones were estimated across multiple planning horizons.",
+				"climate": "Future planning horizons representing the impact of climate change.",
+				"scenario": "Sea level rise scenarios (low, medium, high, and extreme) based on regional sea level rise amounts."
+			},
+			"extent": {
+				"xmin":-13827152.7073,
+				"ymin":5906594.5122999996,
+				"xmax":-13771296.630799999,
+				"ymax":5993208.3400999997,
+				"spatialReference":{
+					"wkid":102100,
+					"latestWkid":3857
+				}
+			},
+			"controls": {
+				"select": {
+					"hazard": {
+						"options": [
+							{
+								"name": " -- ",
+								"value": ""
+							},
+							{
+								"name": "Sea Level Rise",
+								"value": "sea_level_rise",
+								"controls": { "slider": ["climate", "scenario"] },
+								"description":"Historical sea level trends are available from NOAA tide stations at <a href='https://tidesandcurrents.noaa.gov/sltrends/sltrends_station.shtml?stnid=9440910' target='_blank'>Toke Point</a>."
+							}
+						]
+					}
+				},
+				"slider": {
+					"climate": { "disabled": false, "show": true, "labels": ["Current", "2030", "2050", "2100"] },
+					"scenario": { "disabled": false, "show": true, "labels": ["Low", "Med", "High", "Extr"] }
+				}
+			},
+			"download": {
+				"report":"http://coastalresilience.org/project/southwest-washington/",
+				"data":""
+			}
+		},
+		"Pacific County": {
+			"url": "http://dev.services.coastalresilience.org/arcgis/rest/services/Washington/Flood_SLR/MapServer",
+			"layers": {
+				"main": "http://dev.services.coastalresilience.org/arcgis/rest/services/Washington/Flood_SLR/MapServer"
+			},
+			"tooltips": {
+				"region": "Geographic areas where climate change/sea level rise vulnerability studies have been conducted.",
+				"hazard": "Spatial extent for different coastal hazards that may affect coastal assets.  Impact zones were estimated across multiple planning horizons.",
+				"climate": "Future planning horizons representing the impact of climate change.",
+				"scenario": "Sea level rise scenarios (low, medium, high, and extreme) based on regional sea level rise amounts."
+			},
+			"extent": {
+				"xmin":-13816079.9168,
+				"ymin":5823179.4905999973,
+				"xmax":-13760223.840299999,
+				"ymax":5909793.3183999974,
+				"spatialReference":{
+					"wkid":102100,
+					"latestWkid":3857
+				}
+			},
+			"controls": {
+				"select": {
+					"hazard": {
+						"options": [
+							{
+								"name": " -- ",
+								"value": ""
+							},
+							{
+								"name": "Sea Level Rise",
+								"value": "sea_level_rise",
+								"controls": { "slider": ["climate", "scenario"] },
+								"description":"Historical sea level trends are available from NOAA tide stations at <a href='https://tidesandcurrents.noaa.gov/sltrends/sltrends_station.shtml?stnid=9440910' target='_blank'>Toke Point</a>."
+							}
+						]
+					}
+				},
+				"slider": {
+					"climate": { "disabled": false, "show": true, "labels": ["Current", "2030", "2050", "2100"] },
+					"scenario": { "disabled": false, "show": true, "labels": ["Low", "Med", "High", "Extr"] }
+				}
+			},
+			"download": {
+				"report":"http://coastalresilience.org/project/southwest-washington/",
+				"data":""
+			}
 		}
 	}
 }
