@@ -869,7 +869,7 @@
 				"region": "Geographic areas where climate change/sea level rise vulnerability studies have been conducted.",
 				"hazard": "Spatial extent for different coastal hazards that may affect coastal assets.  Impact zones were estimated across multiple planning horizons.",
 				"climate": "Future planning horizons representing the impact of climate change.",
-				"scenario": "Sea level rise scenarios (low, medium, high, and extreme) based on regional sea level rise amounts."
+				"scenario": "Sea level rise scenarios (low, intermediate, high, and extreme) based on regional sea level rise amounts. Below is a table showing the scenario projections of relative sea level rise at Toke Point, Washington (<a href='https://tidesandcurrents.noaa.gov/publications/techrpt83_Global_and_Regional_SLR_Scenarios_for_the_US_final.pdf'>NOAA 2017</a>):<br><br><table class='slr-table'><tr><th class='scenario'>Scenario</th><th>2030</th><th>2050</th><th>2100</th></tr><tr><td class='scenario'>Low</td><td>4 cm (1.6 in)</td><td>8 cm (3.1 in)</td><td>19 cm (7.5 in)</td></tr><tr><td class='scenario'>Inter</td><td>11 cm (4.3 in)</td><td>25 cm (9.8 in)</td><td>83 cm (32.7 in)</td></tr><tr><td class='scenario'>High</td><td>22 cm (8.7 in)</td><td>59 cm (23.2 in)</td><td>229 cm (90.2 in)</td></tr><tr><td class='scenario'>Extr</td><td>27 cm (10.6 in)</td><td>73 cm (28.7 in)</td><td>289 cm (113.8 in)</td></tr></table>"
 			},
 			"extent": {
 				"xmin":-13827152.7073,
@@ -899,12 +899,18 @@
 					}
 				},
 				"slider": {
-					"climate": { "disabled": false, "show": true, "labels": ["Current", "2030", "2050", "2100"] },
-					"scenario": { "disabled": false, "show": true, "labels": ["Low", "Med", "High", "Extr"] }
+					"climate": { 
+						"disabled": false, "show": true,
+						"labels": ["Current", "2030", "2050", "2100"]
+					},
+					"scenario": { 
+						"disabled": false, "show": true, 
+						"labels": ["Low", "Inter", "High", "Extr"] 
+					}
 				}
 			},
 			"download": {
-				"report":"http://coastalresilience.org/project/southwest-washington/",
+				"report":"",
 				"data":""
 			}
 		},
@@ -917,7 +923,7 @@
 				"region": "Geographic areas where climate change/sea level rise vulnerability studies have been conducted.",
 				"hazard": "Spatial extent for different coastal hazards that may affect coastal assets.  Impact zones were estimated across multiple planning horizons.",
 				"climate": "Future planning horizons representing the impact of climate change.",
-				"scenario": "Sea level rise scenarios (low, medium, high, and extreme) based on regional sea level rise amounts."
+				"scenario": "Sea level rise scenarios (low, intermediate, high, and extreme) based on regional sea level rise amounts. Below is a table showing the scenario projections of relative sea level rise at Toke Point, Washington (<a href='https://tidesandcurrents.noaa.gov/publications/techrpt83_Global_and_Regional_SLR_Scenarios_for_the_US_final.pdf'>NOAA 2017</a>):<br><br><table class='slr-table'><tr><th class='scenario'>Scenario</th><th>2030</th><th>2050</th><th>2100</th></tr><tr><td class='scenario'>Low</td><td>4 cm (1.6 in)</td><td>8 cm (3.1 in)</td><td>19 cm (7.5 in)</td></tr><tr><td class='scenario'>Inter</td><td>11 cm (4.3 in)</td><td>25 cm (9.8 in)</td><td>83 cm (32.7 in)</td></tr><tr><td class='scenario'>High</td><td>22 cm (8.7 in)</td><td>59 cm (23.2 in)</td><td>229 cm (90.2 in)</td></tr><tr><td class='scenario'>Extr</td><td>27 cm (10.6 in)</td><td>73 cm (28.7 in)</td><td>289 cm (113.8 in)</td></tr></table>"
 			},
 			"extent": {
 				"xmin":-13816079.9168,
@@ -947,12 +953,18 @@
 					}
 				},
 				"slider": {
-					"climate": { "disabled": false, "show": true, "labels": ["Current", "2030", "2050", "2100"] },
-					"scenario": { "disabled": false, "show": true, "labels": ["Low", "Med", "High", "Extr"] }
+					"climate": { 
+						"disabled": false, "show": true,
+						"labels": ["Current", "2030", "2050", "2100"] 
+					},
+					"scenario": {
+						"disabled": false, "show": true,
+						"labels": ["Low", "Inter", "High", "Extr"] 
+					}
 				}
 			},
 			"download": {
-				"report":"http://coastalresilience.org/project/southwest-washington/",
+				"report":"",
 				"data":""
 			}
 		}
