@@ -430,3 +430,21 @@ color:#333333 !important;
 .tinner .tclose:hover {
 color:#333333 !important;	
 }
+
+.plugin-slr.slr-tooltip .slr-table {
+font-size:9px;
+text-align: center;
+width:100%;
+}
+
+.plugin-slr.slr-tooltip .slr-table  th{
+text-align: center;
+font-weight: bold;
+font-size: 10px;	
+}
+
+.plugin-slr.slr-tooltip .slr-table .scenario{
+font-weight: bold;
+font-style: italic;
+font-size: 10px;	
+}

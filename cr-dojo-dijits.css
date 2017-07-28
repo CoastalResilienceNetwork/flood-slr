@@ -82,16 +82,91 @@ background-color::none;
 background: #fff;
 }
 
-/* DIJIT TITLE PANE */
-.cr-dojo-dijits  div.dijitTitlePaneTitleOpen, .cr-dojo-dijits  div.dijitTitlePaneTitleFixedOpen {
-background-color:#36394a;
-color: #d3d3d3;
+/* DIJIT ACCORDION CONTAINER */
+.cr-dojo-dijits div.dijitAccordionInnerContainerSelected {
+border-color: transparent;
+background-color: transparent;
+}
+.cr-dojo-dijits div.dijitAccordionInnerContainer {
+background-color: transparent;
+border: none;
+margin-bottom: 1px;
+-webkit-transition-property: background-color, border;
+-moz-transition-property: background-color, border;
+transition-property: background-color, border;
+-webkit-transition-duration: 0.3s;
+-moz-transition-duration: 0.3s;
+transition-duration: 0.3s;
+-webkit-transition-timing-function: linear;
+-moz-transition-timing-function: linear;
+transition-timing-function: linear;
 }
 
-.cr-dojo-dijits  div.dijitTitlePaneTitle {
-background-color:#36394a;
-background-image:none;
+.cr-dojo-dijits div.dijitAccordionInnerContainerSelected .dijitAccordionTitle {
+background-color: transparent;
+background-repeat: no-repeat;
+background-image: none;
+}
+
+.cr-dojo-dijits div.dijitAccordionTitle {
+background-color: transparent;
+background-repeat: no-repeat;
+background-image: none;
+padding: 5px 7px 2px 7px;
 font-size: 14px;
+}
+
+.cr-dojo-dijits div.dijitAccordionContainer .dijitAccordionChildWrapper {
+background-color: #ffffff;
+border: none;
+margin: 0 2px 2px;
+}
+
+/* DOJOX TITLE GROUP */
+.cr-dojo-dijits div.dojoxTitleGroup .dijitTitlePaneContentOuter .dijitTitlePaneContentOuter, .cr-dojo-dijits div.dojoxTitleGroup {
+border-bottom: none;
+}
+
+/* DIJIT TITLE PANE */
+.cr-dojo-dijits div.dijitTitlePaneTitle {
+background: none;
+background-color:transparent;
+background-image:none;
+font-size: 17px;
+font-weight:bold;
+border: none;
+border-bottom: none;
+font-variant:normal; 
+margin: 0px;
+line-height:95%;
+color:#333333;
+padding: 5px 0px;
+}
+
+.cr-dojo-dijits  div.dijitTitlePaneTitleOpen, .cr-dojo-dijits  div.dijitTitlePaneTitleFixedOpen {
+background-color:transparent;
+background: #f5f5f5;
+}
+
+.cr-dojo-dijits .dijitTitlePaneTitleClosed .dijitArrowNode, .cr-dojo-dijits .dijitTitlePaneTitleOpen .dijitArrowNode {
+display:none;
+}
+
+.cr-dojo-dijits div.dijitTitlePaneTitleFocus {
+margin-top: 9px;
+padding-bottom: 2px;
+}
+
+.cr-dojo-dijits .layers  .dijitTitlePaneContentInner {
+padding: 0px 0px;
+background: #f5f5f5;
+}
+.cr-dojo-dijits  span.dijitTitlePaneTextNode {
+   margin-left: 8px;
+}
+
+.cr-dojo-dijits div.dijitTitlePaneContentOuter {
+border: none;	
 }
 
 /* DIJIT BUTTON */

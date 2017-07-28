@@ -1498,7 +1498,9 @@ define([
 			}
 			
 			this.updateControls = function() {
-				domStyle.set(this.infoGraphicButton, "display", "none");
+				var display = (this._interface.infoGraphic.show) ? "block": "none";
+				domStyle.set(this.infoGraphicButton, "display", display);
+				
 				var hazard = this.hazardSelect.value.toLowerCase();
 				if (hazard != "") {
 					var options = this._interface.region[this._region].controls.select.hazard.options
