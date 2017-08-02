@@ -97,6 +97,15 @@ background:#ffffff;
 pointer-events: none;
 opacity:1.0;
 }
+
+@media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+	.plugin-slr .styled-select:after {
+		font: 11px FontAwesome;
+		right: 0px;
+		top: 0px;
+		padding: 10px 7px;
+	}
+}
  
 .plugin-slr .styled-select select {
 -webkit-appearance: none;

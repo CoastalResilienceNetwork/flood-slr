@@ -1146,7 +1146,8 @@ define([
 				this.opacityContainer.appendChild(this.opacitySlider.domNode);
 			}
 			
-			this.setControlDependency = function(c, name, value, sub = null) {
+			this.setControlDependency = function(c, name, value, sub) {
+				var sub = (_.isUndefined(sub)) ? null : sub;
 				var suffix = { "slider": "Slider", "radio": "RadioButton", "check": "CheckBox", "togglebutton":"ToggleButton" };
 				var category = { "slider": "slider", "radio": "radiocheck", "check": "radiocheck", "togglebutton":"togglebutton" };
 				if (_.isNull(sub)) {
