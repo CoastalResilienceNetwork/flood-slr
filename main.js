@@ -76,16 +76,18 @@ define([
 
                deactivate: function () {
                    //console.log("deactivate");
-				    if (_.has(this.slr._interface, "includeMinimize") && !this.slr._interface.includeMinimize) {
+				    if (_.has(this.slr._interface, "includeMinimize") && !this.slr._interface.includeMinimize && _.has(this.slr, "closeTool")) {
 					   this.slr.closeTool();
-				   } else {
+				   } else if (_.has(this.slr, "hideTool")) {
 					   this.slr.hideTool();
 				   }
                },
 
                hibernate: function () {
 				   //console.log("hibernate");
-				   this.slr.closeTool();
+				   if (_.has(this.slr, "closeTool")) {
+					   this.slr.closeTool();
+				   }
                },
 
                initialize: function (frameworkParameters) {

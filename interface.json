@@ -641,10 +641,10 @@
 				"scenario": "Sea level rise scenarios (low, medium, and high) based on the 'Average of Models, Low,' 'Projection,' and 'Average of Models, High, regional sea level rise amounts."
 			},
 			"extent": {
-				"xmin": -1.3414577438099999E7,
-				"ymin": 4078232.8861400406,
-				"xmax": -1.3297306761030903E7,
-				"ymax": 4097986.0139999986,
+				"xmin":-13440534.354464998,
+				"ymin":4059218.90697083,
+				"xmax":-13303712.07383448,
+				"ymax":4171428.4644935117,
 				"spatialReference": {
 					"wkid": 102100,
 					"latestWkid": 3857
