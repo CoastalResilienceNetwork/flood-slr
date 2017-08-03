@@ -177,7 +177,16 @@ define([
 					   "disabled": this.slr.hazardCheckBox.disabled,
 					   "value": this.slr.hazardCheckBox.value,
 					   "display": domStyle.get(this.slr.hazardCheckBox.parentNode.parentNode, "display"),
+					   "show": domStyle.get(this.slr.hazardCheckBox.parentNode, "display"),
 					   "label": this.slr.hazardCheckBoxLabel.innerHTML
+				   }
+				   state.controls.checkbox.armorCheckBox = {
+					   "checked": this.slr.armorCheckBox.checked,
+					   "disabled": this.slr.armorCheckBox.disabled,
+					   "value": this.slr.armorCheckBox.value,
+					   "display": domStyle.get(this.slr.armorCheckBox.parentNode.parentNode, "display"),
+					   "show": domStyle.get(this.slr.armorCheckBox.parentNode, "display"),
+					   "label": this.slr.armorCheckBoxLabel.innerHTML
 				   }
 				   state.controls.checkbox.otherCheckBox = {
 					   "checked": this.slr.otherCheckBox.checked,
@@ -345,6 +354,8 @@ define([
 						 for (var property in this._state.controls.checkbox[control]) {
 							 if (property == "display" || property == "visibility") {
 								domStyle.set(plugin[control].parentNode.parentNode, property, this._state.controls.checkbox[control][property]) 
+							 } else if (property == "show") {
+								domStyle.set(plugin[control].parentNode, "display", this._state.controls.checkbox[control][property]) 
 							 } else if (property == "label") {
 								plugin[control + "Label"].innerHTML = this._state.controls.checkbox[control][property];
 							 } else {
