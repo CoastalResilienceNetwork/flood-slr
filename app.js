@@ -154,9 +154,9 @@ define([
 					
 				})
 				
-				var loadingDiv = domConstruct.create("div", {
+				this.loadingDiv = domConstruct.create("div", {
 					innerHTML:"<i class='fa fa-spinner fa-spin fa-3x fa-fw'></i>",
-					style:"position:absolute; left: 110px; top:50%; width:100px; height:100px; line-height:100px; text-align:center;"
+					style:"position:absolute; left: 110px; top:50%; width:100px; height:100px; line-height:100px; text-align:center; z-index:1000;"
 				}, this._container);
 				
 				this.loadInterface(this);
@@ -207,11 +207,18 @@ define([
 				var i = 0
 				array.forEach(_.keys(self._interface.region), function(region){
 					self._mapLayers[region] = {}
+					
 					array.forEach(_.keys(self._interface.region[region].layers), function(layer) {
 						var id = "slr-layer-" + i;
 						if (!_.isObject(self._interface.region[region].layers[layer])) {
 							var mapLayer = new DynamicMapServiceLayer(self._interface.region[region].layers[layer], { id:id });
 							mapLayer.setVisibleLayers([]);
+							on(mapLayer,"update-start",function(){
+								domStyle.set(self.loadingDiv,"display", "block");
+							})
+							on(mapLayer,"update-end",function(){
+								domStyle.set(self.loadingDiv,"display", "none");
+							})
 						} else {
 							var mapLayer = new TiledMapServiceLayer(self._interface.region[region].layers[layer].url, { id:id });
 						}
@@ -226,7 +233,7 @@ define([
 			}
 			
 			this.updateMapLayers = function() {
-				//console.log("updateMapLayers");
+				
 				var parameters = {}
 				parameters.hazard = this.hazardSelect.value.toLowerCase();
 				
@@ -412,7 +419,7 @@ define([
 				win.body().appendChild(this.tip);
 				
 				this.createTooltips();
-				domStyle.set(_.first(query(".plugin-slr .fa-spinner")).parentNode, "display", "none");
+				domStyle.set(this.loadingDiv,"display", "none");
 			}
 			
 			this.createInputs = function(){
