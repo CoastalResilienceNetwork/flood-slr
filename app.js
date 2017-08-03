@@ -635,10 +635,36 @@ define([
 				var checkBoxDiv = domConstruct.create("div", {
 					style:"position:relative; width:100%; height:20px; padding:0px; margin:0px 0px 0px 0px; display:none;"
 				}, hazardTd);
+				
+				var checkBoxLabel = domConstruct.create("label", { 
+					for: "slr-armor-layer-" + self._map.id,
+					className:"styled-checkbox",
+					style:"display:inline-block;margin-left:5px; margin-right:40px;"
+				}, checkBoxDiv);
+				this.armorCheckBox = domConstruct.create("input", {
+					type:"checkbox",
+					value:"armor",
+					name:"armor-layer",
+					id:"slr-armor-layer-" + self._map.id,
+					disabled:true,
+					checked:false
+				}, checkBoxLabel);
+				this.armorCheckBoxLabel = domConstruct.create("div", {
+					innerHTML: '<span>with armoring</span>'
+				}, checkBoxLabel);
+				on(self.armorCheckBox, "change", function(){
+					if (this.checked) {
+						self.setControlDependency("check", this.value, "checked");
+					} else {
+						self.setControlDependency("check", this.value, "unchecked");
+					}
+					self.updateMapLayers();
+				});
+				
 				var checkBoxLabel = domConstruct.create("label", { 
 					for: "slr-hazard-layer-" + self._map.id,
 					className:"styled-checkbox",
-					style:"display:block;margin-left: 5px;"
+					style:"display:inline-block; margin-left:5px;"
 				}, checkBoxDiv);
 				this.hazardCheckBox = domConstruct.create("input", {
 					type:"checkbox",
@@ -649,7 +675,7 @@ define([
 					checked:false
 				}, checkBoxLabel);
 				this.hazardCheckBoxLabel = domConstruct.create("div", {
-					innerHTML: '<span></span>'
+					innerHTML: '<span>aggregate data</span>'
 				}, checkBoxLabel);
 				on(self.hazardCheckBox, "change", function(){
 					if (this.checked) {
@@ -1449,8 +1475,15 @@ define([
 				if (this._region != "" && _.has(this._interface.region[this._region].controls, "radiocheck") && _.has(this._interface.region[this._region].controls.radiocheck, "hazard")) {
 					this.hazardCheckBox.checked = false;
 					this.hazardCheckBox.disabled = this._interface.region[this._region].controls.radiocheck.hazard.disabled;
-					this.hazardCheckBoxLabel.innerHTML = this._interface.region[this._region].controls.radiocheck.hazard.label;
 				}
+				
+				if (this._region != "" && _.has(this._interface.region[this._region].controls, "radiocheck") && _.has(this._interface.region[this._region].controls.radiocheck, "armor")) {
+					this.armorCheckBox.checked = false;
+					this.armorCheckBox.disabled = this._interface.region[this._region].controls.radiocheck.armor.disabled;
+					
+				}
+				domStyle.set(this.hazardCheckBox.parentNode, "display", "none");
+				domStyle.set(this.armorCheckBox.parentNode, "display", "none");
 				domStyle.set(this.hazardCheckBox.parentNode.parentNode, "display", "none");
 				
 				this.hazardDescriptionDiv.innerHTML = "";
@@ -1513,10 +1546,12 @@ define([
 					domStyle.set(this.hurricaneSlider.domNode.parentNode, "display",  "none");
 					domStyle.set(this.stormSurgeSlider.domNode.parentNode, "display",  "none");
 					
+					domStyle.set(this.hazardCheckBox.parentNode, "display", "none");
+					domStyle.set(this.armorCheckBox.parentNode, "display", "none");
+					
 					if (query(".storm-toggle").length > 0) {
 						domStyle.set(_.first(query(".storm-toggle")).parentNode, "display", "none");
 					}
-					
 					
 					array.forEach(options, function(opt) { 
 						if (_.has(opt, "controls")) {
@@ -1561,6 +1596,7 @@ define([
 							if (key == "radiocheck" ) {
 								if (self._interface.region[self._region].controls.radiocheck[control].type == "check") {
 									domStyle.set(self[control + "CheckBox"].parentNode.parentNode, "display", "block");
+									domStyle.set(self[control + "CheckBox"].parentNode, "display", "inline-block");
 								} else {
 									domStyle.set(self[control + "RadioButton"].parentNode.parentNode.parentNode, "display", "block");
 								}
@@ -1589,7 +1625,6 @@ define([
 					}
 					
 					if (_.has(this._interface.region[this._region].controls, "tree") && _.has(this._interface.region[this._region].controls.tree, "storm")) {
-						
 						
 						array.forEach(query(".storm-toggle-icon"), function(node) {
 							domClass.replace(node, "fa-caret-right", "fa-caret-down");

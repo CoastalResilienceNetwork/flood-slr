@@ -484,8 +484,8 @@
 					"hazard": {
 						"options": [
 							{ "name": " -- ", "value": "" },
-							{ "name": "Storm Flooding", "value": "storm_flood", "controls": { "slider": ["climate", "scenario"], "radiocheck": ["hazard"] } },
-							{ "name": "Coastal Erosion", "value": "coastal_erosion", "controls": { "slider": ["climate", "scenario"], "radiocheck": ["hazard"] } },
+							{ "name": "Storm Flooding", "value": "storm_flood", "controls": { "slider": ["climate", "scenario"], "radiocheck": ["armor"] } },
+							{ "name": "Coastal Erosion", "value": "coastal_erosion", "controls": { "slider": ["climate", "scenario"], "radiocheck": ["armor"] } },
 							{ "name": "Cliff Erosion", "value": "cliff_erosion", "controls": { "slider": ["climate"] } },
 							{ "name": "Rising Tide", "value": "tide", "controls": { "slider": ["climate", "scenario"] } }
 						]
@@ -519,7 +519,7 @@
 					}
 				},
 				"radiocheck": {
-					"hazard": { "disabled": false, "show": true, "value": "armor", "type":"check", "label":"with armoring" },
+					"armor": { "disabled": false, "show": true, "value": "armor", "type":"check", "label":"with armoring" },
 					"other": { "disabled": false, "show": true, "value": "risk", "type": "check", "label": "Relative Risk Zones", "layer": "risk", "overlay": false,
 								"dependency": {
 									"slider": {
@@ -612,7 +612,7 @@
 					"hazard": { "disabled": false, "show": true, 
 						"value":"aggregate",
 						"type":"check",
-						"label":"view aggregate data",
+						"label":"aggregate data",
 						"dependency": { 
 							"slider": {
 								"scenario": {
@@ -655,11 +655,11 @@
 					"hazard": {
 						"options": [
 							{ "name": " -- ", "value": "" },
-							{ "name": "Storm Flooding", "value": "storm_flood", "controls": { "slider": ["climate", "scenario"], "radiocheck": ["hazard"] } },
+							{ "name": "Storm Flooding", "value": "storm_flood", "controls": { "slider": ["climate", "scenario"], "radiocheck": ["armor","hazard"] } },
 							{ "name": "Fluvial Flooding", "value": "fluvial_flood", "controls": { "slider": ["climate", "scenario"], "radiocheck": ["hazard"] } },
-							{ "name": "Dune Erosion", "value": "dune_erosion", "controls": { "slider": ["climate", "scenario"], "radiocheck": ["hazard"] } },
-							{ "name": "Cliff Erosion", "value": "cliff_erosion", "controls": { "slider": ["climate", "scenario"], "radiocheck": ["hazard"] } },
-							{ "name": "Rising Tide", "value": "tide", "controls": { "slider": ["climate", "scenario"], "radiocheck": ["hazard"] } }
+							{ "name": "Dune Erosion", "value": "dune_erosion", "controls": { "slider": ["climate", "scenario"], "radiocheck": ["armor","hazard"] } },
+							{ "name": "Cliff Erosion", "value": "cliff_erosion", "controls": { "slider": ["climate", "scenario"], "radiocheck": ["armor","hazard"] } },
+							{ "name": "Rising Tide", "value": "tide", "controls": { "slider": ["climate", "scenario"], "radiocheck": ["armor","hazard"] } }
 						]
 					}
 				},
@@ -707,7 +707,7 @@
 					"hazard": { "disabled": false, "show": true, 
 						"value":"aggregate",
 						"type":"check",
-						"label":"view aggregate data",
+						"label":"aggregate data",
 						"dependency": { 
 							"slider": {
 								"scenario": {
@@ -716,7 +716,8 @@
 								}
 							}
 						}
-					}
+					},
+					"armor": { "disabled": false, "show": true, "value": "armor", "type":"check", "label":"with armoring" }
 				}
 			},
 			"download": {
