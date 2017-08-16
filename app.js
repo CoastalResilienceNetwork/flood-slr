@@ -281,7 +281,9 @@ define([
 												}
 											});
 										}
-									}	
+									} else {
+										parts.push(_.first(query(".plugin-slr .toggle-btn." + self._region.replace(/ /g,"_").toLowerCase() + "." + tb + " input:checked")).value);
+									}
 								})
 							}
 						})
@@ -803,21 +805,21 @@ define([
 							
 							var rbs = _.values(self._interface.region[key].controls.togglebutton[g].controls)
 							array.forEach(rbs, function(rb) {
-								self[rb.name + "ToggleButton"] = domConstruct.create("input", { 
+								self[rb.name + "_" + key.replace(/ /g,"_").toLowerCase() + "_ToggleButton"] = domConstruct.create("input", { 
 									type: "radio", 
 									value: rb.value, 
 									name: rb.group, 
-									id: "plugin-slr-togglebutton-" + rb.group + "-" + rb.name + "-" + self._map.id
+									id: "plugin-slr-" + key.replace(/ /g,"_").toLowerCase() + "-togglebutton-"  + rb.group + "-" + rb.name + "-" + self._map.id
 								}, containerDiv);
 								
-								if (rb.checked) { self[rb.name + "ToggleButton"].checked = true }
+								if (rb.checked) { self[rb.name + "_" + key.replace(/ /g,"_").toLowerCase() + "_ToggleButton"].checked = true }
 								
 								domConstruct.create("label", { 
-									for: "plugin-slr-togglebutton-" + rb.group + "-" + rb.name + "-" + self._map.id,
+									for: "plugin-slr-" + key.replace(/ /g,"_").toLowerCase() + "-togglebutton-"  + rb.group + "-" + rb.name + "-" + self._map.id,
 									innerHTML: rb.label
 								}, containerDiv);
 								
-								on(self[rb.name + "ToggleButton"] , "change", function() {
+								on(self[rb.name + "_" + key.replace(/ /g,"_").toLowerCase() + "_ToggleButton"] , "change", function() {
 									if (this.checked) {
 										self.setControlDependency("togglebutton", this.value, "checked", this.name);
 									}
@@ -1335,7 +1337,7 @@ define([
 					}
 				}
 								
-				if (this._region != "" && _.has(this._interface.region[this._region].controls.slider.climate, "labels")) {
+				if (this._region != "" && _.has(this._interface.region[this._region].controls, "slider") && _.has(this._interface.region[this._region].controls.slider, "climate") && _.has(this._interface.region[this._region].controls.slider.climate, "labels")) {
 					var labels = (_.isArray(this._interface.region[this._region].controls.slider.climate.labels)) ? this._interface.region[this._region].controls.slider.climate.labels : this._interface.region[this._region].controls.slider.climate.labels[_.first(_.keys(this._interface.region[this._region].controls.slider.climate.labels))]
 				} else {
 					var labels = this._defaultLabels.climate;
@@ -1345,10 +1347,10 @@ define([
 				this.climateSliderLabels.set("labels",labels);
 				this.climateSliderLabels.set("count", labels.length);
 				this.climateSliderLabels.buildRendering();
-				var title = (this._region != "" && _.has(this._interface.region[this._region].controls.slider.climate, "title")) ? this._interface.region[this._region].controls.slider.climate.title : this._defaultTitles.climate;
+				var title = (this._region != "" && _.has(this._interface.region[this._region].controls, "slider") && _.has(this._interface.region[this._region].controls.slider, "climate") && _.has(this._interface.region[this._region].controls.slider.climate, "title")) ? this._interface.region[this._region].controls.slider.climate.title : this._defaultTitles.climate;
 				_.first(query("span.slr-control-title.climate")).innerHTML = title;
 				
-				if (this._region != "" && _.has(this._interface.region[this._region].controls.slider.scenario, "labels")) {
+				if (this._region != "" && _.has(this._interface.region[this._region].controls, "slider") && _.has(this._interface.region[this._region].controls.slider, "scenario") && _.has(this._interface.region[this._region].controls.slider.scenario, "labels")) {
 					var labels = (_.isArray(this._interface.region[this._region].controls.slider.scenario.labels)) ? this._interface.region[this._region].controls.slider.scenario.labels : this._interface.region[this._region].controls.slider.scenario.labels[_.first(_.keys(this._interface.region[this._region].controls.slider.scenario.labels))]
 				} else {
 					var labels = this._defaultLabels.scenario;
@@ -1358,10 +1360,10 @@ define([
 				this.scenarioSliderLabels.set("labels",labels);
 				this.scenarioSliderLabels.set("count", labels.length);
 				this.scenarioSliderLabels.buildRendering();
-				var title = (this._region != "" && _.has(this._interface.region[this._region].controls.slider.scenario, "title")) ? this._interface.region[this._region].controls.slider.scenario.title : this._defaultTitles.scenario;
+				var title = (this._region != "" && _.has(this._interface.region[this._region].controls, "slider") && _.has(this._interface.region[this._region].controls.slider, "scenario") && _.has(this._interface.region[this._region].controls.slider.scenario, "title")) ? this._interface.region[this._region].controls.slider.scenario.title : this._defaultTitles.scenario;
 				_.first(query("span.slr-control-title.scenario")).innerHTML = title;
 				
-				if (this._region != "" && _.has(this._interface.region[this._region].controls.slider.stormSurge, "labels")) {
+				if (this._region != "" && _.has(this._interface.region[this._region].controls, "slider") && _.has(this._interface.region[this._region].controls.slider, "stormSurge") && _.has(this._interface.region[this._region].controls.slider.stormSurge, "labels")) {
 					var labels = (_.isArray(this._interface.region[this._region].controls.slider.stormSurge.labels)) ? this._interface.region[this._region].controls.slider.stormSurge.labels : this._interface.region[this._region].controls.slider.stormSurge.labels[_.first(_.keys(this._interface.region[this._region].controls.slider.stormSurge.labels))]
 				} else {
 					var labels = this._defaultLabels.stormSurge;
@@ -1371,10 +1373,10 @@ define([
 				this.stormSurgeSliderLabels.set("labels",labels);
 				this.stormSurgeSliderLabels.set("count", labels.length);
 				this.stormSurgeSliderLabels.buildRendering();
-				var title = (this._region != "" && _.has(this._interface.region[this._region].controls.slider.stormSurge, "title")) ? this._interface.region[this._region].controls.slider.stormSurge.title : this._defaultTitles.stormSurge;
+				var title = (this._region != "" && _.has(this._interface.region[this._region].controls, "slider") && _.has(this._interface.region[this._region].controls.slider, "stormSurge") && _.has(this._interface.region[this._region].controls.slider.stormSurge, "title")) ? this._interface.region[this._region].controls.slider.stormSurge.title : this._defaultTitles.stormSurge;
 				_.first(query("span.slr-control-title.stormSurge")).innerHTML = title;
 				
-				if (this._region != "" && _.has(this._interface.region[this._region].controls.slider.hurricane, "labels")) {
+				if (this._region != "" && _.has(this._interface.region[this._region].controls, "slider") && _.has(this._interface.region[this._region].controls.slider, "hurricane") && _.has(this._interface.region[this._region].controls.slider.hurricane, "labels")) {
 					var labels = (_.isArray(this._interface.region[this._region].controls.slider.hurricane.labels)) ? this._interface.region[this._region].controls.slider.hurricane.labels : this._interface.region[this._region].controls.slider.hurricane.labels[_.first(_.keys(this._interface.region[this._region].controls.slider.hurricane.labels))]
 				} else {
 					var labels = this._defaultLabels.hurricane;
@@ -1384,10 +1386,10 @@ define([
 				this.hurricaneSliderLabels.set("labels",labels);
 				this.hurricaneSliderLabels.set("count", labels.length);
 				this.hurricaneSliderLabels.buildRendering();
-				var title = (this._region != "" && _.has(this._interface.region[this._region].controls.slider.hurricane, "title")) ? this._interface.region[this._region].controls.slider.hurricane.title : this._defaultTitles.hurricane;
+				var title = (this._region != "" && _.has(this._interface.region[this._region].controls, "slider") && _.has(this._interface.region[this._region].controls.slider, "hurricane") && _.has(this._interface.region[this._region].controls.slider.hurricane, "title")) ? this._interface.region[this._region].controls.slider.hurricane.title : this._defaultTitles.hurricane;
 				_.first(query("span.slr-control-title.hurricane")).innerHTML = title;
 				
-				if (this._region != "" && _.has(this._interface.region[this._region].controls.slider.sealevelrise, "labels")) {
+				if (this._region != "" && _.has(this._interface.region[this._region].controls, "slider") && _.has(this._interface.region[this._region].controls.slider, "sealevelrise") && _.has(this._interface.region[this._region].controls.slider.sealevelrise, "labels")) {
 					var labels = (_.isArray(this._interface.region[this._region].controls.slider.sealevelrise.labels)) ? this._interface.region[this._region].controls.slider.sealevelrise.labels : this._interface.region[this._region].controls.slider.sealevelrise.labels[_.first(_.keys(this._interface.region[this._region].controls.slider.sealevelrise.labels))]
 				} else {
 					var labels = this._defaultLabels.sealevelrise;
@@ -1397,7 +1399,7 @@ define([
 				this.sealevelriseSliderLabels.set("labels",labels);
 				this.sealevelriseSliderLabels.set("count", labels.length);
 				this.sealevelriseSliderLabels.buildRendering();
-				var title = (this._region != "" && _.has(this._interface.region[this._region].controls.slider.sealevelrise, "title")) ? this._interface.region[this._region].controls.slider.sealevelrise.title : this._defaultTitles.sealevelrise;
+				var title = (this._region != "" && _.has(this._interface.region[this._region].controls, "slider") && _.has(this._interface.region[this._region].controls.slider, "sealevelrise") && _.has(this._interface.region[this._region].controls.slider.sealevelrise, "title")) ? this._interface.region[this._region].controls.slider.sealevelrise.title : this._defaultTitles.sealevelrise;
 				_.first(query("span.slr-control-title.sealevelrise")).innerHTML = title;
 				
 				domStyle.set(this.climateSlider.domNode.parentNode, "display",  "block");
@@ -1506,9 +1508,12 @@ define([
 				
 				/* if (this._region != "" && _.has(this._interface.region[this._region].controls, "togglebutton")) {
 					array.forEach(_.keys(this._interface.region[this._region].controls.togglebutton), function(tb) {
-						domStyle.set(_.first(query(".toggle-btn." + self._region.replace(/ /g,"_").toLowerCase() + "." + tb)).parentNode, "display", "none");
+						domStyle.set(_.first(query(".toggle-btn." + self._region.replace(/ /g,"_").toLowerCase() + "." + tb)), "display", "none");
 					});
 				} */
+				array.forEach(query('.plugin-slr .toggle-btn input[id*="togglebutton"]'), function(node) {
+					domStyle.set(node.parentNode.parentNode, "display", "none");
+				})
 				domStyle.set(this.toggleDiv, "display", "none");
 				
 				this.otherCheckBox.checked = false;
@@ -1609,7 +1614,8 @@ define([
 								}
 							}
 							if (key == "togglebutton") {
-								domStyle.set(_.first(query(".toggle-btn." + self._region.replace(/ /g,"_").toLowerCase() + "." + control)).parentNode.parentNode, "display", "block");
+								domStyle.set(_.first(query(".toggle-div." + self._region.replace(/ /g,"_").toLowerCase() + "." + control)), "display", "block");
+								domStyle.set(_.first(query(".toggle-div." + self._region.replace(/ /g,"_").toLowerCase() + "." + control)).parentNode, "display", "block");
 							}
 							if (key == "tree") {
 								domStyle.set(_.first(query("." + control + "-toggle")).parentNode, "display", "block");
