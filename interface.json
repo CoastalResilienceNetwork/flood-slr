@@ -968,6 +968,333 @@
 				"report":"",
 				"data":""
 			}
+		},
+		"Grenada": {
+			"url": "http://dev.services.coastalresilience.org/arcgis/rest/services/GSVG/Flood_SLR/MapServer",
+			"layers": {
+				"main": "http://dev.services.coastalresilience.org/arcgis/rest/services/GSVG/Flood_SLR/MapServer"
+			},
+			"tooltips": {
+				"region": "Geographic areas where climate change/sea level rise vulnerability studies have been conducted.",
+				"hazard": "Spatial extent for different coastal hazards that may affect coastal assets.",
+				"scenario": "Sea level rise inundation scenarios ranging from zero to 2 meters."
+			},
+			"extent": {
+				"xmin":-6926329.416251554,
+				"ymin":1339781.3048040115,
+				"xmax":-6786067.469348445,
+				"ymax":1410561.9929959893,
+				"spatialReference":{
+					"wkid":102100,
+					"latestWkid":3857
+				}
+			},
+			"controls": {
+				"select": {
+					"hazard": {
+						"options": [
+							{
+								"name": " -- ",
+								"value": ""
+							},
+							{
+								"name": "Sea Level Rise",
+								"value": "sea_level_rise",
+								"controls": { 
+									"slider": ["scenario"],
+									"togglebutton":["stormtype"]
+								}
+							}
+						]
+					}
+				},
+				"slider": {
+					"scenario": {
+						"disabled": false,
+						"show": true,
+						"labels": ["None", "1m", "2m"]
+					}
+				},
+				"togglebutton": {
+					"stormtype": {
+						"controls": {
+							"none": {
+								"disabled": false,
+								"show": true,
+								"type": "radio",
+								"group": "stormtype",
+								"name": "none",
+								"value": "none",
+								"label": "None",
+								"checked": true,
+								"dependency": {
+									"slider": {
+										"scenario": { 
+											"checked": { "whitelist": ["1m", "2m"] }
+										} 
+									}
+								}
+							},
+							"100yr": {
+								"disabled": false,
+								"show": true,
+								"type": "radio",
+								"group": "stormtype",
+								"name": "100yr",
+								"value": "100yr",
+								"label": "100 yr Flood",
+								"checked": false,
+								"dependency": {
+									"slider": {
+										"scenario": { 
+											"checked": { "whitelist": ["None"] }
+										} 
+									}
+								}
+							},
+							"ivan": {
+								"disabled": false,
+								"show": true,
+								"type": "radio",
+								"group": "stormtype",
+								"name": "ivan",
+								"value": "ivan",
+								"label": "Hurricane Ivan",
+								"checked": false,
+								"dependency": {
+									"slider": {
+										"scenario": { 
+											"checked": { "whitelist": ["None","1m","2m"] }
+										} 
+									}
+								}
+							},
+							"lenny": {
+								"disabled": false,
+								"show": true,
+								"type": "radio",
+								"group": "stormtype",
+								"name": "lenny",
+								"value": "lenny",
+								"label": "Hurricane Lenny",
+								"checked": false,
+								"dependency": {
+									"slider": {
+										"scenario": { 
+											"checked": { "whitelist": ["None","1m","2m"] }
+										} 
+									}
+								}
+							}
+						},
+						"label": "Select Storm Type:"
+					}
+				}
+			},
+			"download": {
+				"report":"",
+				"data":""
+			}
+		},
+		"St Vincent and the Grenadines": {
+			"url": "http://dev.services.coastalresilience.org/arcgis/rest/services/GSVG/Flood_SLR/MapServer",
+			"layers": {
+				"main": "http://dev.services.coastalresilience.org/arcgis/rest/services/GSVG/Flood_SLR/MapServer"
+			},
+			"tooltips": {
+				"region": "Geographic areas where climate change/sea level rise vulnerability studies have been conducted.",
+				"hazard": "Spatial extent for different coastal hazards that may affect coastal assets.",
+				"scenario": "Sea level rise inundation scenarios ranging from zero to 2 meters."
+			},
+			"extent": {
+				"xmin":-6892672.607151555,
+				"ymin":1420276.7801010057,
+				"xmax":-6752410.660248445,
+				"ymax":1489452.290698997,
+				"spatialReference":{
+					"wkid":102100,
+					"latestWkid":3857
+				}
+			},
+			"controls": {
+				"select": {
+					"hazard": {
+						"options": [
+							{
+								"name": " -- ",
+								"value": ""
+							},
+							{
+								"name": "Sea Level Rise",
+								"value": "sea_level_rise",
+								"controls": { 
+									"slider": ["scenario"],
+									"togglebutton":["stormtype"]
+								}
+							}
+						]
+					}
+				},
+				"slider": {
+					"scenario": {
+						"disabled": false,
+						"show": true,
+						"labels": ["None", "1m", "2m"]
+					}
+				},
+				"togglebutton": {
+					"stormtype": {
+						"controls": {
+							"none": {
+								"disabled": false,
+								"show": true,
+								"type": "radio",
+								"group": "stormtype",
+								"name": "none",
+								"value": "none",
+								"label": "None",
+								"checked": true,
+								"dependency": {
+									"slider": {
+										"scenario": { 
+											"checked": { "whitelist": ["1m", "2m"] }
+										} 
+									}
+								}
+							},
+							"100yr": {
+								"disabled": false,
+								"show": true,
+								"type": "radio",
+								"group": "stormtype",
+								"name": "100yr",
+								"value": "100yr",
+								"label": "100 yr Flood",
+								"checked": false,
+								"dependency": {
+									"slider": {
+										"scenario": { 
+											"checked": { "whitelist": ["None"] }
+										} 
+									}
+								}
+							},
+							"ivan": {
+								"disabled": false,
+								"show": true,
+								"type": "radio",
+								"group": "stormtype",
+								"name": "ivan",
+								"value": "ivan",
+								"label": "Hurricane Ivan",
+								"checked": false,
+								"dependency": {
+									"slider": {
+										"scenario": { 
+											"checked": { "whitelist": ["None","1m","2m"] }
+										} 
+									}
+								}
+							},
+							"lenny": {
+								"disabled": false,
+								"show": true,
+								"type": "radio",
+								"group": "stormtype",
+								"name": "lenny",
+								"value": "lenny",
+								"label": "Hurricane Lenny",
+								"checked": false,
+								"dependency": {
+									"slider": {
+										"scenario": { 
+											"checked": { "whitelist": ["None","1m","2m"] }
+										} 
+									}
+								}
+							}
+						},
+						"label": "Select Storm Type:"
+					}
+				}
+			},
+			"download": {
+				"report":"",
+				"data":""
+			}
+		},
+		"Mesoamerican Reef": {
+			"url": "http://dev.services.coastalresilience.org/arcgis/rest/services/Meso_American_Reef/Flood_SLR/MapServer",
+			"layers": {
+				"main": "http://dev.services.coastalresilience.org/arcgis/rest/services/Meso_American_Reef/Flood_SLR/MapServer"
+			},
+			"tooltips": {
+				"region": "Geographic areas where climate change/sea level rise vulnerability studies have been conducted.",
+				"hazard": "Spatial extent for different coastal hazards that may affect coastal assets.",
+				"sealevelrise": "Sea level rise inundation scenarios ranging from 1 to 2 meters."
+			},
+			"extent": {
+				"xmin":-9921210.4677,
+				"ymin":1767838.9513,
+				"xmax":-9462636.0097,
+				"ymax":2561441.1491,
+				"spatialReference":{
+					"wkid":102100,
+					"latestWkid":3857
+				}
+			},
+			"controls": {
+				"select": {
+					"hazard": {
+						"options": [
+							{
+								"name": " -- ",
+								"value": ""
+							},
+							{
+								"name": "Sea Level Rise",
+								"value": "sea_level_rise",
+								"controls": {
+									"togglebutton":["sealevelrise"]
+								}
+							}
+						]
+					}
+				},
+				"togglebutton": {
+					"sealevelrise": {
+						"controls": {
+							"1m": {
+								"disabled": false,
+								"show": true,
+								"type": "radio",
+								"group": "sealevelrise",
+								"name": "1m",
+								"value": "1m",
+								"label": "1-meter rise",
+								"checked": true
+							},
+							"2m": {
+								"disabled": false,
+								"show": true,
+								"type": "radio",
+								"group": "sealevelrise",
+								"name": "2m",
+								"value": "2m",
+								"label": "2-meter rise",
+								"checked": false
+							}
+						},
+						"label": "Select Sea Level Rise:"
+					}
+				}
+			},
+			"download": {
+				"report":"",
+				"data":""
+			}
 		}
+		
+		
 	}
 }
