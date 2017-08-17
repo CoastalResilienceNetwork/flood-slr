@@ -977,7 +977,8 @@
 			"tooltips": {
 				"region": "Geographic areas where climate change/sea level rise vulnerability studies have been conducted.",
 				"hazard": "Spatial extent for different coastal hazards that may affect coastal assets.",
-				"scenario": "Sea level rise inundation scenarios ranging from zero to 2 meters."
+				"scenario": "Sea level rise inundation scenarios ranging from zero to 2 meters.",
+				"togglegroup_stormtype":"Various storm scenarios influencing the extent and severity of inundation from sea level rise."
 			},
 			"extent": {
 				"xmin":-6926329.416251554,
@@ -1104,7 +1105,8 @@
 			"tooltips": {
 				"region": "Geographic areas where climate change/sea level rise vulnerability studies have been conducted.",
 				"hazard": "Spatial extent for different coastal hazards that may affect coastal assets.",
-				"scenario": "Sea level rise inundation scenarios ranging from zero to 2 meters."
+				"scenario": "Sea level rise inundation scenarios ranging from zero to 2 meters.",
+				"togglegroup_stormtype":"Various storm scenarios influencing the extent and severity of inundation from sea level rise."
 			},
 			"extent": {
 				"xmin":-6892672.607151555,
