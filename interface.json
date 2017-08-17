@@ -977,7 +977,8 @@
 			"tooltips": {
 				"region": "Geographic areas where climate change/sea level rise vulnerability studies have been conducted.",
 				"hazard": "Spatial extent for different coastal hazards that may affect coastal assets.",
-				"scenario": "Sea level rise inundation scenarios ranging from zero to 2 meters."
+				"scenario": "Sea level rise inundation scenarios ranging from zero to 2 meters.",
+				"togglegroup_stormtype":"Various storm scenarios influencing the extent and severity of inundation from sea level rise."
 			},
 			"extent": {
 				"xmin":-6926329.416251554,
@@ -1104,7 +1105,8 @@
 			"tooltips": {
 				"region": "Geographic areas where climate change/sea level rise vulnerability studies have been conducted.",
 				"hazard": "Spatial extent for different coastal hazards that may affect coastal assets.",
-				"scenario": "Sea level rise inundation scenarios ranging from zero to 2 meters."
+				"scenario": "Sea level rise inundation scenarios ranging from zero to 2 meters.",
+				"togglegroup_stormtype":"Various storm scenarios influencing the extent and severity of inundation from sea level rise."
 			},
 			"extent": {
 				"xmin":-6892672.607151555,
@@ -1293,8 +1295,209 @@
 				"report":"",
 				"data":""
 			}
+		},
+		"Southeast Florida": {
+			"url": "http://dev.services.coastalresilience.org/arcgis/rest/services/Florida/Flood_SLR/MapServer",
+			"layers": {
+				"main": "http://dev.services.coastalresilience.org/arcgis/rest/services/Florida/Flood_SLR/MapServer",
+				"slr_0ft": { "type": "tiled", "url": "http://maps1.coast.noaa.gov/arcgis/rest/services/dc_slr/slr_0ft/MapServer" },
+				"slr_1ft": { "type": "tiled", "url": "http://maps1.coast.noaa.gov/arcgis/rest/services/dc_slr/slr_1ft/MapServer" },
+				"slr_2ft": { "type": "tiled", "url": "http://maps1.coast.noaa.gov/arcgis/rest/services/dc_slr/slr_2ft/MapServer" },
+				"slr_3ft": { "type": "tiled", "url": "http://maps1.coast.noaa.gov/arcgis/rest/services/dc_slr/slr_3ft/MapServer" },
+				"slr_4ft": { "type": "tiled", "url": "http://maps1.coast.noaa.gov/arcgis/rest/services/dc_slr/slr_4ft/MapServer" },
+				"slr_5ft": { "type": "tiled", "url": "http://maps1.coast.noaa.gov/arcgis/rest/services/dc_slr/slr_5ft/MapServer" },
+				"slr_6ft": { "type": "tiled", "url": "http://maps1.coast.noaa.gov/arcgis/rest/services/dc_slr/slr_6ft/MapServer" },
+				"conf_0ft": { "type": "tiled", "url": "http://maps1.coast.noaa.gov/arcgis/rest/services/dc_slr/conf_0ft/MapServer" },
+				"conf_1ft": { "type": "tiled", "url": "http://maps1.coast.noaa.gov/arcgis/rest/services/dc_slr/conf_1ft/MapServer" },
+				"conf_2ft": { "type": "tiled", "url": "http://maps1.coast.noaa.gov/arcgis/rest/services/dc_slr/conf_2ft/MapServer" },
+				"conf_3ft": { "type": "tiled", "url": "http://maps1.coast.noaa.gov/arcgis/rest/services/dc_slr/conf_3ft/MapServer" },
+				"conf_4ft": { "type": "tiled", "url": "http://maps1.coast.noaa.gov/arcgis/rest/services/dc_slr/conf_4ft/MapServer" },
+				"conf_5ft": { "type": "tiled", "url": "http://maps1.coast.noaa.gov/arcgis/rest/services/dc_slr/conf_5ft/MapServer" },
+				"conf_6ft": { "type": "tiled", "url": "http://maps1.coast.noaa.gov/arcgis/rest/services/dc_slr/conf_6ft/MapServer" }
+			},
+			"tooltips": {
+				"region": "Geographic areas where climate change/sea level rise vulnerability studies have been conducted.",
+				"hazard": "Spatial extent for different coastal hazards that may affect coastal assets.",
+				"sealevelrise": "Sea level rise inundation scenarios ranging from 1 to 6 feet.",
+				"togglegroup_inundation": "Inundation and associated uncertainty (probability/confidence) due to uncertainties associated with land elevation and tidal water surfaces.",
+				"scenario": "Sea level rise inundation scenarios ranging from 1 to 3 feet."
+			},
+			"extent": {
+				"xmin": -9112975.621361278,
+				"ymin": 2818940.4851079737,
+				"xmax": -8907895.621361278,
+				"ymax": 3120320.4851079737,
+				"spatialReference":{
+					"wkid":102100,
+					"latestWkid":3857
+				}
+			},
+			"controls": {
+				"select": {
+					"hazard": {
+						"options": [
+							{
+								"name": " -- ",
+								"value": ""
+							},
+							{
+								"name": "Sea Level Rise (SFWMD)",
+								"value": "sea_level_rise",
+								"controls": {
+									"slider": ["scenario"],
+									"togglebutton":["inundation"]
+								}
+							},
+							{ 	
+								"name": "Sea Level Rise (NOAA)",
+								"value": "sea_level_rise_noaa",
+								"controls": {
+									"slider": ["sealevelrise"],
+									"togglebutton":["inundation"]
+								}
+							}
+						]
+					}
+				},
+				"slider": {
+					"sealevelrise": {
+						"disabled": false,
+						"show": true,
+						"type": "tiled",
+						"labels": ["0","1","2","3","4","5","6"]
+					},
+					"scenario": {
+						"disabled": false,
+						"show": true,
+						"labels": ["1ft", "2ft", "3ft"]
+					}
+				},
+				"togglebutton": {
+					"inundation": {
+						"controls": {
+							"act_in": {
+								"disabled": false,
+								"show": true,
+								"type": "radio",
+								"group": "inundation",
+								"name": "act_in",
+								"value": "act_in",
+								"label": "Inundation",
+								"checked": false
+							},
+							"prob_in": {
+								"disabled": false,
+								"show": true,
+								"type": "radio",
+								"group": "inundation",
+								"name": "prob_in",
+								"value": "prob_in",
+								"label": "Inundation (Confidence)",
+								"checked": true
+							}
+						},
+						"label": "Select Inundation Type:"
+					}
+				}
+			},
+			"download": {
+				"report":"HOSTNAME-methods/SLR_Southeast_Florida.pdf",
+				"data":""
+			}
+		},
+		"Florida Keys": {
+			"url": "http://dev.services.coastalresilience.org/arcgis/rest/services/Florida/Flood_SLR/MapServer",
+			"layers": {
+				"main": "http://dev.services.coastalresilience.org/arcgis/rest/services/Florida/Flood_SLR/MapServer"
+			},
+			"tooltips": {
+				"region": "Geographic areas where climate change/sea level rise vulnerability studies have been conducted.",
+				"hazard": "Spatial extent for different coastal hazards that may affect coastal assets.",
+				"scenario": "Sea level rise inundation scenarios ranging from 0 to 4 feet.",
+				"togglegroup_surgetype":""
+			},
+			"extent": {
+				"xmin": -9107700.3862,
+				"ymin": 2819847.268100001,
+				"xmax": -8924424.8065,
+				"ymax": 2942628.7413000017,
+				"spatialReference":{
+					"wkid":102100,
+					"latestWkid":3857
+				}
+			},
+			"controls": {
+				"select": {
+					"hazard": {
+						"options": [
+							{
+								"name": " -- ",
+								"value": ""
+							},
+							{
+								"name": "Sea Level Rise",
+								"value": "sea_level_rise",
+								"controls": { 
+									"slider": ["scenario"],
+									"togglebutton":["surgetype"]
+								}
+							}
+						]
+					}
+				},
+				"slider": {
+					"scenario": {
+						"disabled": false,
+						"show": true,
+						"labels": ["None", "1ft", "2ft", "3ft", "4ft"]
+					}
+				},
+				"togglebutton": {
+					"surgetype": {
+						"controls": {
+							"none": {
+								"disabled": false,
+								"show": true,
+								"type": "radio",
+								"group": "surgetype",
+								"name": "none",
+								"value": "none",
+								"label": "None",
+								"checked": true,
+								"dependency": {
+									"slider": {
+										"scenario": { 
+											"checked": { "whitelist": ["1ft", "2ft", "3ft", "4ft"] }
+										} 
+									}
+								}
+							},
+							"wilma": {
+								"disabled": false,
+								"show": true,
+								"type": "radio",
+								"group": "surgetype",
+								"name": "wilma",
+								"value": "wilma",
+								"label": "Hurricane Wilma",
+								"checked": false,
+								"dependency": {
+									"slider": {
+										"scenario": { 
+											"checked": { "whitelist": ["None", "1ft", "2ft", "3ft", "4ft"] }
+										} 
+									}
+								}
+							}
+						},
+						"label": "Select Storm Type:"
+					}
+				}
+			},
+			"download": {
+				"report":"HOSTNAME-methods/SLR_Florida_Keys.pdf",
+				"data":""
+			}
 		}
-		
-		
 	}
 }
