@@ -667,6 +667,41 @@
 		"Mesoamerican Reef": {
 			"sea_level_rise|1m": [0],
 			"sea_level_rise|2m": [1]
+		},
+		"Southeast Florida": {
+			"sea_level_rise|1ft|prob_in": [3],
+			"sea_level_rise|2ft|prob_in":[4],
+			"sea_level_rise|3ft|prob_in":[5],
+			"sea_level_rise|1ft|act_in": [0],
+			"sea_level_rise|2ft|act_in": [1],
+			"sea_level_rise|3ft|act_in": [2],
+			
+			"sea_level_rise_noaa|0|act_in": "slr_0ft",
+			"sea_level_rise_noaa|1|act_in": "slr_1ft",
+			"sea_level_rise_noaa|2|act_in": "slr_2ft",
+			"sea_level_rise_noaa|3|act_in": "slr_3ft",
+			"sea_level_rise_noaa|4|act_in": "slr_4ft",
+			"sea_level_rise_noaa|5|act_in": "slr_5ft",
+			"sea_level_rise_noaa|6|act_in": "slr_6ft",
+			
+			"sea_level_rise_noaa|0|prob_in": "conf_0ft",
+			"sea_level_rise_noaa|1|prob_in": "conf_1ft",
+			"sea_level_rise_noaa|2|prob_in": "conf_2ft",
+			"sea_level_rise_noaa|3|prob_in": "conf_3ft",
+			"sea_level_rise_noaa|4|prob_in": "conf_4ft",
+			"sea_level_rise_noaa|5|prob_in": "conf_5ft",
+			"sea_level_rise_noaa|6|prob_in": "conf_6ft"
+		},
+		"Florida Keys": {
+			"sea_level_rise|1ft|none": [6],
+			"sea_level_rise|2ft|none": [7],
+			"sea_level_rise|3ft|none": [8],
+			"sea_level_rise|4ft|none": [9],
+			"sea_level_rise|none|wilma": [10],
+			"sea_level_rise|1ft|wilma": [11],
+			"sea_level_rise|2ft|wilma": [12],
+			"sea_level_rise|3ft|wilma": [13],
+			"sea_level_rise|4ft|wilma": [14]
 		}
 	}
 }

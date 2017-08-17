@@ -416,6 +416,10 @@ background:#efefef;
 border-color: #d3d3d3;
 }
 
+.plugin-slr div.dijitRuleLabel.dijitRuleLabelH {
+white-space:nowrap;	
+}
+
 .plugin-slr .toggle-btn label {
 box-shadow:none;
 display: flex;
