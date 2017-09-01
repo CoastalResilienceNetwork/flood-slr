@@ -1401,7 +1401,10 @@
 				}
 			},
 			"download": {
-				"report":"HOSTNAME-methods/SLR_Southeast_Florida.pdf",
+				"report": {
+					"sea_level_rise": "HOSTNAME-methods/SLR_Southeast_Florida.pdf",
+					"sea_level_rise_noaa": "http://coast.noaa.gov/digitalcoast/tools/slr"
+				},
 				"data":""
 			}
 		},
@@ -1652,7 +1655,9 @@
 				}
 			},
 			"download": {
-				"report":"HOSTNAME-methods/SLR_Southeast_Florida.pdf",
+				"report": {
+					"sea_level_rise_noaa": "http://coast.noaa.gov/digitalcoast/tools/slr"
+				},
 				"data":""
 			}
 		}
