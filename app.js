@@ -1250,6 +1250,9 @@ define([
 									if (!_.isUndefined(w) && w.length > 0 && _.indexOf(w, z) < 0) {
 										self[n].set("value", _.indexOf(labels, _.first(w)));
 									}
+									
+									var disabled = (_.has(y, "disabled")) ? y.disabled : false;
+									self[n].set("disabled", disabled);
 								});
 							}
 						}
@@ -1506,11 +1509,6 @@ define([
 				}
 				domStyle.set(this.radioButtonDiv, "display", "none");
 				
-				/* if (this._region != "" && _.has(this._interface.region[this._region].controls, "togglebutton")) {
-					array.forEach(_.keys(this._interface.region[this._region].controls.togglebutton), function(tb) {
-						domStyle.set(_.first(query(".toggle-btn." + self._region.replace(/ /g,"_").toLowerCase() + "." + tb)), "display", "none");
-					});
-				} */
 				array.forEach(query('.plugin-slr .toggle-btn input[id*="togglebutton"]'), function(node) {
 					domStyle.set(node.parentNode.parentNode, "display", "none");
 				})
@@ -1582,7 +1580,10 @@ define([
 							if (_.has(opt.controls, "togglebutton")) {
 								array.forEach(opt.controls.togglebutton, function(control) {
 									var tb = _.first(query(".toggle-btn." + self._region.replace(/ /g,"_").toLowerCase() + "." + control));
-									tb.firstChild.checked = true;
+									array.forEach(query("input", tb), function(rb) {
+										var checked = self._interface.region[self._region].controls.togglebutton[control].controls[rb.value].checked;
+										rb.checked = checked;
+									})
 									domStyle.set(tb.parentNode.parentNode, "display", "none");
 								})
 							}
