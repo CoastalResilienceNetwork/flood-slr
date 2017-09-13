@@ -1503,9 +1503,9 @@
 			}
 		},
 		"Connecticut": {
-			"url": "http://dev.services.coastalresilience.org/arcgis/rest/services/Connecticut/CT_Flood_and_SLR/MapServer",
+			"url": "http://dev.services.coastalresilience.org/arcgis/rest/services/Connecticut/Flood_SLR/MapServer",
 			"layers": {
-				"main": "http://dev.services.coastalresilience.org/arcgis/rest/services/Connecticut/CT_Flood_and_SLR/MapServer",
+				"main": "http://dev.services.coastalresilience.org/arcgis/rest/services/Connecticut/Flood_SLR/MapServer",
 				"slr_0ft": { "type": "tiled", "url": "http://maps1.coast.noaa.gov/arcgis/rest/services/dc_slr/slr_0ft/MapServer" },
 				"slr_1ft": { "type": "tiled", "url": "http://maps1.coast.noaa.gov/arcgis/rest/services/dc_slr/slr_1ft/MapServer" },
 				"slr_2ft": { "type": "tiled", "url": "http://maps1.coast.noaa.gov/arcgis/rest/services/dc_slr/slr_2ft/MapServer" },
