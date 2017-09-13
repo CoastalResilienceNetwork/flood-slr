@@ -177,6 +177,7 @@ background-color:#0096d6;
 border-color:#0084bd;
 font-size:14px;
 color:#fff;
+padding: 4px 4px 4px 4px;
 }
 
 .cr-dojo-dijits span.dijitButtonText {
@@ -218,12 +219,12 @@ border-bottom:1px solid #ddd;
 width: 15px;
 }
 
-.cr-dojo-dijits div.dijitArrowButtonInner {
+.cr-dojo-dijits .dijitComboButton div.dijitArrowButtonInner {
 background-image: none;
 background-repeat: no-repeat;
 }
 
-.cr-dojo-dijits div.dijitArrowButtonInner::before {
+.cr-dojo-dijits .dijitComboButton div.dijitArrowButtonInner::before {
 content: '\f078';
 font: 12px FontAwesome;
 color: #ddd;
