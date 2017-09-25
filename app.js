@@ -548,7 +548,8 @@ define([
 							if ((!_.isObject(self._interface.region[self._region].download.report) && self._interface.region[self._region].download.report != "") || (_.isObject(self._interface.region[self._region].download.report) && _.has(self._interface.region[self._region].download.report, "default") && self._interface.region[self._region].download.report.default != "") || (_.isObject(self._interface.region[self._region].download.report) && _.has(self._interface.region[self._region].download.report, self.hazardSelect.value))) {
 								
 								var url = (_.isObject(self._interface.region[self._region].download.report) && _.has(self._interface.region[self._region].download.report, self.hazardSelect.value)) ? self._interface.region[self._region].download.report[self.hazardSelect.value] : self._interface.region[self._region].download.report;
-								url = url.replace("HOSTNAME-", window.location.href);
+								var href = window.location.origin + window.location.pathname;
+								url = url.replace("HOSTNAME-", href);
 								window.open(url, "_blank");
 							}
 							
@@ -592,7 +593,8 @@ define([
 							if ((!_.isObject(self._interface.region[self._region].download.data) && self._interface.region[self._region].download.data != "") || (_.isObject(self._interface.region[self._region].download.data) && _.has(self._interface.region[self._region].download.data, "default") && self._interface.region[self._region].download.data.default != "") || (_.isObject(self._interface.region[self._region].download.data) && _.has(self._interface.region[self._region].download.data, self.hazardSelect.value))) {
 								
 								var url = (_.isObject(self._interface.region[self._region].download.data) && _.has(self._interface.region[self._region].download.data, self.hazardSelect.value)) ? self._interface.region[self._region].download.data[self.hazardSelect.value] : self._interface.region[self._region].download.data;
-								url = url.replace("HOSTNAME-", window.location.href);
+								var href = window.location.origin + window.location.pathname;
+								url = url.replace("HOSTNAME-", href);
 								window.open(url, "_blank");
 							}
 						}
