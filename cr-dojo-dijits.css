@@ -193,8 +193,8 @@ background-color:#80c2de;
 border-color:#80c2de;
 }
 
-/* DIJIT COMBO BUTTON */
-.cr-dojo-dijits .dijitComboButton td.dijitButtonNode {
+/* DIJIT COMBO BUTTON, DIJIT DROPDOWN BUTTON */
+.cr-dojo-dijits .dijitComboButton td.dijitButtonNode, .cr-dojo-dijits .dijitDropDownButton span.dijitButtonNode {
 border-left:1px solid #ddd;
 border-right:none;
 border-top:1px solid #ddd;
@@ -207,11 +207,15 @@ padding:7px;
 font-size: 14px;
 }
 
-.cr-dojo-dijits .dijitComboButton div.dijitButtonContents {
+.cr-dojo-dijits .dijitDropDownButton span.dijitButtonNode {
+border-right:1px solid #ddd;
+}
+
+.cr-dojo-dijits .dijitComboButton div.dijitButtonContents, .cr-dojo-dijits .dijitDropDownButton span.dijitButtonContents {
 text-align:left;
 }
 
-.cr-dojo-dijits .dijitComboButton td.dijitArrowButton {
+.cr-dojo-dijits .dijitComboButton td.dijitArrowButton, .cr-dojo-dijits .dijitDropDownButton span.dijitArrowButton {
 border-left:none;
 border-right:1px solid #ddd;
 border-top:1px solid #ddd;
@@ -219,12 +223,12 @@ border-bottom:1px solid #ddd;
 width: 15px;
 }
 
-.cr-dojo-dijits .dijitComboButton div.dijitArrowButtonInner {
+.cr-dojo-dijits .dijitComboButton div.dijitArrowButtonInner, .cr-dojo-dijits .dijitDropDownButton span.dijitArrowButtonInner {
 background-image: none;
 background-repeat: no-repeat;
 }
 
-.cr-dojo-dijits .dijitComboButton div.dijitArrowButtonInner::before {
+.cr-dojo-dijits .dijitComboButton div.dijitArrowButtonInner::before, .cr-dojo-dijits .dijitDropDownButton span.dijitArrowButtonInner::before {
 content: '\f078';
 font: 12px FontAwesome;
 color: #ddd;
