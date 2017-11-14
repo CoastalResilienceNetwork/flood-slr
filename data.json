@@ -646,6 +646,20 @@
 			"sea_level_rise|2100|high": [9],
 			"sea_level_rise|2100|extr": [12]
 		},
+		"Snohomish County": {
+			"sea_level_rise|historic|low|10yr": [14],
+			"sea_level_rise|historic|low|100yr": [15],
+			"sea_level_rise|historic|high|10yr": [14],
+			"sea_level_rise|historic|high|100yr": [15],
+			"sea_level_rise|2040|low|10yr": [16],
+			"sea_level_rise|2040|high|10yr": [17],
+			"sea_level_rise|2040|low|100yr": [18],
+			"sea_level_rise|2040|high|100yr": [19],
+			"sea_level_rise|2080|low|10yr": [20],
+			"sea_level_rise|2080|high|10yr": [21],
+			"sea_level_rise|2080|low|100yr": [22],
+			"sea_level_rise|2080|high|100yr": [23]
+		},
 		"Grenada": {
 			"sea_level_rise|none|100yr": [2],
 			"sea_level_rise|none|ivan": [3],

@@ -969,6 +969,112 @@
 				"data":""
 			}
 		},
+		"Snohomish County": {
+			"url": "http://dev.services.coastalresilience.org/arcgis/rest/services/Washington/Flood_SLR/MapServer",
+			"layers": {
+				"main": "http://dev.services.coastalresilience.org/arcgis/rest/services/Washington/Flood_SLR/MapServer"
+			},
+			"tooltips": {
+				"region": "Geographic areas where climate change/sea level rise vulnerability studies have been conducted.",
+				"hazard": "Spatial extent for different coastal hazards that may affect coastal assets.  Impact zones were estimated across multiple planning horizons.",
+				"climate": "Future planning horizons representing the impact of climate change.",
+				"floodtype": "",
+				"eventtype": ""
+			},
+			"extent": {
+				"xmin":-13631418.324041456,
+				"ymin":6070000.5605738563,
+				"xmax":-13559821.930848669,
+				"ymax":6125000.1437590225,
+				"spatialReference":{
+					"wkid":102100,
+					"latestWkid":3857
+				}
+			},
+			"controls": {
+				"select": {
+					"hazard": {
+						"options": [
+							{
+								"name": " -- ",
+								"value": ""
+							},
+							{
+								"name": "Riverine & Sea Level Rise",
+								"value": "sea_level_rise",
+								"controls": {
+									"slider": ["climate"],
+									"togglebutton":["floodtype","eventtype"]
+									
+								}
+							}
+						]
+					}
+				},
+				"slider": {
+					"climate": { 
+						"disabled": false, "show": true, "title": "Flood Year",
+						"labels": ["Historic", "2040", "2080"] 
+					}
+				},
+				"togglebutton": {
+					"floodtype": {
+						"controls": {
+							"low": {
+								"disabled": false,
+								"show": true,
+								"type": "radio",
+								"group": "floodtype",
+								"name": "low",
+								"value": "low",
+								"label": "Low",
+								"checked": true
+							},
+							"high": {
+								"disabled": false,
+								"show": true,
+								"type": "radio",
+								"group": "floodtype",
+								"name": "high",
+								"value": "high",
+								"label": "High",
+								"checked": false
+							}
+						},
+						"label": "Select Sea Level Rise Scenario:"
+					},
+					"eventtype": {
+						"controls": {
+							"10yr": {
+								"disabled": false,
+								"show": true,
+								"type": "radio",
+								"group": "eventtype",
+								"name": "10yr",
+								"value": "10yr",
+								"label": "10% (10-year)",
+								"checked": true
+							},
+							"100yr": {
+								"disabled": false,
+								"show": true,
+								"type": "radio",
+								"group": "eventtype",
+								"name": "100yr",
+								"value": "100yr",
+								"label": "1% (100-year)",
+								"checked": false
+							}
+						},
+						"label": "Select Annual Chance Event:"
+					}
+				}
+			},
+			"download": {
+				"report":"",
+				"data":""
+			}
+		},
 		"Grenada": {
 			"url": "http://dev.services.coastalresilience.org/arcgis/rest/services/GSVG/Flood_SLR/MapServer",
 			"layers": {

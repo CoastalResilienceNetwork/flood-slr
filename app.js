@@ -282,7 +282,10 @@ define([
 											});
 										}
 									} else {
-										parts.push(_.first(query(".plugin-slr .toggle-btn." + self._region.replace(/ /g,"_").toLowerCase() + "." + tb + " input:checked")).value);
+										var value = _.first(query(".plugin-slr .toggle-btn." + self._region.replace(/ /g,"_").toLowerCase() + "." + tb + " input:checked")).value;
+										if (!_.contains(parts, value)) {
+											parts.push(_.first(query(".plugin-slr .toggle-btn." + self._region.replace(/ /g,"_").toLowerCase() + "." + tb + " input:checked")).value);
+										}
 									}
 								})
 							}
