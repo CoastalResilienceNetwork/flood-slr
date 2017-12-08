@@ -977,9 +977,9 @@
 			"tooltips": {
 				"region": "Geographic areas where climate change/sea level rise vulnerability studies have been conducted.",
 				"hazard": "Spatial extent for different coastal hazards that may affect coastal assets.  Impact zones were estimated across multiple planning horizons.",
-				"climate": "Future planning horizons representing the impact of climate change.",
-				"floodtype": "",
-				"eventtype": ""
+				"climate": "Flood depths and extents are derived by calculating where excess stream flow ends up on the landscape. The Historic flood depths are based on an analysis of more than a century of past flood events. The Future flood depths are based on changes in temperature and precipitation relative to 1970-1999. The 2040s flood depth reference period is 2030-2059 and the 2080s flood depth reference period is 2070-2099.",
+				"togglegroup_floodtype": "The timing and magnitude of climate change will depend on the amount of greenhouse gases emitted and the response of the climate system to the change in greenhouse gases. There is considerable uncertainty about climate change because future greenhouse gas emissions are unknown and because different climate models predict different responses to certain greenhouse gas concentrations. Consequently we have included low and high scenarios to bracket the range of these two uncertainties, ranging from a low greenhouse gas emissions scenario and relatively smaller change in flooding, to a medium greenhouse gas scenario and relatively larger change in flooding.",
+				"togglegroup_eventtype": "Flooding events are defined by the probability that an equal or greater event will occur in a given year...sometimes referred to as the Annual Chance of Exceedance. The 100-year flood event is associated with conditions that have a 1% probability of occurring in any given year. Similarly, the 10-year flood is associated with conditions that have a 10% chance of occurring in any given year."
 			},
 			"extent": {
 				"xmin":-13631418.324041456,
