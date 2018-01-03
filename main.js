@@ -12,11 +12,6 @@ require({
             name: "d3",
             location: "//d3js.org",
             main: "d3.v3.min"
-        },
-        {
-            name: "underscore",
-            location: "//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3",
-            main: "underscore-min"
         }
     ]
 });
