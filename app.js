@@ -1610,6 +1610,12 @@ define([
 									self[control + "SliderLabels"].set("count", labels.length);
 									self[control + "SliderLabels"].buildRendering();
 								}
+								
+								/* if (this._region != "" && _.has(this._interface.region[this._region].controls, "slider") && _.has(this._interface.region[this._region].controls.slider, "climate") && _.has(this._interface.region[this._region].controls.slider.climate, "title")) {
+									var title = (_.keys(this._interface.region[this._region].controls.slider.climate.title).length > 0) ? this._interface.region[this._region].controls.slider.climate.title[] : this._interface.region[this._region].controls.slider.climate.title;
+								} else {
+									var title = this._defaultTitles.climate;
+								} */
 							}
 							if (key == "radiocheck" ) {
 								if (self._interface.region[self._region].controls.radiocheck[control].type == "check") {

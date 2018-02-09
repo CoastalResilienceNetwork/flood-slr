@@ -70,6 +70,13 @@
 								"name": "Shallow Coastal Flooding",
 								"value": "shallow_coastal_flooding",
 								"controls": { "slider": [] }
+							},
+							{
+								"name": "Coastal Flooding (NC Emergency Mgmt)",
+								"value": "coastal_flooding_oem",
+								"controls": { 
+									"slider": ["climate", "scenario"]
+								}
 							}
 						]
 					},
@@ -80,8 +87,16 @@
 					}
 				},
 				"slider": {
-					"climate": { "disabled": false, "show": true, "labels": ["Current", "2045", "2060", "2100"]  },
-					"scenario": { "disabled": false, "show": true, "labels": ["Low", "Medium", "High"] },
+					"climate": { "disabled": false, "show": true, "labels": { 
+							"sea_level_rise": ["Current", "2045", "2060", "2100"],
+							"coastal_flooding_oem": ["Current", "20cm", "40cm", "100cm"]
+						}
+					},
+					"scenario": { "disabled": false, "show": true, "labels": { 
+							"sea_level_rise": ["Low", "Medium", "High"],
+							"coastal_flooding_oem": ["MHHW", "10yr", "100yr", "Fran"]
+						}
+					 },
 					"hurricane": { "disabled": false, "show": true, "labels": ["1","2","3","4","5"] }
 				},
 				"radiocheck": {
