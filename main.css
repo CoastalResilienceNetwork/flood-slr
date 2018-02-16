@@ -461,3 +461,41 @@ font-weight: bold;
 font-style: italic;
 font-size: 10px;	
 }
+
+.plugin-slr .slr-chart-container {
+padding: 0px 0px 10px 0px;
+}
+
+.plugin-slr .slr-chart-header {
+line-height: 1;
+text-align: center;
+padding: 10px 10px 0px 20px;
+font-weight:bold;
+}
+
+.plugin-slr .slr-chart-legend text {
+font-size:11px;	
+}
+
+.plugin-slr .categories  rect {
+stroke: #bbbbbb;
+}
+
+.plugin-slr .categories.active  rect {
+stroke: #000000;
+}
+
+.plugin-slr .axis text {
+  font: 10px sans-serif;
+}
+
+.plugin-slr .axis path,
+.plugin-slr .axis line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+
+.plugin-slr .x-axis-title {
+font: 10px sans-serif;
+}

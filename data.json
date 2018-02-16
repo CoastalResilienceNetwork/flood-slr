@@ -1,6 +1,24 @@
 {
 	"region": {
-		"Currituck County": {
+		"Carteret": {
+			"coastal_flooding_oem|current<br>(0in)|mhhw":[288],
+			"coastal_flooding_oem|current<br>(0in)|fran":[288,289],
+			"coastal_flooding_oem|current<br>(0in)|10yr":[288,290],
+			"coastal_flooding_oem|current<br>(0in)|100yr":[288,291],
+			"coastal_flooding_oem|40cm<br>(15.7in)|mhhw":[292],
+			"coastal_flooding_oem|40cm<br>(15.7in))|fran":[292,293],
+			"coastal_flooding_oem|40cm<br>(15.7in))|10yr":[292,294],
+			"coastal_flooding_oem|40cm<br>(15.7in)|100yr":[292,295],
+			"coastal_flooding_oem|20cm<br>(7.8in)|mhhw":[296],
+			"coastal_flooding_oem|20cm<br>(7.8in)|fran":[296,297],
+			"coastal_flooding_oem|20cm<br>(7.8in)|10yr":[296,298],
+			"coastal_flooding_oem|20cm<br>(7.8in)|100yr":[296,299],
+			"coastal_flooding_oem|100cm<br>(39in)|mhhw":[300],
+			"coastal_flooding_oem|100cm<br>(39in)|fran":[300,301],
+			"coastal_flooding_oem|100cm<br>(39in)|10yr":[300,302],
+			"coastal_flooding_oem|100cm<br>(39in)|100yr":[300,303]
+		},
+		"Currituck": {
 			"hurricane|1": [37],
 			"hurricane|2": [38],
 			"hurricane|3": [39],
@@ -26,10 +44,27 @@
 			
 			"model_storm|surge|matthew": [46],
 			"model_storm|track|matthew": [43],
-			"model_storm|swath|matthew": [44]
+			"model_storm|swath|matthew": [44],
+			
+			"coastal_flooding_oem|current<br>(0in)|mhhw":[240],
+			"coastal_flooding_oem|current<br>(0in)|fran":[240,241],
+			"coastal_flooding_oem|current<br>(0in)|10yr":[240,242],
+			"coastal_flooding_oem|current<br>(0in)|100yr":[240,243],
+			"coastal_flooding_oem|40cm<br>(15.7in)|mhhw":[244],
+			"coastal_flooding_oem|40cm<br>(15.7in))|fran":[244,245],
+			"coastal_flooding_oem|40cm<br>(15.7in))|10yr":[244,246],
+			"coastal_flooding_oem|40cm<br>(15.7in)|100yr":[244247],
+			"coastal_flooding_oem|20cm<br>(7.8in)|mhhw":[248],
+			"coastal_flooding_oem|20cm<br>(7.8in)|fran":[248,249],
+			"coastal_flooding_oem|20cm<br>(7.8in)|10yr":[248,250],
+			"coastal_flooding_oem|20cm<br>(7.8in)|100yr":[248,251],
+			"coastal_flooding_oem|100cm<br>(39in)|mhhw":[252],
+			"coastal_flooding_oem|100cm<br>(39in)|fran":[252,253],
+			"coastal_flooding_oem|100cm<br>(39in)|10yr":[252,254],
+			"coastal_flooding_oem|100cm<br>(39in)|100yr":[252,255]
 		
 		},
-		"Dare County": {
+		"Dare": {
 			"hurricane|1": [31],
 			"hurricane|2": [32],
 			"hurricane|3": [33],
@@ -55,7 +90,24 @@
 			
 			"model_storm|surge|matthew": [45],
 			"model_storm|track|matthew": [43],
-			"model_storm|swath|matthew": [44]
+			"model_storm|swath|matthew": [44],
+			
+			"coastal_flooding_oem|current<br>(0in)|mhhw":[224],
+			"coastal_flooding_oem|current<br>(0in)|fran":[224,225],
+			"coastal_flooding_oem|current<br>(0in)|10yr":[224,226],
+			"coastal_flooding_oem|current<br>(0in)|100yr":[224,227],
+			"coastal_flooding_oem|40cm<br>(15.7in)|mhhw":[228],
+			"coastal_flooding_oem|40cm<br>(15.7in))|fran":[228,229],
+			"coastal_flooding_oem|40cm<br>(15.7in))|10yr":[228,230],
+			"coastal_flooding_oem|40cm<br>(15.7in)|100yr":[228,231],
+			"coastal_flooding_oem|20cm<br>(7.8in)|mhhw":[232],
+			"coastal_flooding_oem|20cm<br>(7.8in)|fran":[232,233],
+			"coastal_flooding_oem|20cm<br>(7.8in)|10yr":[232,234],
+			"coastal_flooding_oem|20cm<br>(7.8in)|100yr":[232,235],
+			"coastal_flooding_oem|100cm<br>(39in)|mhhw":[236],
+			"coastal_flooding_oem|100cm<br>(39in)|fran":[236,237],
+			"coastal_flooding_oem|100cm<br>(39in)|10yr":[236,238],
+			"coastal_flooding_oem|100cm<br>(39in)|100yr":[236,239]
 		},
 		"Virginia Eastern Shore": {
 			"sea_level_rise|2025|low": [3],

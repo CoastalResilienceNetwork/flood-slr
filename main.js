@@ -209,10 +209,12 @@ define([
 					if (!_.isUndefined(plugin.slr._interface.region[key].controls.togglebutton)) {
 						array.forEach(_.keys(plugin.slr._interface.region[key].controls.togglebutton), function(group) {
 							array.forEach(_.keys(plugin.slr._interface.region[key].controls.togglebutton[group].controls), function(name) {
-								state.controls.togglebutton[name + "ToggleButton"] = {
-									"checked": plugin.slr[name + "ToggleButton"].checked,
-									"disabled": plugin.slr[name + "ToggleButton"].disabled,
-									"display": domStyle.get(plugin.slr[name + "ToggleButton"].parentNode.parentNode.parentNode, "display")
+								if (!_.isUndefined(plugin.slr[name + "ToggleButton"])) {
+									state.controls.togglebutton[name + "ToggleButton"] = {
+										"checked": plugin.slr[name + "ToggleButton"].checked,
+										"disabled": plugin.slr[name + "ToggleButton"].disabled,
+										"display": domStyle.get(plugin.slr[name + "ToggleButton"].parentNode.parentNode.parentNode, "display")
+									}
 								}
 							});
 						});
@@ -272,6 +274,10 @@ define([
 								}
 							})
 						})
+				   }
+				   
+				   if (_.has(this.slr._interface.region[this.slr._region], "chart")) {
+						state.chart = true;
 				   }
 				   //console.log(state);
                    return state;
@@ -426,6 +432,15 @@ define([
 							}
 						}
 					 }
+					 
+					 if (_.has(this._state, "chart")) {
+						plugin.createChart();
+						window.setTimeout(function(){
+							plugin.updateChart();
+							plugin.highlightChart();
+						}, 500)						
+					 }
+					 
 					 this._state = {};
 			   },
 
