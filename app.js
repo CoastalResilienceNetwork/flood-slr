@@ -242,15 +242,17 @@ define([
 					var options = this._interface.region[this._region].controls.select.hazard.options
 					var hazardOption = options[array.map(options, function(option) { return option.value }).indexOf(parameters.hazard)]
 					
-					parameters.climate = (!_.has(this._interface.region[this._region].controls.slider, "climate")) ? this.climateSlider.get("value") : (_.isArray(this._interface.region[this._region].controls.slider.climate.labels)) ? this._interface.region[this._region].controls.slider.climate.labels[this.climateSlider.get("value")].toLowerCase() : this._interface.region[this._region].controls.slider.climate.labels[parameters.hazard][this.climateSlider.get("value")].toLowerCase();
 					
-					parameters.sealevelrise = (!_.has(this._interface.region[this._region].controls.slider, "sealevelrise")) ? this.sealevelriseSlider.get("value") : (_.isArray(this._interface.region[this._region].controls.slider.sealevelrise.labels)) ? this._interface.region[this._region].controls.slider.sealevelrise.labels[this.sealevelriseSlider.get("value")].toLowerCase() : this._interface.region[this._region].controls.slider.sealevelrise.labels[parameters.hazard][this.sealevelriseSlider.get("value")].toLowerCase();
+					//rewrite to include support for an json object;w
+					parameters.climate = (!_.has(this._interface.region[this._region].controls.slider, "climate")) ? this.climateSlider.get("value") : (_.isObject(this._interface.region[this._region].controls.slider.climate.labels) && _.has(this._interface.region[this._region].controls.slider.climate.labels, parameters.hazard)) ? this._interface.region[this._region].controls.slider.climate.labels[parameters.hazard][this.climateSlider.get("value")].toLowerCase() :(_.isArray(this._interface.region[this._region].controls.slider.climate.labels)) ? this._interface.region[this._region].controls.slider.climate.labels[this.climateSlider.get("value")].toLowerCase() : this.climateSlider.get("value");
 					
-					parameters.scenario = (!_.has(this._interface.region[this._region].controls.slider, "scenario")) ? this.scenarioSlider.get("value") : (_.isArray(this._interface.region[this._region].controls.slider.scenario.labels)) ? this._interface.region[this._region].controls.slider.scenario.labels[this.scenarioSlider.get("value")].toLowerCase() : this._interface.region[this._region].controls.slider.scenario.labels[parameters.hazard][this.scenarioSlider.get("value")].toLowerCase();
+					parameters.sealevelrise = (!_.has(this._interface.region[this._region].controls.slider, "sealevelrise")) ? this.sealevelriseSlider.get("value") : (_.isObject(this._interface.region[this._region].controls.slider.sealevelrise.labels) && _.has(this._interface.region[this._region].controls.slider.sealevelrise.labels, parameters.hazard)) ? this._interface.region[this._region].controls.slider.sealevelrise.labels[parameters.hazard][this.sealevelriseSlider.get("value")].toLowerCase() :(_.isArray(this._interface.region[this._region].controls.slider.sealevelrise.labels)) ? this._interface.region[this._region].controls.slider.sealevelrise.labels[this.sealevelriseSlider.get("value")].toLowerCase() : this.sealevelriseSlider.get("value");
 					
-					parameters.hurricane = (!_.has(this._interface.region[this._region].controls.slider, "hurricane")) ? this.hurricaneSlider.get("value") : (_.isArray(this._interface.region[this._region].controls.slider.hurricane.labels)) ? this._interface.region[this._region].controls.slider.hurricane.labels[this.hurricaneSlider.get("value")].toLowerCase() : this._interface.region[this._region].controls.slider.hurricane.labels[parameters.hazard][this.hurricaneSlider.get("value")].toLowerCase();
+					parameters.scenario = (!_.has(this._interface.region[this._region].controls.slider, "scenario")) ? this.scenarioSlider.get("value") : (_.isObject(this._interface.region[this._region].controls.slider.scenario.labels) && _.has(this._interface.region[this._region].controls.slider.scenario.labels, parameters.hazard)) ? this._interface.region[this._region].controls.slider.scenario.labels[parameters.hazard][this.scenarioSlider.get("value")].toLowerCase() :(_.isArray(this._interface.region[this._region].controls.slider.scenario.labels)) ? this._interface.region[this._region].controls.slider.scenario.labels[this.scenarioSlider.get("value")].toLowerCase() : this.scenarioSlider.get("value");
 					
-					parameters.stormSurge = (!_.has(this._interface.region[this._region].controls.slider, "stormSurge")) ? this.stormSurgeSlider.get("value") : (_.isArray(this._interface.region[this._region].controls.slider.stormSurge.labels)) ? this._interface.region[this._region].controls.slider.stormSurge.labels[this.stormSurgeSlider.get("value")].toLowerCase() : this._interface.region[this._region].controls.slider.stormSurge.labels[parameters.hazard][this.stormSurgeSlider.get("value")].toLowerCase();
+					parameters.hurricane = (!_.has(this._interface.region[this._region].controls.slider, "hurricane")) ? this.hurricaneSlider.get("value") : (_.isObject(this._interface.region[this._region].controls.slider.hurricane.labels) && _.has(this._interface.region[this._region].controls.slider.hurricane.labels, parameters.hazard)) ? this._interface.region[this._region].controls.slider.hurricane.labels[parameters.hazard][this.hurricaneSlider.get("value")].toLowerCase() :(_.isArray(this._interface.region[this._region].controls.slider.hurricane.labels)) ? this._interface.region[this._region].controls.slider.hurricane.labels[this.hurricaneSlider.get("value")].toLowerCase() : this.hurricaneSlider.get("value");
+					
+					parameters.stormSurge = (!_.has(this._interface.region[this._region].controls.slider, "stormSurge")) ? this.stormSurgeSlider.get("value") : (_.isObject(this._interface.region[this._region].controls.slider.stormSurge.labels) && _.has(this._interface.region[this._region].controls.slider.stormSurge.labels, parameters.hazard)) ? this._interface.region[this._region].controls.slider.stormSurge.labels[parameters.hazard][this.stormSurgeSlider.get("value")].toLowerCase() :(_.isArray(this._interface.region[this._region].controls.slider.stormSurge.labels)) ? this._interface.region[this._region].controls.slider.stormSurge.labels[this.stormSurgeSlider.get("value")].toLowerCase() : this.stormSurgeSlider.get("value");
 					
 					var parts = [parameters.hazard];
 					array.forEach(_.keys(hazardOption.controls), function(key) {
@@ -298,6 +300,7 @@ define([
 					if (!_.isEmpty(this._mapLayer)) {
 						this._mapLayer.hide();
 					}
+					
 					if (_.has(this._data.region[this._region], parts.join("|"))) {
 						var dynamic = _.isArray(this._data.region[this._region][parts.join("|")]);
 						if (dynamic) {
@@ -483,6 +486,10 @@ define([
 					style:"position:relative; width:100%; height:auto; padding:0px; margin:-10px 0px 15px 0px; display:none;"
 				}, this.inputsPane.containerNode); 
 				
+				var chartTd = domConstruct.create("div", {
+					style:"position:relative; width:100%; height:auto; padding:0px; margin:0px 0px 0px 0px;"
+				}, this.inputsPane.containerNode);
+				
 				var otherTd = domConstruct.create("div", {
 					style:"position:relative; width:100%; height:20px; padding:0px; margin:0px 0px 0px 0px; visibility:hidden;"
 				}, this.inputsPane.containerNode);
@@ -490,7 +497,7 @@ define([
 				// region control
 				var regionText = domConstruct.create("div", {
 					style:"position:relative;margin-bottom:5px;",
-					innerHTML: '<span class="info-circle fa-stack fa slr-' + this._map.id + '-region"><i class="fa fa-circle fa-stack-1x"></i><span class="fa-stack-1x info-circle-text">1</span></span><b> Select a Region:</b>'
+					innerHTML: '<span class="info-circle fa-stack fa slr-' + this._map.id + '-region"><i class="fa fa-circle fa-stack-1x"></i><span class="fa-stack-1x info-circle-text">1</span></span><b> Select a <span class="slr-region-geography">Region</span>:</b>'
 				}, regionTd);
 				
 				var regionSelectDiv = domConstruct.create("div", { 
@@ -550,7 +557,8 @@ define([
 							
 							if ((!_.isObject(self._interface.region[self._region].download.report) && self._interface.region[self._region].download.report != "") || (_.isObject(self._interface.region[self._region].download.report) && _.has(self._interface.region[self._region].download.report, "default") && self._interface.region[self._region].download.report.default != "") || (_.isObject(self._interface.region[self._region].download.report) && _.has(self._interface.region[self._region].download.report, self.hazardSelect.value))) {
 								
-								var url = (_.isObject(self._interface.region[self._region].download.report) && _.has(self._interface.region[self._region].download.report, self.hazardSelect.value)) ? self._interface.region[self._region].download.report[self.hazardSelect.value] : self._interface.region[self._region].download.report;
+								var url = (_.isObject(self._interface.region[self._region].download.report) && _.has(self._interface.region[self._region].download.report, self.hazardSelect.value)) ? self._interface.region[self._region].download.report[self.hazardSelect.value] : (_.isObject(self._interface.region[self._region].download.report) && _.has(self._interface.region[self._region].download.report, "default")) ? self._interface.region[self._region].download.report["default"] : self._interface.region[self._region].download.report;
+								
 								var href = window.location.origin + window.location.pathname;
 								url = url.replace("HOSTNAME-", href);
 								window.open(url, "_blank");
@@ -595,10 +603,28 @@ define([
 							
 							if ((!_.isObject(self._interface.region[self._region].download.data) && self._interface.region[self._region].download.data != "") || (_.isObject(self._interface.region[self._region].download.data) && _.has(self._interface.region[self._region].download.data, "default") && self._interface.region[self._region].download.data.default != "") || (_.isObject(self._interface.region[self._region].download.data) && _.has(self._interface.region[self._region].download.data, self.hazardSelect.value))) {
 								
-								var url = (_.isObject(self._interface.region[self._region].download.data) && _.has(self._interface.region[self._region].download.data, self.hazardSelect.value)) ? self._interface.region[self._region].download.data[self.hazardSelect.value] : self._interface.region[self._region].download.data;
-								var href = window.location.origin + window.location.pathname;
-								url = url.replace("HOSTNAME-", href);
-								window.open(url, "_blank");
+								var url = (_.isObject(self._interface.region[self._region].download.data) && _.has(self._interface.region[self._region].download.data, self.hazardSelect.value)) ? self._interface.region[self._region].download.data[self.hazardSelect.value] : (_.isObject(self._interface.region[self._region].download.data) && _.has(self._interface.region[self._region].download.data, "default")) ? self._interface.region[self._region].download.data["default"] : self._interface.region[self._region].download.data;
+								
+								var popup = (_.has(url, "popup") && url.popup) ? true : false;
+								if (popup) {
+									var content = (_.has(url, "url")) ? url.url : "";
+									var html = content.replace("PLUGIN-DIRECTORY", self._plugin_directory);
+									var width = (_.has(url, "width")) ? url.width : 600;
+									var height = (_.has(url, "height")) ? url.height : 400;
+									TINY.box.show({
+										animate: true,
+										html: html,
+										fixed: true,
+										width: width + 40,
+										height: height + 40
+									});
+									//query(".tbox .tinner").style("height", "auto");
+								} else {
+									var href = window.location.origin + window.location.pathname;
+									url = url.replace("HOSTNAME-", href);
+									window.open(url, "_blank");
+								}
+								
 							}
 						}
 					 }
@@ -854,6 +880,9 @@ define([
 			        onChange: function(value){
 						self.setControlDependency("slider", this.name, this.value);
 						if (self._region != "") {
+							if (_.has(self._interface.region[self._region], "chart")) {
+								self.highlightChart();
+							}
 							self.updateMapLayers();
 						}
 			        }
@@ -885,6 +914,9 @@ define([
 			        onChange: function(value){
 						self.setControlDependency("slider", this.name, this.value);
 						if (self._region != "") {
+							if (_.has(self._interface.region[self._region], "chart")) {
+								self.updateChart();
+							}
 							self.updateMapLayers();
 						}
 			        }
@@ -1110,6 +1142,22 @@ define([
 			    });
 			    this.stormSurgeSlider.addChild(this.stormSurgeSliderLabels);
 				
+				
+				this.chartContainer = domConstruct.create("div", {
+					className: "slr-chart-container"
+				}, chartTd)
+				
+				this.chartHeader = domConstruct.create("div", {
+					className: "slr-chart-header",
+					innerHTML: ""
+				}, this.chartContainer)
+				
+				this.chartContent = domConstruct.create("div", {
+					className: "slr-chart-content",
+					innerHTML: ""
+				}, this.chartContainer)
+				
+				
 				var checkBoxDiv = domConstruct.create("label", { 
 					for: "slr-other-layer-" + self._map.id,
 					className:"styled-checkbox",
@@ -1305,7 +1353,12 @@ define([
 			}
 			
 			this.updateInterface = function(control){
-				//console.log("updateInterface");
+				
+				this.chart = {}
+				domStyle.set(this.chartContainer, "display", "none");
+				domConstruct.empty(this.chartHeader);
+				domConstruct.empty(this.chartContent);
+				
 				domConstruct.empty(this.hazardSelect);
 				if (this._region != "") {
 					array.forEach(this._interface.region[this._region].controls.select.hazard.options, function(item) {
@@ -1314,6 +1367,8 @@ define([
 				} else {
 					domConstruct.create("option", { innerHTML: " -- ", value: "" }, this.hazardSelect);
 				}
+				
+				_.first(query(".slr-region-geography")).innerHTML = (_.has(this._interface.region[this._region], "geography")) ? this._interface.region[this._region].geography : "Region";
 				
 				if (control == "region") {
 					if (this._region != "" && _.has(this._interface.region[this._region].controls.select, "datasource")) {
@@ -1342,6 +1397,8 @@ define([
 						
 						domStyle.set(this.dataSourceSelect.parentNode.parentNode, "display",  "none");
 						_.first(query('.slr-' + this._map.id + '-hazard .info-circle-text')).innerHTML = 2;
+						
+						
 					}
 				}
 								
@@ -1355,7 +1412,14 @@ define([
 				this.climateSliderLabels.set("labels",labels);
 				this.climateSliderLabels.set("count", labels.length);
 				this.climateSliderLabels.buildRendering();
-				var title = (this._region != "" && _.has(this._interface.region[this._region].controls, "slider") && _.has(this._interface.region[this._region].controls.slider, "climate") && _.has(this._interface.region[this._region].controls.slider.climate, "title")) ? this._interface.region[this._region].controls.slider.climate.title : this._defaultTitles.climate;
+								
+				//var title = (this._region != "" && _.has(this._interface.region[this._region].controls, "slider") && _.has(this._interface.region[this._region].controls.slider, "climate") && _.has(this._interface.region[this._region].controls.slider.climate, "title")) ? this._interface.region[this._region].controls.slider.climate.title : this._defaultTitles.climate;
+				
+				if (this._region != "" && _.has(this._interface.region[this._region].controls, "slider") && _.has(this._interface.region[this._region].controls.slider, "climate") && _.has(this._interface.region[this._region].controls.slider.climate, "title")) {
+					var title = (_.isObject(self._interface.region[self._region].controls.slider.climate.title)) ? this._interface.region[this._region].controls.slider.climate.title[_.first(_.keys(this._interface.region[this._region].controls.slider.climate.title))] : this._interface.region[this._region].controls.slider.climate.title;
+				} else {
+					var title = self._defaultTitles.climate;
+				}
 				_.first(query("span.slr-control-title.climate")).innerHTML = title;
 				
 				if (this._region != "" && _.has(this._interface.region[this._region].controls, "slider") && _.has(this._interface.region[this._region].controls.slider, "scenario") && _.has(this._interface.region[this._region].controls.slider.scenario, "labels")) {
@@ -1368,7 +1432,14 @@ define([
 				this.scenarioSliderLabels.set("labels",labels);
 				this.scenarioSliderLabels.set("count", labels.length);
 				this.scenarioSliderLabels.buildRendering();
-				var title = (this._region != "" && _.has(this._interface.region[this._region].controls, "slider") && _.has(this._interface.region[this._region].controls.slider, "scenario") && _.has(this._interface.region[this._region].controls.slider.scenario, "title")) ? this._interface.region[this._region].controls.slider.scenario.title : this._defaultTitles.scenario;
+				
+				//var title = (this._region != "" && _.has(this._interface.region[this._region].controls, "slider") && _.has(this._interface.region[this._region].controls.slider, "scenario") && _.has(this._interface.region[this._region].controls.slider.scenario, "title")) ? this._interface.region[this._region].controls.slider.scenario.title : this._defaultTitles.scenario;
+				
+				if (this._region != "" && _.has(this._interface.region[this._region].controls, "slider") && _.has(this._interface.region[this._region].controls.slider, "scenario") && _.has(this._interface.region[this._region].controls.slider.scenario, "title")) {
+					var title = (_.isObject(self._interface.region[self._region].controls.slider.scenario.title)) ? this._interface.region[this._region].controls.slider.scenario.title[_.first(_.keys(this._interface.region[this._region].controls.slider.scenario.title))] : this._interface.region[this._region].controls.slider.scenario.title;
+				} else {
+					var title = self._defaultTitles.scenario;
+				}
 				_.first(query("span.slr-control-title.scenario")).innerHTML = title;
 				
 				if (this._region != "" && _.has(this._interface.region[this._region].controls, "slider") && _.has(this._interface.region[this._region].controls.slider, "stormSurge") && _.has(this._interface.region[this._region].controls.slider.stormSurge, "labels")) {
@@ -1381,7 +1452,14 @@ define([
 				this.stormSurgeSliderLabels.set("labels",labels);
 				this.stormSurgeSliderLabels.set("count", labels.length);
 				this.stormSurgeSliderLabels.buildRendering();
-				var title = (this._region != "" && _.has(this._interface.region[this._region].controls, "slider") && _.has(this._interface.region[this._region].controls.slider, "stormSurge") && _.has(this._interface.region[this._region].controls.slider.stormSurge, "title")) ? this._interface.region[this._region].controls.slider.stormSurge.title : this._defaultTitles.stormSurge;
+				
+				//var title = (this._region != "" && _.has(this._interface.region[this._region].controls, "slider") && _.has(this._interface.region[this._region].controls.slider, "stormSurge") && _.has(this._interface.region[this._region].controls.slider.stormSurge, "title")) ? this._interface.region[this._region].controls.slider.stormSurge.title : this._defaultTitles.stormSurge;
+				
+				if (this._region != "" && _.has(this._interface.region[this._region].controls, "slider") && _.has(this._interface.region[this._region].controls.slider, "stormSurge") && _.has(this._interface.region[this._region].controls.slider.stormSurge, "title")) {
+					var title = (_.isObject(self._interface.region[self._region].controls.slider.stormSurge.title)) ? this._interface.region[this._region].controls.slider.stormSurge.title[_.first(_.keys(this._interface.region[this._region].controls.slider.stormSurge.title))] : this._interface.region[this._region].controls.slider.stormSurge.title;
+				} else {
+					var title = self._defaultTitles.stormSurge;
+				}
 				_.first(query("span.slr-control-title.stormSurge")).innerHTML = title;
 				
 				if (this._region != "" && _.has(this._interface.region[this._region].controls, "slider") && _.has(this._interface.region[this._region].controls.slider, "hurricane") && _.has(this._interface.region[this._region].controls.slider.hurricane, "labels")) {
@@ -1394,7 +1472,14 @@ define([
 				this.hurricaneSliderLabels.set("labels",labels);
 				this.hurricaneSliderLabels.set("count", labels.length);
 				this.hurricaneSliderLabels.buildRendering();
-				var title = (this._region != "" && _.has(this._interface.region[this._region].controls, "slider") && _.has(this._interface.region[this._region].controls.slider, "hurricane") && _.has(this._interface.region[this._region].controls.slider.hurricane, "title")) ? this._interface.region[this._region].controls.slider.hurricane.title : this._defaultTitles.hurricane;
+				
+				//var title = (this._region != "" && _.has(this._interface.region[this._region].controls, "slider") && _.has(this._interface.region[this._region].controls.slider, "hurricane") && _.has(this._interface.region[this._region].controls.slider.hurricane, "title")) ? this._interface.region[this._region].controls.slider.hurricane.title : this._defaultTitles.hurricane;
+				
+				if (this._region != "" && _.has(this._interface.region[this._region].controls, "slider") && _.has(this._interface.region[this._region].controls.slider, "hurricane") && _.has(this._interface.region[this._region].controls.slider.hurricane, "title")) {
+					var title = (_.isObject(self._interface.region[self._region].controls.slider.hurricane.title)) ? this._interface.region[this._region].controls.slider.hurricane.title[_.first(_.keys(this._interface.region[this._region].controls.slider.hurricane.title))] : this._interface.region[this._region].controls.slider.hurricane.title;
+				} else {
+					var title = self._defaultTitles.hurricane;
+				}
 				_.first(query("span.slr-control-title.hurricane")).innerHTML = title;
 				
 				if (this._region != "" && _.has(this._interface.region[this._region].controls, "slider") && _.has(this._interface.region[this._region].controls.slider, "sealevelrise") && _.has(this._interface.region[this._region].controls.slider.sealevelrise, "labels")) {
@@ -1407,7 +1492,14 @@ define([
 				this.sealevelriseSliderLabels.set("labels",labels);
 				this.sealevelriseSliderLabels.set("count", labels.length);
 				this.sealevelriseSliderLabels.buildRendering();
-				var title = (this._region != "" && _.has(this._interface.region[this._region].controls, "slider") && _.has(this._interface.region[this._region].controls.slider, "sealevelrise") && _.has(this._interface.region[this._region].controls.slider.sealevelrise, "title")) ? this._interface.region[this._region].controls.slider.sealevelrise.title : this._defaultTitles.sealevelrise;
+				
+				//var title = (this._region != "" && _.has(this._interface.region[this._region].controls, "slider") && _.has(this._interface.region[this._region].controls.slider, "sealevelrise") && _.has(this._interface.region[this._region].controls.slider.sealevelrise, "title")) ? this._interface.region[this._region].controls.slider.sealevelrise.title : this._defaultTitles.sealevelrise;
+				
+				if (this._region != "" && _.has(this._interface.region[this._region].controls, "slider") && _.has(this._interface.region[this._region].controls.slider, "sealevelrise") && _.has(this._interface.region[this._region].controls.slider.sealevelrise, "title")) {
+					var title = (_.isObject(self._interface.region[self._region].controls.slider.sealevelrise.title)) ? this._interface.region[this._region].controls.slider.sealevelrise.title[_.first(_.keys(this._interface.region[this._region].controls.slider.sealevelrise.title))] : this._interface.region[this._region].controls.slider.sealevelrise.title;
+				} else {
+					var title = self._defaultTitles.sealevelrise;
+				}
 				_.first(query("span.slr-control-title.sealevelrise")).innerHTML = title;
 				
 				domStyle.set(this.climateSlider.domNode.parentNode, "display",  "block");
@@ -1544,6 +1636,10 @@ define([
 					this._mapLayer = {};
 				}
 				
+				domStyle.set(this.chartContainer, "display", "none");
+				if (this._region != "" && _.has(this._interface.region[this._region], "chart")) {
+					this.createChart();
+				}
 			}
 			
 			this.updateControls = function() {
@@ -1610,6 +1706,13 @@ define([
 									self[control + "SliderLabels"].set("count", labels.length);
 									self[control + "SliderLabels"].buildRendering();
 								}
+								
+								if (_.has(self._interface.region[self._region].controls.slider[control], "title")) {
+									var title = (_.keys(self._interface.region[self._region].controls.slider[control].title).length > 0 && _.has(self._interface.region[self._region].controls.slider[control].title, hazard)) ? self._interface.region[self._region].controls.slider[control].title[hazard] : (_.keys(self._interface.region[self._region].controls.slider[control].title).length == 0) ? self._interface.region[self._region].controls.slider[control].title : self._defaultTitles[control];
+								} else {
+									var title = self._defaultTitles[control];
+								}
+								_.first(query("span.slr-control-title." + control)).innerHTML = title;
 							}
 							if (key == "radiocheck" ) {
 								if (self._interface.region[self._region].controls.radiocheck[control].type == "check") {
@@ -1635,6 +1738,12 @@ define([
 					} else {
 						this.hazardDescriptionDiv.innerHTML = "";
 						domStyle.set(this.hazardDescriptionDiv, "display", "none");
+					}
+					
+					if (_.has(hazardOption, "chart") && hazardOption.chart) {
+						domStyle.set(this.chartContainer, "display", "block");
+					} else {
+						domStyle.set(this.chartContainer, "display", "none");
 					}
 					
 					if (_.has(hazardOption.controls, "infoGraphic") && hazardOption.controls.infoGraphic) {
@@ -1683,6 +1792,7 @@ define([
 					var backgroundColor = ((!_.isObject(self._interface.region[self._region].download.data) && self._interface.region[self._region].download.data != "") || (_.isObject(self._interface.region[self._region].download.data) && _.has(self._interface.region[self._region].download.data, "default") && self._interface.region[self._region].download.data.default != "") || (_.isObject(self._interface.region[self._region].download.data) && _.has(self._interface.region[self._region].download.data, self.hazardSelect.value)))  ? "#2B2E3B" : "#94959C";
 					query(".downloadButton.slr-data").style("backgroundColor", backgroundColor);
 					
+					
 				} else {
 					domStyle.set(this.climateSlider.domNode.parentNode, "display",  "block");
 					domStyle.set(this.sealevelriseSlider.domNode.parentNode, "display",  "none");
@@ -1728,6 +1838,161 @@ define([
 					var backgroundColor = ((!_.isObject(self._interface.region[self._region].download.data) && self._interface.region[self._region].download.data != "") || (_.isObject(self._interface.region[self._region].download.data) && _.has(self._interface.region[self._region].download.data, "default") && self._interface.region[self._region].download.data.default != ""))  ? "#2B2E3B" : "#94959C";
 					query(".downloadButton.slr-data").style("backgroundColor", backgroundColor);
 				}
+			}
+			
+			this.createChart = function() {
+				this.chartHeader.innerHTML = this._interface.region[this._region].chart.title;
+				
+				var margin = {top: 20, right: 0, bottom: 35, left: 40}
+				var width = 230;
+				var height = 200;
+				var padding = 0.25;
+				
+				this.chart = {}
+				
+				this.chart.formatter = function(value,n) {
+					return Math.round(value/n);
+				}
+				
+				this.chart.dimensions = { height: height, width: width, margin: margin, padding: padding }
+				
+				this.chart.x = d3.scale.ordinal()
+					.rangeRoundBands([0, width], padding, padding);
+
+				this.chart.y = d3.scale.linear()
+					.rangeRound([height, 0]);
+
+				this.chart.color = d3.scale.ordinal()
+					.range(["#98abc5", "#7b6888", "#6b486b"]);
+				
+				this.chart.xaxis = d3.svg.axis()
+					.scale(this.chart.x)
+					.orient("bottom")
+					.tickFormat(function(d) { return d; });
+
+				this.chart.yaxis = d3.svg.axis()
+					.scale(this.chart.y)
+					.orient("left")
+					.tickFormat(function(d) { return self.chart.formatter(d, 1000);});
+
+				this.chart.pane = d3.select(".slr-chart-content")
+					.append("svg")
+					.attr("width", width + margin.left + margin.right)
+					.attr("height", height + margin.top + margin.bottom)
+					.append("g")
+					.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+				this.chart.data = [];
+				d3.csv(this._plugin_directory + "/data/" + this._interface.region[this._region].chart.data, function(error, data) {
+						var data = data.filter(function(d) { return d['county'] == self._region });
+						
+						self.chart.x.domain(data.map(function(d) { return d.category; }));
+						self.chart.y.domain([0, d3.max(data, function(d) { return parseInt(d.total) + 15000; })]).nice()
+						
+						self.chart.color.domain(d3.keys(data[0]).filter(function(key) { return key !== "county" && key !== "total" && key !== "category" }));
+						data.forEach(function(d) {
+							var y0 = 0;
+							d.categories = self.chart.color.domain().map(function(name, i) { return {name: name, y0: y0, y1: y0 += +d[name], order:i }; }).reverse();
+						});
+						self.chart.data = dojo.clone(data);
+						
+						self.chart.pane.append("g")
+							.attr("class", "x axis")
+							.attr("transform", "translate(0," + self.chart.dimensions.height + ")")
+							.call(self.chart.xaxis)
+							
+						self.chart.pane.append("text")
+							.attr("class", "x-axis-title")
+							.attr("transform", "translate(" + (self.chart.dimensions.width/2) + "," + (self.chart.dimensions.height + self.chart.dimensions.margin.bottom)+ ")")
+							.style("text-anchor", "middle")
+							.text("Sea Level Rise");
+						
+						self.chart.pane.append("g")
+							.attr("class", "y axis e")
+							.call(self.chart.yaxis)
+							.append("text")
+							.attr("transform", "rotate(-90)")
+							.attr("x", 0 - (self.chart.dimensions.height/2))
+							.attr("y", 0 - self.chart.dimensions.margin.left)
+							.attr("dy", ".7em")
+							.style("text-anchor", "middle")
+							.text("Acres Inundated (thousands)")
+							
+						var categories = self.chart.pane.selectAll(".categories")
+							.data(data)
+							.enter().append("g")
+							.attr("class", function(d, i) { return "categories cat" + i; })
+							.attr("cursor", "pointer")
+							.attr("transform", function(d) { return "translate(" + self.chart.x(d.category) + ",0)"; });
+
+						categories.selectAll("rect")
+							.data(function(d) {
+								d.categories.forEach(function(o){
+									if (parseInt(o.order) > parseInt(self.scenarioSlider.get("value"))) {
+										o.y0 = 0;
+										o.y1 = 0;
+									}
+								}); 
+								return d.categories;
+							})
+							.enter().append("rect")
+							.attr("width", self.chart.x.rangeBand())
+							.attr("y", function(d) { return self.chart.y(d.y1); })
+							.attr("height", function(d) { return self.chart.y(d.y0) - self.chart.y(d.y1); })
+							.style("fill", function(d) { return self.chart.color(d.name); });
+							
+						var legend = self.chart.pane.selectAll(".slr-chart-legend")
+							.data(self.chart.color.domain().slice().reverse())
+							.enter().append("g")
+							.attr("class", function(d) { return "slr-chart-legend " + d; })
+							.attr("transform", function(d, i) { return "translate(0," + ((i * 16) - 0) + ")"; });
+
+						legend.append("rect")
+							.attr("x", 14)
+							.attr("width", 14)
+							.attr("height", 14)
+							.style("fill", self.chart.color)
+							.style("stroke", "#bbbbbb")
+							.attr("cursor", "pointer");
+
+						legend.append("text")
+							.attr("x", 33)
+							.attr("y", 7)
+							.attr("dy", ".35em")
+							.style("text-anchor", "start")
+							.text(function(d) { return d.replace("yr", " yr Flood"); });
+							
+							self.highlightChart(0);
+				})
+			
+			}
+			
+			this.updateChart = function() {
+				var value = this[this._interface.region[this._region].chart.controls.chart + "Slider"].get("value");
+				var data = dojo.clone(self.chart.data);
+				var categories = this.chart.pane.selectAll(".categories")
+					.data(data);
+				categories
+					.selectAll("rect")
+					.data(function(d) {
+						d.categories.forEach(function(o){
+							if ( parseInt(o.order) > parseInt(value) || (_.has(self._interface.region[self._region].chart, "exclude-value") && value == self._interface.region[self._region].chart["exclude-value"]) ) {
+								o.y0 = 0;
+								o.y1 = 0;
+							}
+						});					
+						return d.categories;
+					})
+					.transition()
+					.duration(500)
+					.attr("y", function(d) { return self.chart.y(d.y1); })
+					.attr("height", function(d) { return self.chart.y(d.y0) - self.chart.y(d.y1); })
+			}
+			
+			this.highlightChart = function() {
+				var value = this[this._interface.region[this._region].chart.controls.highlight + "Slider"].get("value");
+				d3.selectAll(".slr-chart-content .categories").classed("active", false)
+				d3.selectAll(".slr-chart-content .categories.cat" + value).classed("active", true);
 			}
 			
 			this.resetInterface = function(){
@@ -1823,10 +2088,9 @@ define([
 					if (!_.isUndefined(message)) {
 						if (_.isObject(message)) {
 							var value = self[message.control + "Select"].value;
-							var popup = (_.has(message.values[value], "popup") && message.values[value].popup) ? message.values[value].popup : false;
-							var url = (_.has(message.values[value], "url")) ? message.values[value].url : "";
-							
+							var popup = (_.has(message.values, value) && _.has(message.values[value], "popup") && message.values[value].popup) ? message.values[value].popup : false;
 							if (popup) {
+								var url = (_.has(message.values[value], "url")) ? message.values[value].url : "";
 								var html = url.replace("PLUGIN-DIRECTORY", self._plugin_directory);
 								var width = (_.has(message.values[value], "width")) ? message.values[value].width : 600;
 								var height = (_.has(message.values[value], "height")) ? message.values[value].height : 400;
@@ -1838,7 +2102,8 @@ define([
 									height: height + 40
 								});
 							} else {
-								self.showMessageDialog(this, value);
+								var content = (_.has(message.values, value)) ? message.values[value] : message.values["default"];
+								self.showMessageDialog(this, content);
 							}
 							
 						} else {

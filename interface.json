@@ -17,21 +17,126 @@
 		"sealevelrise": "Sea level rise inundation scenarios ranging from zero to six feet above mean higher high water (MHHW)."
 	},
 	"region": {
-		"Currituck County": {
-			"url": "http://services.coastalresilience.org/arcgis/rest/services/North_Carolina/NC_Flood_Slr/MapServer",
+		"Carteret": {
+			"geography":"County",
+			"url": "http://services.coastalresilience.org/arcgis/rest/services/North_Carolina/Flood_SLR/MapServer",
 			"layers": {
-				"main": "http://services.coastalresilience.org/arcgis/rest/services/North_Carolina/NC_Flood_Slr/MapServer",
-				"hurricane": "http://services.coastalresilience.org/arcgis/rest/services/North_Carolina/NC_Flood_Slr/MapServer",
-				"shallow_coastal_flooding": "http://services.coastalresilience.org/arcgis/rest/services/North_Carolina/NC_Flood_Slr/MapServer",
-				"fema": "http://services.coastalresilience.org/arcgis/rest/services/North_Carolina/NC_Flood_Slr/MapServer",
-				"model_storm": "http://services.coastalresilience.org/arcgis/rest/services/North_Carolina/NC_Flood_Slr/MapServer"
+				"main": "http://services.coastalresilience.org/arcgis/rest/services/North_Carolina/Flood_SLR/MapServer"
 			},
 			"tooltips": {
 				"region": "Geographic areas where climate change/sea level rise vulnerability studies have been conducted.",
 				"hazard": "Spatial extent for different coastal hazards that may affect coastal assets.  Impact zones were estimated across multiple planning horizons.",
-				"climate": "Future planning horizons representing the impact of climate change.",
-				"scenario": "Sea level rise scenarios (low, medium, and high) based on regional sea level rise amounts.",
-				"hurricane": "Hurrican categories (Saffir-Simpson hurricane wind scale, ranging from 1 to 5) used to model storm surge heights.",
+				"climate": { 
+					"control":"hazard",
+					"values": {
+						"coastal_flooding_oem": "Current and modeled potential water surface.",
+						"default": "Future planning horizons representing the impact of climate change."
+					}
+				},
+				"scenario": {
+					"control":"hazard",
+					"values": {
+						"coastal_flooding_oem": "<div style='text-align:left'>Modeled storm surge from North Carolina Sea Level Rise Impact Study.<div style='height:5px;'></div><b>Mean High High Water (MHHW)</b>: The average of all the <b>high</b> water heights observed over a period of several years.<div style='height:5px;'></div><b>10-yr event</b>: A coastal flood event with a 10% chance of occurring annually. Has a 96% chance of occurring over a 30-yr mortgage.<div style='height:5px;'></div><b>100-year event</b>: A coastal flood event with a 1% chance of occurring annually. Has a 26% chance of occurring over a 30-yr mortgage.<div style='height:5px;'></div><b>Hurricane Fran</b>: Modeled storm surge using conditions from this 1996 event.</div>",
+						"default": "Sea level rise scenarios (low, medium, and high) based on regional sea level rise amounts."
+					}
+				}
+			},
+			"extent": {
+				"xmin":-8614467.544694105,
+				"ymin":4096442.525359713,
+				"xmax":-8446350.958460935,
+				"ymax":4204868.992212647,
+				"spatialReference":{
+					"wkid":102100,
+					"latestWkid":3857
+				}
+			},
+			"controls": {
+				"select": {
+					"hazard": {
+						"options": [
+							{
+								"name": " -- ",
+								"value": ""
+							},
+							{
+								"name": "Coastal Flooding (NC Emergency Mgmt)",
+								"value": "coastal_flooding_oem",
+								"controls": { 
+									"slider": ["climate", "scenario"]
+								},
+								"chart": true
+							}
+						]
+					}
+				},
+				"slider": {
+					"climate": { "disabled": false, "show": true,
+						"labels": { 
+							"coastal_flooding_oem": ["Current<br>(0in)", "20cm<br>(7.8in)", "40cm<br>(15.7in)", "100cm<br>(39in)"]
+						},
+						"title": { 
+							"coastal_flooding_oem": "Sea Level Rise"
+						}
+					},
+					"scenario": { "disabled": false, "show": true,
+						"labels": { 
+							"coastal_flooding_oem": ["MHHW", "10yr", "100yr", "Fran"]
+						},
+						"title": {
+							"coastal_flooding_oem": "Flood Extent"
+						}
+					 }
+				}
+			},
+			"download": {
+				"report": {
+					"coastal_flooding_oem": "http://media.coastalresilience.org/NC/2015%20NC%20SLR%20Assessment-FINAL%20REPORT%20Jan%2028%202016.pdf",
+					"default": "https://coast.noaa.gov/floodexposure/#/services#flood-hazards"
+				},
+				"data": {
+					"coastal_flooding_oem": { "popup": true, "width":250, "height":85, "url": "<div style='padding:30px 20px;line-height:1;font-size: 15px;'>Data was acquired from <a href='https://www.ncdps.gov/Our-Organization/Emergency-Management' target='_blank'>NC Emergency Management</a> through a public records request.  For data or information on this project contact <a  href='https://www.ncdps.gov/Our-Organization/Emergency-Management' target='_blank'>NC Emergency Management</a>.</div>" },
+					"default":"https://coast.noaa.gov/floodexposure/#/services#flood-hazards"
+				}
+			},
+			"chart": {
+				"data": "chart_data_nc.csv",
+				"title": "Acres at Risk Under Various Flood Events and Sea Level Rise Scenarios",
+				"controls": {
+					"chart":"scenario",
+					"highlight": "climate"
+				},
+				"exclude-value": 3
+			}
+		},
+		"Currituck": {
+			"geography":"County",
+			"url": "http://services.coastalresilience.org/arcgis/rest/services/North_Carolina/Flood_SLR/MapServer",
+			"layers": {
+				"main": "http://services.coastalresilience.org/arcgis/rest/services/North_Carolina/Flood_SLR/MapServer",
+				"hurricane": "http://services.coastalresilience.org/arcgis/rest/services/North_Carolina/Flood_SLR/MapServer",
+				"shallow_coastal_flooding": "http://services.coastalresilience.org/arcgis/rest/services/North_Carolina/Flood_SLR/MapServer",
+				"fema": "http://services.coastalresilience.org/arcgis/rest/services/North_Carolina/Flood_SLR/MapServer",
+				"model_storm": "http://services.coastalresilience.org/arcgis/rest/services/North_Carolina/Flood_SLR/MapServer"
+			},
+			"tooltips": {
+				"region": "Geographic areas where climate change/sea level rise vulnerability studies have been conducted.",
+				"hazard": "Spatial extent for different coastal hazards that may affect coastal assets.  Impact zones were estimated across multiple planning horizons.",
+				"climate": { 
+					"control":"hazard",
+					"values": {
+						"coastal_flooding_oem": "Current and modeled potential water surface.",
+						"default": "Future planning horizons representing the impact of climate change."
+					}
+				},
+				"scenario": {
+					"control":"hazard",
+					"values": {
+						"coastal_flooding_oem": "<div style='text-align:left'>Modeled storm surge from North Carolina Sea Level Rise Impact Study.<div style='height:5px;'></div><b>Mean High High Water (MHHW)</b>: The average of all the <b>high</b> water heights observed over a period of several years.<div style='height:5px;'></div><b>10-yr event</b>: A coastal flood event with a 10% chance of occurring annually. Has a 96% chance of occurring over a 30-yr mortgage.<div style='height:5px;'></div><b>100-year event</b>: A coastal flood event with a 1% chance of occurring annually. Has a 26% chance of occurring over a 30-yr mortgage.<div style='height:5px;'></div><b>Hurricane Fran</b>: Modeled storm surge using conditions from this 1996 event.</div>",
+						"default": "Sea level rise scenarios (low, medium, and high) based on regional sea level rise amounts."
+					}
+				},
+				"hurricane": "Hurricane categories (Saffir-Simpson hurricane wind scale, ranging from 1 to 5) used to model storm surge heights.",
 				"dataSource": "Source of hazard data to be mapped in the application.",
 				"storm_matthew": "Storm surge, track, and wind swath radii of Hurricane Matthew (2016) based on NOAA's National Hurricane Center best estimates of the location, intensity, and size of a tropical cyclone."
 			},
@@ -70,6 +175,14 @@
 								"name": "Shallow Coastal Flooding",
 								"value": "shallow_coastal_flooding",
 								"controls": { "slider": [] }
+							},
+							{
+								"name": "Coastal Flooding (NC Emergency Mgmt)",
+								"value": "coastal_flooding_oem",
+								"controls": { 
+									"slider": ["climate", "scenario"]
+								},
+								"chart": true
 							}
 						]
 					},
@@ -80,8 +193,26 @@
 					}
 				},
 				"slider": {
-					"climate": { "disabled": false, "show": true, "labels": ["Current", "2045", "2060", "2100"]  },
-					"scenario": { "disabled": false, "show": true, "labels": ["Low", "Medium", "High"] },
+					"climate": { "disabled": false, "show": true,
+						"labels": { 
+							"sea_level_rise": ["Current", "2045", "2060", "2100"],
+							"coastal_flooding_oem": ["Current<br>(0in)", "20cm<br>(7.8in)", "40cm<br>(15.7in)", "100cm<br>(39in)"]
+						},
+						"title": { 
+							"sea_level_rise": "Climate Year",
+							"coastal_flooding_oem": "Sea Level Rise"
+						}
+					},
+					"scenario": { "disabled": false, "show": true,
+						"labels": { 
+							"sea_level_rise": ["Low", "Medium", "High"],
+							"coastal_flooding_oem": ["MHHW", "10yr", "100yr", "Fran"]
+						},
+						"title": { 
+							"sea_level_rise": "Sea Level Rise",
+							"coastal_flooding_oem": "Flood Extent"
+						}
+					 },
 					"hurricane": { "disabled": false, "show": true, "labels": ["1","2","3","4","5"] }
 				},
 				"radiocheck": {
@@ -111,24 +242,52 @@
 				}
 			},
 			"download": {
-				"report":"https://coast.noaa.gov/floodexposure/#/services#flood-hazards",
-				"data":"https://coast.noaa.gov/floodexposure/#/services#flood-hazards"
+				"report": {
+					"coastal_flooding_oem": "http://media.coastalresilience.org/NC/2015%20NC%20SLR%20Assessment-FINAL%20REPORT%20Jan%2028%202016.pdf",
+					"default": "https://coast.noaa.gov/floodexposure/#/services#flood-hazards"
+				},
+				"data": {
+					"coastal_flooding_oem": { "popup": true, "width":250, "height":85, "url": "<div style='padding:30px 20px;line-height:1;font-size: 15px;'>Data was acquired from <a href='https://www.ncdps.gov/Our-Organization/Emergency-Management' target='_blank'>NC Emergency Management</a> through a public records request.  For data or information on this project contact <a  href='https://www.ncdps.gov/Contact/Contact-Us' target='_blank'>NC Emergency Management</a>.</div>" },
+					"default":"https://coast.noaa.gov/floodexposure/#/services#flood-hazards"
+				}
+			},
+			"chart": {
+				"data": "chart_data_nc.csv",
+				"title": "Acres at Risk Under Various Flood Events and Sea Level Rise Scenarios",
+				"controls": {
+					"chart":"scenario",
+					"highlight": "climate"
+				},
+				"exclude-value": 3
 			}
 		},
-		"Dare County": {
-			"url": "http://services.coastalresilience.org/arcgis/rest/services/North_Carolina/NC_Flood_Slr/MapServer",
+		"Dare": {
+			"geography":"County",
+			"url": "http://services.coastalresilience.org/arcgis/rest/services/North_Carolina/Flood_SLR/MapServer",
 			"layers": {
-				"main": "http://services.coastalresilience.org/arcgis/rest/services/North_Carolina/NC_Flood_Slr/MapServer",
-				"hurricane": "http://services.coastalresilience.org/arcgis/rest/services/North_Carolina/NC_Flood_Slr/MapServer",
-				"shallow_coastal_flooding": "http://services.coastalresilience.org/arcgis/rest/services/North_Carolina/NC_Flood_Slr/MapServer",
-				"fema": "http://services.coastalresilience.org/arcgis/rest/services/North_Carolina/NC_Flood_Slr/MapServer",
-				"model_storm": "http://services.coastalresilience.org/arcgis/rest/services/North_Carolina/NC_Flood_Slr/MapServer"
+				"main": "http://services.coastalresilience.org/arcgis/rest/services/North_Carolina/Flood_SLR/MapServer",
+				"hurricane": "http://services.coastalresilience.org/arcgis/rest/services/North_Carolina/Flood_SLR/MapServer",
+				"shallow_coastal_flooding": "http://services.coastalresilience.org/arcgis/rest/services/North_Carolina/Flood_SLR/MapServer",
+				"fema": "http://services.coastalresilience.org/arcgis/rest/services/North_Carolina/Flood_SLR/MapServer",
+				"model_storm": "http://services.coastalresilience.org/arcgis/rest/services/North_Carolina/Flood_SLR/MapServer"
 			},
 			"tooltips": {
 				"region": "Geographic areas where climate change/sea level rise vulnerability studies have been conducted.",
 				"hazard": "Spatial extent for different coastal hazards that may affect coastal assets.  Impact zones were estimated across multiple planning horizons.",
-				"climate": "Future planning horizons representing the impact of climate change.",
-				"scenario": "Sea level rise scenarios (low, medium, and high) based on regional sea level rise amounts.",
+				"climate": { 
+					"control":"hazard",
+					"values": {
+						"coastal_flooding_oem": "Current and modeled potential water surface.",
+						"default": "Future planning horizons representing the impact of climate change."
+					}
+				},
+				"scenario": {
+					"control":"hazard",
+					"values": {
+						"coastal_flooding_oem": "<div style='text-align:left'>Modeled storm surge from North Carolina Sea Level Rise Impact Study.<div style='height:5px;'></div><b>Mean High High Water (MHHW)</b>: The average of all the <b>high</b> water heights observed over a period of several years.<div style='height:5px;'></div><b>10-yr event</b>: A coastal flood event with a 10% chance of occurring annually. Has a 96% chance of occurring over a 30-yr mortgage.<div style='height:5px;'></div><b>100-year event</b>: A coastal flood event with a 1% chance of occurring annually. Has a 26% chance of occurring over a 30-yr mortgage.<div style='height:5px;'></div><b>Hurricane Fran</b>: Modeled storm surge using conditions from this 1996 event.</div>",
+						"default": "Sea level rise scenarios (low, medium, and high) based on regional sea level rise amounts."
+					}
+				},
 				"hurricane": "Hurrican categories (Saffir-Simpson hurricane wind scale, ranging from 1 to 5) used to model storm surge heights.",
 				"dataSource": "Source of hazard data to be mapped in the application.",
 				"storm_matthew": "Storm surge, track, and wind swath radii of Hurricane Matthew (2016) based on NOAA's National Hurricane Center best estimates of the location, intensity, and size of a tropical cyclone."
@@ -166,6 +325,14 @@
 								"name": "Shallow Coastal Flooding",
 								"value": "shallow_coastal_flooding",
 								"controls": { "slider": [] }
+							},
+							{
+								"name": "Coastal Flooding (NC Emergency Mgmt)",
+								"value": "coastal_flooding_oem",
+								"controls": { 
+									"slider": ["climate", "scenario"]
+								},
+								"chart": true
 							}
 						]
 					},
@@ -176,8 +343,26 @@
 					}
 				},
 				"slider": {
-					"climate": { "disabled": false, "show": true, "labels": ["Current", "2045", "2060", "2100"] },
-					"scenario": { "disabled": false, "show": true, "labels": ["Low", "Medium", "High"] },
+					"climate": { "disabled": false, "show": true,
+						"labels": { 
+							"sea_level_rise": ["Current", "2045", "2060", "2100"],
+							"coastal_flooding_oem": ["Current<br>(0in)", "20cm<br>(7.8in)", "40cm<br>(15.7in)", "100cm<br>(39in)"]
+						},
+						"title": { 
+							"sea_level_rise": "Climate Year",
+							"coastal_flooding_oem": "Sea Level Rise"
+						}
+					},
+					"scenario": { "disabled": false, "show": true,
+						"labels": { 
+							"sea_level_rise": ["Low", "Medium", "High"],
+							"coastal_flooding_oem": ["MHHW", "10yr", "100yr", "Fran"]
+						},
+						"title": { 
+							"sea_level_rise": "Sea Level Rise",
+							"coastal_flooding_oem": "Flood Extent"
+						}
+					 },
 					"hurricane": { "disabled": false, "show": true, "labels": ["1","2","3","4","5"] }
 				},
 				"radiocheck": {
@@ -207,8 +392,23 @@
 				}
 			},
 			"download": {
-				"report":"https://coast.noaa.gov/floodexposure/#/services#flood-hazards",
-				"data":"https://coast.noaa.gov/floodexposure/#/services#flood-hazards"
+				"report": {
+					"coastal_flooding_oem": "http://media.coastalresilience.org/NC/2015%20NC%20SLR%20Assessment-FINAL%20REPORT%20Jan%2028%202016.pdf",
+					"default": "https://coast.noaa.gov/floodexposure/#/services#flood-hazards"
+				},
+				"data": {
+					"coastal_flooding_oem": { "popup": true, "width":250, "height":85, "url": "<div style='padding:30px 20px;line-height:1;font-size: 15px;'>Data was acquired from <a href='https://www.ncdps.gov/Our-Organization/Emergency-Management' target='_blank'>NC Emergency Management</a> through a public records request.  For data or information on this project contact <a  href='https://www.ncdps.gov/Contact/Contact-Us' target='_blank'>NC Emergency Management</a>.</div>" },
+					"default":"https://coast.noaa.gov/floodexposure/#/services#flood-hazards"
+				}
+			},
+			"chart": {
+				"data": "chart_data_nc.csv",
+				"title": "Acres at Risk Under Various Flood Events and Sea Level Rise Scenarios",
+				"controls": {
+					"chart":"scenario",
+					"highlight": "climate"
+				},
+				"exclude-value": 3
 			}
 		},
 		"Virginia Eastern Shore": {
@@ -794,9 +994,9 @@
 			}
 		},
 		"New Jersey": {
-			"url": "http://services.coastalresilience.org/arcgis/rest/services/New_Jersey/NJ_Flood_and_SLR_Data/MapServer",
+			"url": "http://services.coastalresilience.org/arcgis/rest/services/New_Jersey/Flood_SLR/MapServer",
 			"layers": {
-				"main": "http://services.coastalresilience.org/arcgis/rest/services/New_Jersey/NJ_Flood_and_SLR_Data/MapServer",
+				"main": "http://services.coastalresilience.org/arcgis/rest/services/New_Jersey/Flood_SLR/MapServer",
 				"slr_0ft": { "type": "tiled", "url": "http://maps1.coast.noaa.gov/arcgis/rest/services/dc_slr/slr_0ft/MapServer" },
 				"slr_1ft": { "type": "tiled", "url": "http://maps1.coast.noaa.gov/arcgis/rest/services/dc_slr/slr_1ft/MapServer" },
 				"slr_2ft": { "type": "tiled", "url": "http://maps1.coast.noaa.gov/arcgis/rest/services/dc_slr/slr_2ft/MapServer" },
@@ -1071,7 +1271,7 @@
 				}
 			},
 			"download": {
-				"report":"HOSTNAME-methods/SWWA_SLR_Technical_Summary.pdf",
+				"report":"",
 				"data":""
 			}
 		},
