@@ -399,7 +399,7 @@ define([
 			}
 			
 			this.updateExtentByRegion = function(region) {
-				this._map.setExtent(new Extent(region.extent), false)
+				this._map.setExtent(new Extent(region.extent), true)
 			}
 						
 			this.loadInterface = function() {
@@ -1631,7 +1631,7 @@ define([
 					this._mapLayer = this._mapLayers[this._region].main;
 					this._mapLayer.show();
 					var extent = new Extent(this._interface.region[this._region].extent);
-					this._map.setExtent(extent, false);
+					this._map.setExtent(extent, true);
 				} else {
 					this._mapLayer = {};
 				}
