@@ -699,18 +699,26 @@
 			"sea_level_rise|2100|extr": [12]
 		},
 		"Snohomish County": {
-			"sea_level_rise|historic|low|10yr": [14],
-			"sea_level_rise|historic|low|100yr": [15],
-			"sea_level_rise|historic|high|10yr": [14],
-			"sea_level_rise|historic|high|100yr": [15],
-			"sea_level_rise|2040|low|10yr": [16],
-			"sea_level_rise|2040|high|10yr": [17],
-			"sea_level_rise|2040|low|100yr": [18],
-			"sea_level_rise|2040|high|100yr": [19],
-			"sea_level_rise|2080|low|10yr": [20],
-			"sea_level_rise|2080|high|10yr": [21],
-			"sea_level_rise|2080|low|100yr": [22],
-			"sea_level_rise|2080|high|100yr": [23]
+			"sea_level_rise|historic (1980s)|low|2yr": [40],
+			"sea_level_rise|historic (1980s)|low|10yr": [14],
+			"sea_level_rise|historic (1980s)|low|25yr": [53],
+			"sea_level_rise|historic (1980s)|high|2yr": [40],
+			"sea_level_rise|historic (1980s)|high|10yr": [14],
+			"sea_level_rise|historic (1980s)|high|25yr": [53],
+			
+			"sea_level_rise|2050s|low|2yr": [42],
+			"sea_level_rise|2050s|high|2yr": [45],
+			"sea_level_rise|2050s|low|10yr": [16],
+			"sea_level_rise|2050s|high|10yr": [19],
+			"sea_level_rise|2050s|low|25yr": [55],
+			"sea_level_rise|2050s|high|25yr": [58],
+			
+			"sea_level_rise|2080s|low|2yr": [48],
+			"sea_level_rise|2080s|high|2yr": [51],
+			"sea_level_rise|2080s|low|10yr": [22],
+			"sea_level_rise|2080s|high|10yr": [25],
+			"sea_level_rise|2080s|low|25yr": [61],
+			"sea_level_rise|2080s|high|25yr": [64]
 		},
 		"Grenada": {
 			"sea_level_rise|none|100yr": [2],

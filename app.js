@@ -26,6 +26,8 @@ define([
 		"esri/layers/ArcGISDynamicMapServiceLayer",
 		"esri/layers/ArcGISTiledMapServiceLayer",
 		"esri/geometry/Extent",
+		"esri/tasks/IdentifyTask",
+		"esri/tasks/IdentifyParameters",
 		"dojo/NodeList-traverse"
 		], 
 
@@ -55,19 +57,71 @@ define([
 			HorizontalRuleLabels,
 			DynamicMapServiceLayer,
 			TiledMapServiceLayer,
-			Extent
+			Extent,
+			IdentifyTask,
+			IdentifyParameters
 		  ) 
 		
 		{
 
 		var slrTool = function(plugin, appData, appConfig){
 			var self = this;
+			this._data = JSON.parse(appData);
+			this._interface = JSON.parse(appConfig);
 			this._plugin = plugin;
 			this._app = this._plugin.app;
 			this._container = this._plugin.container;
 			this._plugin_directory = this._plugin.plugin_directory;
 			this._legend = this._plugin.legendContainer;
 			this._map = this._plugin.map;
+			this._status = "close";
+			
+			on(dom.byId(this._map.getMapId() + "_layers"), "click", function(evt) {
+				domStyle.set(self.mapTip, { "display": "none" });
+				if (self._status != "close") {
+					if (_.has(self._interface.region[self._region], "identify")) {
+						
+						window.setTimeout(function() {
+							var identifyParams = new IdentifyParameters();
+							identifyParams.tolerance = 3;
+							identifyParams.layerIds = self._mapLayer.visibleLayers;
+							identifyParams.layerOption = IdentifyParameters.LAYER_OPTION_VISIBLE;
+							identifyParams.width = self._map.width;
+							identifyParams.height = self._map.height;
+							identifyParams.geometry = evt.mapPoint;
+							identifyParams.mapExtent = self._map.extent;
+							identifyParams.returnGeometry = false;
+
+							var identifyTask = new IdentifyTask(self._mapLayer.url);
+							identifyTask.execute(identifyParams, function(response) {
+								
+								if (response.length > 0) {
+									var field = self._interface.region[self._region].identify.field;
+									var value = response[0].feature.attributes[field];
+									value = (_.has(self._interface.region[self._region].identify, "lookup")) ? self._interface.region[self._region].identify.lookup[value] : value;
+
+									if (!_.isUndefined(value)) {
+										self.mapTip.innerHTML = value;
+										domStyle.set(self.mapTip, { "display": "block" });
+										var left = evt.screenPoint.x;
+										var top = evt.screenPoint.y - domGeom.getMarginBox(self.mapTip).h/2;
+										domStyle.set(self.mapTip, {
+											"left": left + "px",
+											"top": top + "px"
+										});
+										
+										self.mapTip.focus();
+									}
+									
+								}
+							});
+							
+						}, 250);
+					}
+				
+				}
+				
+			})
 			this._mapLayers = {};
 			this._mapLayer = {};
 			this._mapLayers_closeState = {};
@@ -81,8 +135,7 @@ define([
 					"latestWkid": 3857
 				}
 			};
-			this._data = JSON.parse(appData);
-			this._interface = JSON.parse(appConfig);
+			
 			this._firstLoad = this._plugin._firstLoad;
 			this._defaultLabels = {
 				climate:["Current", "2030", "2060", "2100"],
@@ -182,10 +235,7 @@ define([
 
 			this.hideTool = function(){
 				//console.log("hideTool");
-				/* if (this._mapLayer && this._mapLayer.loaded) { 
-					this._mapLayer.setVisibleLayers([]);
-					this._mapLayer.hide();
-				} */
+				domStyle.set(self.tip, { "display": "none" });
 			}
 			
 			this.closeTool = function(){
@@ -199,6 +249,8 @@ define([
 						})
 					})
 				}
+				domStyle.set(self.tip, { "display": "none" });
+				domStyle.set(self.mapTip, { "display": "none" });
 			}
 
 			this.loadLayers = function() {
@@ -219,6 +271,7 @@ define([
 							on(mapLayer,"update-end",function(){
 								domStyle.set(self.loadingDiv,"display", "none");
 							})
+							
 						} else {
 							var mapLayer = new TiledMapServiceLayer(self._interface.region[region].layers[layer].url, { id:id });
 						}
@@ -425,6 +478,16 @@ define([
 				
 				this.tip = domConstruct.create("div", { className: "plugin-slr slr-tooltip interface", tabindex: -1 });
 				win.body().appendChild(this.tip);
+				
+				this.mapTip = domConstruct.create("div", { className: "plugin-slr slr-tooltip slr-maptip interface", tabindex: -1 });
+				this._plugin.app._unsafeMap.container.appendChild(this.mapTip);
+				on(this.mapTip, "blur", function() {
+					domStyle.set(self.mapTip, { "display": "none" });
+				});
+				
+				on(this.mapTip, "click", function() {
+					domStyle.set(self.mapTip, { "display": "none" });
+				});
 				
 				this.createTooltips();
 				domStyle.set(this.loadingDiv,"display", "none");
