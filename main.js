@@ -52,6 +52,7 @@ define([
 
                activate: function () {
 					//console.log("activate");
+					this.slr._status = "active";
 					if (_.isUndefined(this.map.getLayer("slr-layer-0"))) {
 						var plugin = this;
 						window.setTimeout(function() {
@@ -71,16 +72,20 @@ define([
 
                deactivate: function () {
                    //console.log("deactivate");
+				   
 				    if (_.has(this.slr._interface, "includeMinimize") && !this.slr._interface.includeMinimize && _.has(this.slr, "closeTool")) {
 					   this.slr.closeTool();
+					   this.slr._status = "close";
 				   } else if (_.has(this.slr, "hideTool")) {
 					   this.slr.hideTool();
+					   this.slr._status = "minimize";
 				   }
                },
 
                hibernate: function () {
 				   //console.log("hibernate");
 				   if (_.has(this.slr, "closeTool")) {
+					   this.slr._status = "close";
 					   this.slr.closeTool();
 				   }
                },
@@ -442,10 +447,6 @@ define([
 					 }
 					 
 					 this._state = {};
-			   },
-
-               identify: function(){
-
-               }
+			   }
            });
        });
