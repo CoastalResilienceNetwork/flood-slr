@@ -2,7 +2,7 @@
 define([
 	    "dojo/_base/declare",
 		"d3",
-		"use!underscore",
+		"underscore",
 		"dojo/json",
 		"dojo/parser",
 		"dojo/on",
