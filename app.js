@@ -1295,6 +1295,11 @@ define([
 			        }
 			    });
 				this.opacityContainer.appendChild(this.opacitySlider.domNode);
+				
+				this.hazardFooterDiv = domConstruct.create("div", {
+					class: "hazard-footer",
+					style:"display:none;"
+				}, this.cp.domNode);
 			}
 			
 			this.setControlDependency = function(c, name, value, sub) {
@@ -1801,6 +1806,14 @@ define([
 					} else {
 						this.hazardDescriptionDiv.innerHTML = "";
 						domStyle.set(this.hazardDescriptionDiv, "display", "none");
+					}
+					
+					if (_.has(hazardOption, "footer") ) {
+						this.hazardFooterDiv.innerHTML = hazardOption.footer;
+						domStyle.set(this.hazardFooterDiv, "display", "block");
+					} else {
+						this.hazardFooterDiv.innerHTML = "";
+						domStyle.set(this.hazardFooterDiv, "display", "none");
 					}
 					
 					if (_.has(hazardOption, "chart") && hazardOption.chart) {

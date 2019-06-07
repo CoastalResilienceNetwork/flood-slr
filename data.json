@@ -110,18 +110,25 @@
 			"coastal_flooding_oem|100cm<br>(39in)|100yr":[236,239]
 		},
 		"Virginia Eastern Shore": {
-			"sea_level_rise|2025|low": [3],
-			"sea_level_rise|2025|high": [7],
-			"sea_level_rise|2025|highest": [11],
-			"sea_level_rise|2040|low": [2],
-			"sea_level_rise|2040|high": [6],
-			"sea_level_rise|2040|highest": [10],
-			"sea_level_rise|2065|low": [1],
-			"sea_level_rise|2065|high": [5],
-			"sea_level_rise|2065|highest": [9],
-			"sea_level_rise|2100|low": [0],
-			"sea_level_rise|2100|high": [4],
-			"sea_level_rise|2100|highest": [8],
+			"sea_level_rise|2030|interm.<br>low": [60],
+			"sea_level_rise|2030|interm.": [64],
+			"sea_level_rise|2030|high": [68],
+			"sea_level_rise|2030|extreme": [72],
+			
+			"sea_level_rise|2050|interm.<br>low": [59],
+			"sea_level_rise|2050|interm.": [63],
+			"sea_level_rise|2050|high": [67],
+			"sea_level_rise|2050|extreme": [71],
+			
+			"sea_level_rise|2075|interm.<br>low": [58],
+			"sea_level_rise|2075|interm.": [62],
+			"sea_level_rise|2075|high": [66],
+			"sea_level_rise|2075|extreme": [70],
+			
+			"sea_level_rise|2100|interm.<br>low": [57],
+			"sea_level_rise|2100|interm.": [61],
+			"sea_level_rise|2100|high": [65],
+			"sea_level_rise|2100|extreme": [69],
 			
 			"storm_surge|current|low|surgedepth|water": [5],
 			"storm_surge|2040|low|surgedepth|water": [6],
@@ -699,26 +706,18 @@
 			"sea_level_rise|2100|extr": [12]
 		},
 		"Snohomish County": {
-			"sea_level_rise|historic (1980s)|low|2yr": [40],
-			"sea_level_rise|historic (1980s)|low|10yr": [14],
-			"sea_level_rise|historic (1980s)|low|25yr": [53],
-			"sea_level_rise|historic (1980s)|high|2yr": [40],
-			"sea_level_rise|historic (1980s)|high|10yr": [14],
-			"sea_level_rise|historic (1980s)|high|25yr": [53],
-			
-			"sea_level_rise|2050s|low|2yr": [42],
-			"sea_level_rise|2050s|high|2yr": [45],
-			"sea_level_rise|2050s|low|10yr": [16],
-			"sea_level_rise|2050s|high|10yr": [19],
-			"sea_level_rise|2050s|low|25yr": [55],
-			"sea_level_rise|2050s|high|25yr": [58],
-			
-			"sea_level_rise|2080s|low|2yr": [48],
-			"sea_level_rise|2080s|high|2yr": [51],
-			"sea_level_rise|2080s|low|10yr": [22],
-			"sea_level_rise|2080s|high|10yr": [25],
-			"sea_level_rise|2080s|low|25yr": [61],
-			"sea_level_rise|2080s|high|25yr": [64]
+			"sea_level_rise|historic|low|10yr": [14],
+			"sea_level_rise|historic|low|100yr": [15],
+			"sea_level_rise|historic|high|10yr": [14],
+			"sea_level_rise|historic|high|100yr": [15],
+			"sea_level_rise|2040|low|10yr": [16],
+			"sea_level_rise|2040|high|10yr": [17],
+			"sea_level_rise|2040|low|100yr": [18],
+			"sea_level_rise|2040|high|100yr": [19],
+			"sea_level_rise|2080|low|10yr": [20],
+			"sea_level_rise|2080|high|10yr": [21],
+			"sea_level_rise|2080|low|100yr": [22],
+			"sea_level_rise|2080|high|100yr": [23]
 		},
 		"Grenada": {
 			"sea_level_rise|none|100yr": [2],
