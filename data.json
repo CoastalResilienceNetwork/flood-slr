@@ -110,18 +110,25 @@
 			"coastal_flooding_oem|100cm<br>(39in)|100yr":[236,239]
 		},
 		"Virginia Eastern Shore": {
-			"sea_level_rise|2025|low": [3],
-			"sea_level_rise|2025|high": [7],
-			"sea_level_rise|2025|highest": [11],
-			"sea_level_rise|2040|low": [2],
-			"sea_level_rise|2040|high": [6],
-			"sea_level_rise|2040|highest": [10],
-			"sea_level_rise|2065|low": [1],
-			"sea_level_rise|2065|high": [5],
-			"sea_level_rise|2065|highest": [9],
-			"sea_level_rise|2100|low": [0],
-			"sea_level_rise|2100|high": [4],
-			"sea_level_rise|2100|highest": [8],
+			"sea_level_rise|2030|interm.<br>low": [60],
+			"sea_level_rise|2030|interm.": [64],
+			"sea_level_rise|2030|high": [68],
+			"sea_level_rise|2030|extreme": [72],
+			
+			"sea_level_rise|2050|interm.<br>low": [59],
+			"sea_level_rise|2050|interm.": [63],
+			"sea_level_rise|2050|high": [67],
+			"sea_level_rise|2050|extreme": [71],
+			
+			"sea_level_rise|2075|interm.<br>low": [58],
+			"sea_level_rise|2075|interm.": [62],
+			"sea_level_rise|2075|high": [66],
+			"sea_level_rise|2075|extreme": [70],
+			
+			"sea_level_rise|2100|interm.<br>low": [57],
+			"sea_level_rise|2100|interm.": [61],
+			"sea_level_rise|2100|high": [65],
+			"sea_level_rise|2100|extreme": [69],
 			
 			"storm_surge|current|low|surgedepth|water": [5],
 			"storm_surge|2040|low|surgedepth|water": [6],

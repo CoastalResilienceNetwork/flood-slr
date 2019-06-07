@@ -412,11 +412,11 @@
 			}
 		},
 		"Virginia Eastern Shore": {
-			"url": "http://dev.services.coastalresilience.org/arcgis/rest/services/Virginia/Inundation/MapServer",
+			"url": "https://dev-services.coastalresilience.org/arcgis/rest/services/Virginia/Flood_SLR/MapServer",
 			"layers": {
-				"main": "http://dev.services.coastalresilience.org/arcgis/rest/services/Virginia/Inundation/MapServer",
-				"storm_surge": "http://dev.services.coastalresilience.org/arcgis/rest/services/Virginia/Storm_Surge_Complete/MapServer",
-				"model_storm": "http://dev.services.coastalresilience.org/arcgis/rest/services/Virginia/Storm_Surge_Complete/MapServer"
+				"main": "https://dev-services.coastalresilience.org/arcgis/rest/services/Virginia/Flood_SLR/MapServer",
+				"storm_surge": "https://dev-services.coastalresilience.org/arcgis/rest/services/Virginia/Flood_SLR/MapServer",
+				"model_storm": "https://dev-services.coastalresilience.org/arcgis/rest/services/Virginia/Flood_SLR/MapServer"
 			},
 			"extent": {
 				"xmin": -8465603.278145544,
@@ -456,7 +456,8 @@
 								"name": "Basic Inundation",
 								"value": "sea_level_rise",
 								"controls": { "slider": ["climate", "scenario"] },
-								"description":"Historical sea level trends are available from NOAA tide stations at <a href='http://tidesandcurrents.noaa.gov/sltrends/sltrends_station.shtml?stnid=8631044' target='_blank'>Wachapreague</a> and <a target='_blank' href='http://tidesandcurrents.noaa.gov/sltrends/sltrends_station.shtml?stnid=8632200'>Kiptopeke</a>."
+								"description":"Historical sea level trends are available from NOAA tide stations at <a href='http://tidesandcurrents.noaa.gov/sltrends/sltrends_station.shtml?stnid=8631044' target='_blank'>Wachapreague</a> and <a target='_blank' href='http://tidesandcurrents.noaa.gov/sltrends/sltrends_station.shtml?stnid=8632200'>Kiptopeke</a>.",
+								"footer":"Note: basic inundation data have been updated based on sea level rise scenarios from the 2017 Climate Assessment."
 							},
 							{
 								"name": "Storm Surge",
@@ -475,7 +476,7 @@
 				"slider": {
 					"climate": { "disabled": false, "show": true,
 						"labels": { 
-							"sea_level_rise": ["2025", "2040", "2065", "2100"],
+							"sea_level_rise": ["2030", "2050", "2075", "2100"],
 							"storm_surge": ["Current", "2040", "2065"]
 						},
 						"dependency": {
@@ -488,7 +489,7 @@
 							}
 						}
 					},
-					"scenario": { "disabled": false, "show": true, "labels": ["Low", "High", "Highest"]  },
+					"scenario": { "disabled": false, "show": true, "labels": ["Interm.<br>Low", "Interm.", "High", "Extreme"]  },
 					"stormSurge": { "disabled": false, "show": true, "labels": ["Nor'Ida", "Low", "Medium", "High"]  }
 				},
 				"radiocheck": {
@@ -597,7 +598,7 @@
 					"storm_surge": "https://tnc.app.box.com/s/fiya9hirlr28a96b0rwfmdzpb55hcx1i",
 					"default": ""
 				},
-				"data":"http://data.coastalresilience.org/Virginia/VA_FloodSLR_gdb.zip"
+				"data":"https://data.coastalresilience.org/Virginia/VA_FloodSLR_gdb.zip"
 			}
 		},
 		"California (statewide)": {
