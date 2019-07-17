@@ -502,11 +502,7 @@
 								"name": "Basic Inundation",
 								"value": "sea_level_rise",
 								"controls": { "slider": ["climate", "scenario"] },
-<<<<<<< HEAD
 								"description":"Historical sea level trends are available from NOAA tide stations at <a href='https://tidesandcurrents.noaa.gov/sltrends/sltrends_station.shtml?stnid=8631044' target='_blank'>Wachapreague</a> and <a target='_blank' href='https://tidesandcurrents.noaa.gov/sltrends/sltrends_station.shtml?stnid=8632200'>Kiptopeke</a>.",
-=======
-								"description":"Historical sea level trends are available from NOAA tide stations at <a href='http://tidesandcurrents.noaa.gov/sltrends/sltrends_station.shtml?stnid=8631044' target='_blank'>Wachapreague</a> and <a target='_blank' href='http://tidesandcurrents.noaa.gov/sltrends/sltrends_station.shtml?stnid=8632200'>Kiptopeke</a>.",
->>>>>>> 7cda2a0905aa80ab06ff34f6cf6c714a1afcbcee
 								"footer":"Note: basic inundation data have been updated based on sea level rise scenarios from the 2017 Climate Assessment."
 							},
 							{
@@ -1045,7 +1041,6 @@
 			}
 		},
 		"New Jersey": {
-<<<<<<< HEAD
 			"url": "https://services.coastalresilience.org/arcgis/rest/services/New_Jersey/Flood_SLR/MapServer",
 			"layers": {
 				"main": "https://services.coastalresilience.org/arcgis/rest/services/New_Jersey/Flood_SLR/MapServer",
@@ -1056,18 +1051,6 @@
 				"slr_4ft": { "type": "tiled", "url": "https://maps1.coast.noaa.gov/arcgis/rest/services/dc_slr/slr_4ft/MapServer" },
 				"slr_5ft": { "type": "tiled", "url": "https://maps1.coast.noaa.gov/arcgis/rest/services/dc_slr/slr_5ft/MapServer" },
 				"slr_6ft": { "type": "tiled", "url": "https://maps1.coast.noaa.gov/arcgis/rest/services/dc_slr/slr_6ft/MapServer" }
-=======
-			"url": "http://dev.services.coastalresilience.org/arcgis/rest/services/New_Jersey/Flood_SLR/MapServer",
-			"layers": {
-				"main": "http://dev.services.coastalresilience.org/arcgis/rest/services/New_Jersey/Flood_SLR/MapServer",
-				"slr_0ft": { "type": "tiled", "url": "http://maps1.coast.noaa.gov/arcgis/rest/services/dc_slr/slr_0ft/MapServer" },
-				"slr_1ft": { "type": "tiled", "url": "http://maps1.coast.noaa.gov/arcgis/rest/services/dc_slr/slr_1ft/MapServer" },
-				"slr_2ft": { "type": "tiled", "url": "http://maps1.coast.noaa.gov/arcgis/rest/services/dc_slr/slr_2ft/MapServer" },
-				"slr_3ft": { "type": "tiled", "url": "http://maps1.coast.noaa.gov/arcgis/rest/services/dc_slr/slr_3ft/MapServer" },
-				"slr_4ft": { "type": "tiled", "url": "http://maps1.coast.noaa.gov/arcgis/rest/services/dc_slr/slr_4ft/MapServer" },
-				"slr_5ft": { "type": "tiled", "url": "http://maps1.coast.noaa.gov/arcgis/rest/services/dc_slr/slr_5ft/MapServer" },
-				"slr_6ft": { "type": "tiled", "url": "http://maps1.coast.noaa.gov/arcgis/rest/services/dc_slr/slr_6ft/MapServer" }
->>>>>>> 7cda2a0905aa80ab06ff34f6cf6c714a1afcbcee
 			},
 			"tooltips": {
 				"region": "Geographic areas where climate change/sea level rise vulnerability studies have been conducted.",
@@ -1234,15 +1217,9 @@
 			}
 		},
 		"Snohomish County": {
-<<<<<<< HEAD
 			"url": "https://services.coastalresilience.org/arcgis/rest/services/Washington/Flood_SLR/MapServer",
 			"layers": {
 				"main": "https://services.coastalresilience.org/arcgis/rest/services/Washington/Flood_SLR/MapServer"
-=======
-			"url": "http://dev.services.coastalresilience.org/arcgis/rest/services/Washington/Flood_SLR/MapServer",
-			"layers": {
-				"main": "http://dev.services.coastalresilience.org/arcgis/rest/services/Washington/Flood_SLR/MapServer"
->>>>>>> 7cda2a0905aa80ab06ff34f6cf6c714a1afcbcee
 			},
 			"tooltips": {
 				"region": "Geographic areas where climate change/sea level rise vulnerability studies have been conducted.",
@@ -1779,11 +1756,7 @@
 			"download": {
 				"report": {
 					"sea_level_rise": "HOSTNAME-methods/SLR_Southeast_Florida.pdf",
-<<<<<<< HEAD
 					"sea_level_rise_noaa": "https://coast.noaa.gov/digitalcoast/tools/slr"
-=======
-					"sea_level_rise_noaa": "http://coast.noaa.gov/digitalcoast/tools/slr"
->>>>>>> 7cda2a0905aa80ab06ff34f6cf6c714a1afcbcee
 				},
 				"data":""
 			}
@@ -1883,7 +1856,6 @@
 			}
 		},
 		"Connecticut": {
-<<<<<<< HEAD
 			"url": "https://services.coastalresilience.org/arcgis/rest/services/Connecticut/Flood_SLR/MapServer",
 			"layers": {
 				"main": "https://services.coastalresilience.org/arcgis/rest/services/Connecticut/Flood_SLR/MapServer",
@@ -1894,18 +1866,6 @@
 				"slr_4ft": { "type": "tiled", "url": "https://maps1.coast.noaa.gov/arcgis/rest/services/dc_slr/slr_4ft/MapServer" },
 				"slr_5ft": { "type": "tiled", "url": "https://maps1.coast.noaa.gov/arcgis/rest/services/dc_slr/slr_5ft/MapServer" },
 				"slr_6ft": { "type": "tiled", "url": "https://maps1.coast.noaa.gov/arcgis/rest/services/dc_slr/slr_6ft/MapServer" }
-=======
-			"url": "http://dev.services.coastalresilience.org/arcgis/rest/services/Connecticut/Flood_SLR/MapServer",
-			"layers": {
-				"main": "http://dev.services.coastalresilience.org/arcgis/rest/services/Connecticut/Flood_SLR/MapServer",
-				"slr_0ft": { "type": "tiled", "url": "http://maps1.coast.noaa.gov/arcgis/rest/services/dc_slr/slr_0ft/MapServer" },
-				"slr_1ft": { "type": "tiled", "url": "http://maps1.coast.noaa.gov/arcgis/rest/services/dc_slr/slr_1ft/MapServer" },
-				"slr_2ft": { "type": "tiled", "url": "http://maps1.coast.noaa.gov/arcgis/rest/services/dc_slr/slr_2ft/MapServer" },
-				"slr_3ft": { "type": "tiled", "url": "http://maps1.coast.noaa.gov/arcgis/rest/services/dc_slr/slr_3ft/MapServer" },
-				"slr_4ft": { "type": "tiled", "url": "http://maps1.coast.noaa.gov/arcgis/rest/services/dc_slr/slr_4ft/MapServer" },
-				"slr_5ft": { "type": "tiled", "url": "http://maps1.coast.noaa.gov/arcgis/rest/services/dc_slr/slr_5ft/MapServer" },
-				"slr_6ft": { "type": "tiled", "url": "http://maps1.coast.noaa.gov/arcgis/rest/services/dc_slr/slr_6ft/MapServer" }
->>>>>>> 7cda2a0905aa80ab06ff34f6cf6c714a1afcbcee
 			},
 			"tooltips": {
 				"region": "Geographic areas where climate change/sea level rise vulnerability studies have been conducted.",
@@ -2049,11 +2009,7 @@
 			},
 			"download": {
 				"report": {
-<<<<<<< HEAD
 					"sea_level_rise_noaa": "https://coast.noaa.gov/digitalcoast/tools/slr"
-=======
-					"sea_level_rise_noaa": "http://coast.noaa.gov/digitalcoast/tools/slr"
->>>>>>> 7cda2a0905aa80ab06ff34f6cf6c714a1afcbcee
 				},
 				"data":""
 			}
