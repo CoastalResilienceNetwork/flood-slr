@@ -161,7 +161,7 @@ define([
 				this._extent.ymax = _.max(dojo.map(_.keys(this._interface.region), function(region) { return self._interface.region[region].extent.ymax; }));
 
 				console.log('set extent');
-				this._map.setExtent(this._extent);
+				this._map.setExtent(new Extent(this._extent));
 				
 				domStyle.set(this._container, {
 					"padding": "0px"
