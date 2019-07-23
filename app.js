@@ -25,9 +25,17 @@ define([
 		"dijit/form/HorizontalRuleLabels",
 		"esri/layers/ArcGISDynamicMapServiceLayer",
 		"esri/layers/ArcGISTiledMapServiceLayer",
+		"esri/layers/FeatureLayer",
+		"esri/layers/GraphicsLayer",
+		"esri/graphic",
 		"esri/geometry/Extent",
 		"esri/tasks/IdentifyTask",
 		"esri/tasks/IdentifyParameters",
+		"esri/symbols/SimpleMarkerSymbol",
+		"esri/symbols/SimpleLineSymbol",
+		"esri/symbols/TextSymbol",  
+		"esri/symbols/Font",  
+		"esri/Color",
 		"dojo/NodeList-traverse"
 		], 
 
@@ -57,9 +65,17 @@ define([
 			HorizontalRuleLabels,
 			DynamicMapServiceLayer,
 			TiledMapServiceLayer,
+			FeatureLayer,
+			GraphicsLayer,
+			Graphic,
 			Extent,
 			IdentifyTask,
-			IdentifyParameters
+			IdentifyParameters,
+			SimpleMarkerSymbol,
+			SimpleLineSymbol,
+			TextSymbol,
+			Font,
+			Color
 		  ) 
 		
 		{
@@ -274,9 +290,11 @@ define([
 								domStyle.set(self.loadingDiv,"display", "none");
 							})
 							
-						} else {
+						} else if (_.isObject(self._interface.region[region].layers[layer]) && self._interface.region[region].layers[layer].type == "tiled") {
 							var mapLayer = new TiledMapServiceLayer(self._interface.region[region].layers[layer].url, { id:id });
 						}
+						
+						
 						if (mapLayer) {
 							self._mapLayers[region][layer] = mapLayer;
 							self._map.addLayer(mapLayer);
@@ -284,6 +302,39 @@ define([
 						}
 						i += 1
 					});
+					
+					if (_.has(self._interface.region[region], "images")) {
+						var layer = "slr-image-layer-" + region.toLowerCase().replace(" ", "_");
+						var mapLayer = new FeatureLayer(self._interface.region[region].images.layer.url, { id:layer, outFields:["*"] });
+						
+						var font = new Font("20pt", Font.STYLE_NORMAL, Font.VARIANT_NORMAL, Font.WEIGHT_BOLD,"FontAwesome");
+						var color = new Color("#000");
+						var symbol = new TextSymbol("?", font, color);
+						self.imageSymbol = dojo.clone(symbol);
+						
+						var color = new Color("#ed5854");
+						var symbol = new TextSymbol("?", font, color);
+						self.imageHighlightSymbol = dojo.clone(symbol);
+						
+						self.imageHighlightId = null;
+						
+						mapLayer.setRenderer(new esri.renderer.SimpleRenderer(self.imageSymbol));
+						
+						on(mapLayer,"graphic-draw",function(evt){
+							var color = (evt.graphic.attributes[self._interface.region[self._region].images.layer.idField] == self.imageHighlightId) ? new Color("#ed5854") : new Color("#000");
+							dojo.attr(evt.node, "fill", "rgb(" + color.r + ", " + color.g + ", " + color.b + ")");
+							query(evt.node).style("cursor", "pointer");
+						})
+						
+						on(mapLayer,"click",function(evt){
+							self.loadImageOnClick(evt);
+						})
+						
+						self._mapLayers[region][layer] = mapLayer;
+						self._map.addLayer(mapLayer);
+						mapLayer.hide();
+					}
+					
 				});
 			}
 			
@@ -294,9 +345,8 @@ define([
 				
 				if (parameters.hazard != "") {
 				
-					var options = this._interface.region[this._region].controls.select.hazard.options
-					var hazardOption = options[array.map(options, function(option) { return option.value }).indexOf(parameters.hazard)]
-					
+					var options = this._interface.region[this._region].controls.select.hazard.options;
+					var hazardOption = options[array.map(options, function(option) { return option.value }).indexOf(parameters.hazard)];
 					
 					//rewrite to include support for an json object;w
 					parameters.climate = (!_.has(this._interface.region[this._region].controls.slider, "climate")) ? this.climateSlider.get("value") : (_.isObject(this._interface.region[this._region].controls.slider.climate.labels) && _.has(this._interface.region[this._region].controls.slider.climate.labels, parameters.hazard)) ? this._interface.region[this._region].controls.slider.climate.labels[parameters.hazard][this.climateSlider.get("value")].toLowerCase() :(_.isArray(this._interface.region[this._region].controls.slider.climate.labels)) ? this._interface.region[this._region].controls.slider.climate.labels[this.climateSlider.get("value")].toLowerCase() : this.climateSlider.get("value");
@@ -440,6 +490,15 @@ define([
 						}
 						
 					}
+					
+					if (_.has(self._interface.region[self._region], "images")) {
+						var layer = "slr-image-layer-" + self._region.toLowerCase().replace(" ", "_");
+						self._mapLayers[self._region][layer].hide();
+						
+						if (_.has(hazardOption, "images") &&  hazardOption.images) {
+							self._mapLayers[self._region][layer].show();
+						}
+					}
 				
 				} else {
 					array.forEach(_.keys(this._mapLayers[this._region]), function(layer) {
@@ -552,6 +611,10 @@ define([
 				}, this.inputsPane.containerNode); 
 				
 				var chartTd = domConstruct.create("div", {
+					style:"position:relative; width:100%; height:auto; padding:0px; margin:0px 0px 0px 0px;"
+				}, this.inputsPane.containerNode);
+				
+				var imagesTd = domConstruct.create("div", {
 					style:"position:relative; width:100%; height:auto; padding:0px; margin:0px 0px 0px 0px;"
 				}, this.inputsPane.containerNode);
 				
@@ -1223,6 +1286,34 @@ define([
 				}, this.chartContainer)
 				
 				
+				this.imagesContainer = domConstruct.create("div", {
+					className: "slr-images-container"
+				}, imagesTd)
+				
+				this.imagesHeader = domConstruct.create("div", {
+					className: "slr-images-header",
+					innerHTML: ""
+				}, this.imagesContainer)
+				
+				this.imagesContent = domConstruct.create("div", {
+					className: "slr-images-content",
+					innerHTML: ""
+				}, this.imagesContainer)
+				
+				this.imagesImage = domConstruct.create("div", {
+					className: "slr-images-image",
+					innerHTML: ""
+				}, this.imagesContent)
+				
+				this.imagesClose = domConstruct.create("div", {
+					className: "slr-images-close",
+					innerHTML: '<i class="fa fa-times" aria-hidden="true"></i>'
+				}, this.imagesContent)
+				
+				on(this.imagesClose, "click", function(evt) {
+					self.closeImageOnClick();
+				});
+				
 				var checkBoxDiv = domConstruct.create("label", { 
 					for: "slr-other-layer-" + self._map.id,
 					className:"styled-checkbox",
@@ -1302,6 +1393,15 @@ define([
 					class: "hazard-footer",
 					style:"display:none;"
 				}, this.cp.domNode);
+				
+				this.partnersContainer = domConstruct.create("div", {
+					className: "slr-partners-container"
+				}, this.cp.domNode)
+				
+				this.partnersContent = domConstruct.create("div", {
+					className: "slr-partners-content",
+					innerHTML: ""
+				}, this.partnersContainer)
 			}
 			
 			this.setControlDependency = function(c, name, value, sub) {
@@ -1428,6 +1528,16 @@ define([
 				domStyle.set(this.chartContainer, "display", "none");
 				domConstruct.empty(this.chartHeader);
 				domConstruct.empty(this.chartContent);
+				
+				domStyle.set(this.imagesContainer, "display", "none");
+				domConstruct.empty(this.imagesHeader);
+				domConstruct.empty(this.imagesImage);
+				
+				domStyle.set(this.hazardFooterDiv, "display", "none");
+				domConstruct.empty(this.hazardFooterDiv);
+				
+				domStyle.set(this.partnersContainer, "display", "none");
+				domConstruct.empty(this.partnersContent);
 				
 				domConstruct.empty(this.hazardSelect);
 				if (this._region != "") {
@@ -1811,17 +1921,37 @@ define([
 					}
 					
 					if (_.has(hazardOption, "footer") ) {
-						this.hazardFooterDiv.innerHTML = hazardOption.footer;
 						domStyle.set(this.hazardFooterDiv, "display", "block");
+						this.hazardFooterDiv.innerHTML = hazardOption.footer;
 					} else {
-						this.hazardFooterDiv.innerHTML = "";
 						domStyle.set(this.hazardFooterDiv, "display", "none");
+						domConstruct.empty(this.hazardFooterDiv);
 					}
 					
 					if (_.has(hazardOption, "chart") && hazardOption.chart) {
 						domStyle.set(this.chartContainer, "display", "block");
 					} else {
 						domStyle.set(this.chartContainer, "display", "none");
+					}
+					
+					if (_.has(hazardOption, "images") && hazardOption.images) {
+						domStyle.set(this.imagesContainer, "display", "block");
+						this.imagesHeader.innerHTML = this._interface.region[self._region].images.header;
+					} else {
+						domStyle.set(this.imagesContainer, "display", "none");
+						this.imagesHeader.innerHTML = "";
+					}
+					
+					if (_.has(hazardOption, "partners")) {
+						domStyle.set(this.partnersContainer, "display", "block");
+						var content = "";
+						dojo.forEach(hazardOption.partners, function(partner) {
+							content += "<div><img src='" + self._plugin_directory + "/" + partner.logoPath + "'></div>"
+						})
+						this.partnersContent.innerHTML = content;
+					} else {
+						domStyle.set(this.partnersContainer, "display", "none");
+						domConstruct.empty(this.partnersContent);
 					}
 					
 					if (_.has(hazardOption.controls, "infoGraphic") && hazardOption.controls.infoGraphic) {
@@ -1915,6 +2045,12 @@ define([
 					
 					var backgroundColor = ((!_.isObject(self._interface.region[self._region].download.data) && self._interface.region[self._region].download.data != "") || (_.isObject(self._interface.region[self._region].download.data) && _.has(self._interface.region[self._region].download.data, "default") && self._interface.region[self._region].download.data.default != ""))  ? "#2B2E3B" : "#94959C";
 					query(".downloadButton.slr-data").style("backgroundColor", backgroundColor);
+					
+					domStyle.set(this.hazardFooterDiv, "display", "none");
+					domConstruct.empty(this.hazardFooterDiv);
+						
+					domStyle.set(this.partnersContainer, "display", "none");
+					domConstruct.empty(this.partnersContent);
 				}
 			}
 			
@@ -2073,6 +2209,36 @@ define([
 				d3.selectAll(".slr-chart-content .categories.cat" + value).classed("active", true);
 			}
 			
+			this.loadImageOnClick = function(evt) {
+				console.log(evt);
+				
+				this.imageHighlightId = evt.graphic.attributes[self._interface.region[self._region].images.layer.idField];
+				
+				var id = "slr-image-layer-" + this._region.toLowerCase().replace(" ", "_");
+				var mapLayer = this._mapLayers[this._region][id];
+				dojo.forEach(mapLayer.graphics, function(graphic) {
+					graphic.setSymbol(self.imageSymbol);
+				});
+				
+				evt.graphic.setSymbol(self.imageHighlightSymbol);
+				
+				var src = this._plugin_directory + "/canvis.jpeg";
+				var html = "<img src='" + src + "'>"
+				this.imagesImage.innerHTML = html;
+			}
+			
+			this.closeImageOnClick = function() {
+				this.imagesImage.innerHTML = "";
+				this.imageHighlightId = null;
+				
+				var id = "slr-image-layer-" + this._region.toLowerCase().replace(" ", "_");
+				var mapLayer = this._mapLayers[this._region][id];
+				dojo.forEach(mapLayer.graphics, function(graphic) {
+					graphic.setSymbol(self.imageSymbol);
+				});
+	
+			}
+			
 			this.resetInterface = function(){
 				query(".downloadButton").style("backgroundColor", "#94959C");
 				
@@ -2150,7 +2316,6 @@ define([
 					})
 				})
 				
-				/* Do we need the _firsLoad check? */
 				this._mapLayer = {};
 				console.log('set extent');
 				this._map.setExtent(new Extent(this._extent), false);

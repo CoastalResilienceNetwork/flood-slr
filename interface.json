@@ -19,15 +19,9 @@
 	"region": {
 		"Carteret": {
 			"geography":"County",
-<<<<<<< HEAD
-			"url": "https://services.coastalresilience.org/arcgis/rest/services/North_Carolina/Flood_SLR/MapServer",
-			"layers": {
-				"main": "https://services.coastalresilience.org/arcgis/rest/services/North_Carolina/Flood_SLR/MapServer"
-=======
-			"url": "http://dev.services.coastalresilience.org/arcgis/rest/services/North_Carolina/Flood_SLR/MapServer",
+            "url": "http://dev.services.coastalresilience.org/arcgis/rest/services/North_Carolina/Flood_SLR/MapServer",
 			"layers": {
 				"main": "http://dev.services.coastalresilience.org/arcgis/rest/services/North_Carolina/Flood_SLR/MapServer"
->>>>>>> 7cda2a0905aa80ab06ff34f6cf6c714a1afcbcee
 			},
 			"tooltips": {
 				"region": "Geographic areas where climate change/sea level rise vulnerability studies have been conducted.",
@@ -96,12 +90,8 @@
 				}
 			},
 			"download": {
-				"report": {
-<<<<<<< HEAD
-					"coastal_flooding_oem": "https://media.coastalresilience.org/NC/2015%20NC%20SLR%20Assessment-FINAL%20REPORT%20Jan%2028%202016.pdf",
-=======
-					"coastal_flooding_oem": "http://media.coastalresilience.org/NC/2015%20NC%20SLR%20Assessment-FINAL%20REPORT%20Jan%2028%202016.pdf",
->>>>>>> 7cda2a0905aa80ab06ff34f6cf6c714a1afcbcee
+                "report": {
+                    "coastal_flooding_oem": "http://media.coastalresilience.org/NC/2015%20NC%20SLR%20Assessment-FINAL%20REPORT%20Jan%2028%202016.pdf",
 					"default": "https://coast.noaa.gov/floodexposure/#/services#flood-hazards"
 				},
 				"data": {
@@ -121,23 +111,13 @@
 		},
 		"Currituck": {
 			"geography":"County",
-<<<<<<< HEAD
-			"url": "https://services.coastalresilience.org/arcgis/rest/services/North_Carolina/Flood_SLR/MapServer",
-			"layers": {
-				"main": "https://services.coastalresilience.org/arcgis/rest/services/North_Carolina/Flood_SLR/MapServer",
-				"hurricane": "https://services.coastalresilience.org/arcgis/rest/services/North_Carolina/Flood_SLR/MapServer",
-				"shallow_coastal_flooding": "https://services.coastalresilience.org/arcgis/rest/services/North_Carolina/Flood_SLR/MapServer",
-				"fema": "https://services.coastalresilience.org/arcgis/rest/services/North_Carolina/Flood_SLR/MapServer",
-				"model_storm": "https://services.coastalresilience.org/arcgis/rest/services/North_Carolina/Flood_SLR/MapServer"
-=======
-			"url": "http://dev.services.coastalresilience.org/arcgis/rest/services/North_Carolina/Flood_SLR/MapServer",
+            "url": "http://dev.services.coastalresilience.org/arcgis/rest/services/North_Carolina/Flood_SLR/MapServer",
 			"layers": {
 				"main": "http://dev.services.coastalresilience.org/arcgis/rest/services/North_Carolina/Flood_SLR/MapServer",
 				"hurricane": "http://dev.services.coastalresilience.org/arcgis/rest/services/North_Carolina/Flood_SLR/MapServer",
 				"shallow_coastal_flooding": "http://dev.services.coastalresilience.org/arcgis/rest/services/North_Carolina/Flood_SLR/MapServer",
 				"fema": "http://dev.services.coastalresilience.org/arcgis/rest/services/North_Carolina/Flood_SLR/MapServer",
 				"model_storm": "http://dev.services.coastalresilience.org/arcgis/rest/services/North_Carolina/Flood_SLR/MapServer"
->>>>>>> 7cda2a0905aa80ab06ff34f6cf6c714a1afcbcee
 			},
 			"tooltips": {
 				"region": "Geographic areas where climate change/sea level rise vulnerability studies have been conducted.",
@@ -263,11 +243,7 @@
 			},
 			"download": {
 				"report": {
-<<<<<<< HEAD
-					"coastal_flooding_oem": "https://media.coastalresilience.org/NC/2015%20NC%20SLR%20Assessment-FINAL%20REPORT%20Jan%2028%202016.pdf",
-=======
-					"coastal_flooding_oem": "http://media.coastalresilience.org/NC/2015%20NC%20SLR%20Assessment-FINAL%20REPORT%20Jan%2028%202016.pdf",
->>>>>>> 7cda2a0905aa80ab06ff34f6cf6c714a1afcbcee
+                    "coastal_flooding_oem": "http://media.coastalresilience.org/NC/2015%20NC%20SLR%20Assessment-FINAL%20REPORT%20Jan%2028%202016.pdf",
 					"default": "https://coast.noaa.gov/floodexposure/#/services#flood-hazards"
 				},
 				"data": {
@@ -287,23 +263,13 @@
 		},
 		"Dare": {
 			"geography":"County",
-<<<<<<< HEAD
-			"url": "https://services.coastalresilience.org/arcgis/rest/services/North_Carolina/Flood_SLR/MapServer",
-			"layers": {
-				"main": "https://services.coastalresilience.org/arcgis/rest/services/North_Carolina/Flood_SLR/MapServer",
-				"hurricane": "https://services.coastalresilience.org/arcgis/rest/services/North_Carolina/Flood_SLR/MapServer",
-				"shallow_coastal_flooding": "https://services.coastalresilience.org/arcgis/rest/services/North_Carolina/Flood_SLR/MapServer",
-				"fema": "https://services.coastalresilience.org/arcgis/rest/services/North_Carolina/Flood_SLR/MapServer",
-				"model_storm": "https://services.coastalresilience.org/arcgis/rest/services/North_Carolina/Flood_SLR/MapServer"
-=======
-			"url": "http://dev.services.coastalresilience.org/arcgis/rest/services/North_Carolina/Flood_SLR/MapServer",
+            "url": "http://dev.services.coastalresilience.org/arcgis/rest/services/North_Carolina/Flood_SLR/MapServer",
 			"layers": {
 				"main": "http://dev.services.coastalresilience.org/arcgis/rest/services/North_Carolina/Flood_SLR/MapServer",
 				"hurricane": "http://dev.services.coastalresilience.org/arcgis/rest/services/North_Carolina/Flood_SLR/MapServer",
 				"shallow_coastal_flooding": "http://dev.services.coastalresilience.org/arcgis/rest/services/North_Carolina/Flood_SLR/MapServer",
 				"fema": "http://dev.services.coastalresilience.org/arcgis/rest/services/North_Carolina/Flood_SLR/MapServer",
 				"model_storm": "http://dev.services.coastalresilience.org/arcgis/rest/services/North_Carolina/Flood_SLR/MapServer"
->>>>>>> 7cda2a0905aa80ab06ff34f6cf6c714a1afcbcee
 			},
 			"tooltips": {
 				"region": "Geographic areas where climate change/sea level rise vulnerability studies have been conducted.",
@@ -427,11 +393,7 @@
 			},
 			"download": {
 				"report": {
-<<<<<<< HEAD
-					"coastal_flooding_oem": "https://media.coastalresilience.org/NC/2015%20NC%20SLR%20Assessment-FINAL%20REPORT%20Jan%2028%202016.pdf",
-=======
-					"coastal_flooding_oem": "http://media.coastalresilience.org/NC/2015%20NC%20SLR%20Assessment-FINAL%20REPORT%20Jan%2028%202016.pdf",
->>>>>>> 7cda2a0905aa80ab06ff34f6cf6c714a1afcbcee
+                    "coastal_flooding_oem": "http://media.coastalresilience.org/NC/2015%20NC%20SLR%20Assessment-FINAL%20REPORT%20Jan%2028%202016.pdf",
 					"default": "https://coast.noaa.gov/floodexposure/#/services#flood-hazards"
 				},
 				"data": {
@@ -450,19 +412,11 @@
 			}
 		},
 		"Virginia Eastern Shore": {
-<<<<<<< HEAD
-			"url": "https://services.coastalresilience.org/arcgis/rest/services/Virginia/Flood_SLR/MapServer",
-			"layers": {
-				"main": "https://services.coastalresilience.org/arcgis/rest/services/Virginia/Flood_SLR/MapServer",
-				"storm_surge": "https://services.coastalresilience.org/arcgis/rest/services/Virginia/Flood_SLR/MapServer",
-				"model_storm": "https://services.coastalresilience.org/arcgis/rest/services/Virginia/Flood_SLR/MapServer"
-=======
-			"url": "https://dev-services.coastalresilience.org/arcgis/rest/services/Virginia/Flood_SLR/MapServer",
+            "url": "https://dev-services.coastalresilience.org/arcgis/rest/services/Virginia/Flood_SLR/MapServer",
 			"layers": {
 				"main": "https://dev-services.coastalresilience.org/arcgis/rest/services/Virginia/Flood_SLR/MapServer",
 				"storm_surge": "https://dev-services.coastalresilience.org/arcgis/rest/services/Virginia/Flood_SLR/MapServer",
 				"model_storm": "https://dev-services.coastalresilience.org/arcgis/rest/services/Virginia/Flood_SLR/MapServer"
->>>>>>> 7cda2a0905aa80ab06ff34f6cf6c714a1afcbcee
 			},
 			"extent": {
 				"xmin": -8465603.278145544,
@@ -1216,23 +1170,23 @@
 				"data":""
 			}
 		},
-		"Snohomish County": {
-			"url": "https://services.coastalresilience.org/arcgis/rest/services/Washington/Flood_SLR/MapServer",
+		"Snohomish Watershed": {
+			"url": "https://dev-services.coastalresilience.org/arcgis/rest/services/Washington/Flood_SLR/MapServer",
 			"layers": {
-				"main": "https://services.coastalresilience.org/arcgis/rest/services/Washington/Flood_SLR/MapServer"
+				"main": "https://dev-services.coastalresilience.org/arcgis/rest/services/Washington/Flood_SLR/MapServer"
 			},
 			"tooltips": {
-				"region": "Geographic areas where climate change/sea level rise vulnerability studies have been conducted.",
-				"hazard": "Spatial extent for different coastal hazards that may affect coastal assets.  Impact zones were estimated across multiple planning horizons.",
-				"climate": "Flood depths and extents are derived by calculating where excess stream flow ends up on the landscape. The Historic flood depths are based on an analysis of more than a century of past flood events. The Future flood depths are based on changes in temperature and precipitation relative to 1970-1999. The 2040s flood depth reference period is 2030-2059 and the 2080s flood depth reference period is 2070-2099.",
-				"togglegroup_floodtype": "The timing and magnitude of climate change will depend on the amount of greenhouse gases emitted and the response of the climate system to the change in greenhouse gases. There is considerable uncertainty about climate change because future greenhouse gas emissions are unknown and because different climate models predict different responses to certain greenhouse gas concentrations. Consequently we have included low and high scenarios to bracket the range of these two uncertainties, ranging from a low greenhouse gas emissions scenario and relatively smaller change in flooding, to a medium greenhouse gas scenario and relatively larger change in flooding.",
-				"togglegroup_eventtype": "Flooding events are defined by the probability that an equal or greater event will occur in a given year...sometimes referred to as the Annual Chance of Exceedance. The 100-year flood event is associated with conditions that have a 1% probability of occurring in any given year. Similarly, the 10-year flood is associated with conditions that have a 10% chance of occurring in any given year."
+				"region": "Geographic areas where climate change vulnerability studies have been conducted on issues such as sea level rise, storm surges, and riverine flooding.",
+				"hazard": "Spatial extent for different hazards that may affect coastal or floodplain assets. Impact zones were estimated across multiple planning horizons.",
+				"climate": "Flood depths and extents are derived by calculating where excess streamflow ends up on the landscape. The “Historic” flood depths are based on an analysis of more than a century of past flood events. The “Future” flood depths are based on changes in temperature and precipitation relative to 1970-1999. The 2050s flood depth reference period is 2040-2069 and the 2080s flood depth reference period is 2070-2099.",
+				"togglegroup_floodtype": "The timing and magnitude of climate change will depend on the amount of greenhouse gases emitted and the response of the climate system to the change in greenhouse gases. To make projections of future climate, scientists use “what if” scenarios of plausible future greenhouse gas emissions to drive computer model simulations of the earth’s climate. We have included low and high scenarios to bracket the range of possible future changes in climate. These range from a low greenhouse gas emissions scenario and relatively smaller change in flooding, to a medium greenhouse gas scenario and relatively larger change in flooding.",
+				"togglegroup_eventtype": "Flooding events are defined by the probability that an equal or greater event will occur in a given year...sometimes referred to as the 'Annual Chance of Exceedance.' For example, the 100-year event is associated with conditions that have a 1% probability of occurring in any given year. Similarly:<br><br><ul><li>the 2-year flood has a 50% annual chance of occurring,</li><li>the 10-year flood has a 10% annual chance of occurring, and</li><li>the 25-year flood has a 4% annual chance of occurring</li></ul>."
 			},
 			"extent": {
-				"xmin":-13631418.324041456,
-				"ymin":6070000.5605738563,
-				"xmax":-13559821.930848669,
-				"ymax":6125000.1437590225,
+				"xmin":-13645463.61778515,
+				"ymin":5995810.3754542638,
+				"xmax":-13466198.630671747,
+				"ymax":6186430.4223982999,
 				"spatialReference":{
 					"wkid":102100,
 					"latestWkid":3857
@@ -1247,13 +1201,20 @@
 								"value": ""
 							},
 							{
-								"name": "Riverine & Sea Level Rise",
+								"name": "Riverine & Coastal Flooding",
 								"value": "sea_level_rise",
 								"controls": {
 									"slider": ["climate"],
 									"togglebutton":["floodtype","eventtype"]
 									
-								}
+								},
+								"footer":"Note: click on the map to identify the flood depth at that specific location.",
+								"partners": [
+									{
+										"logoPath": "CIG.jpg",
+										"link": ""
+									}
+								]
 							}
 						]
 					}
@@ -1261,7 +1222,7 @@
 				"slider": {
 					"climate": { 
 						"disabled": false, "show": true, "title": "Flood Year",
-						"labels": ["Historic", "2040", "2080"] 
+						"labels": ["1980s", "2050s", "2080s"] 
 					}
 				},
 				"togglebutton": {
@@ -1275,7 +1236,7 @@
 								"name": "low",
 								"value": "low",
 								"label": "Low",
-								"checked": true
+								"checked": false
 							},
 							"high": {
 								"disabled": false,
@@ -1285,13 +1246,23 @@
 								"name": "high",
 								"value": "high",
 								"label": "High",
-								"checked": false
+								"checked": true
 							}
 						},
-						"label": "Select Sea Level Rise Scenario:"
+						"label": "Select Greenhouse Gas Scenario:"
 					},
 					"eventtype": {
 						"controls": {
+							"2yr": {
+								"disabled": false,
+								"show": true,
+								"type": "radio",
+								"group": "eventtype",
+								"name": "2yr",
+								"value": "2yr",
+								"label": "2-year<br>(50%)",
+								"checked": true
+							},
 							"10yr": {
 								"disabled": false,
 								"show": true,
@@ -1299,8 +1270,18 @@
 								"group": "eventtype",
 								"name": "10yr",
 								"value": "10yr",
-								"label": "10% (10-year)",
-								"checked": true
+								"label": "10-year<br>(10%)",
+								"checked": false
+							},
+							"25yr": {
+								"disabled": false,
+								"show": true,
+								"type": "radio",
+								"group": "eventtype",
+								"name": "25yr",
+								"value": "25yr",
+								"label": "25-year<br>(4%)",
+								"checked": false
 							},
 							"100yr": {
 								"disabled": false,
@@ -1309,7 +1290,7 @@
 								"group": "eventtype",
 								"name": "100yr",
 								"value": "100yr",
-								"label": "1% (100-year)",
+								"label": "100-year<br>(1%)",
 								"checked": false
 							}
 						},
@@ -1320,6 +1301,27 @@
 			"download": {
 				"report":"HOSTNAME-methods/SLR_Snohomish.pdf",
 				"data":""
+			},
+			"identify": {
+				"field": "Pixel Value",
+				"lookup": {
+					"0": "Not Flooded",
+					"1":"0'-1'",
+					"2":"1'-2'",
+					"3":"2'-3'",
+					"4":"3'-4'",
+					"5":"4'-5'",
+					"6":"5'-6'",
+					"8":"6'-8'",
+					"10":"8'-10'",
+					"12":"10'-12'",
+					"14":"12'-14'",
+					"16":"14'-16'",
+					"20":"16'-20'",
+					"24":"20'-24'",
+					"998":">24'",
+					"999":"Lake or Sound"
+				}
 			}
 		},
 		"Grenada": {
@@ -2012,6 +2014,78 @@
 					"sea_level_rise_noaa": "https://coast.noaa.gov/digitalcoast/tools/slr"
 				},
 				"data":""
+			}
+		},
+        "Camden County": {
+			"url": "https://dev-services.coastalresilience.org/arcgis/rest/services/Georgia/Flood_and_SLR/MapServer",
+			"layers": {
+				"main": "https://dev-services.coastalresilience.org/arcgis/rest/services/Georgia/Flood_and_SLR/MapServer"
+			},
+			"extent": {
+				"xmin": -9150825.293802444,
+				"ymin": 3616908.144389578,
+				"xmax": -9054617.437222715,
+				"ymax": 3668806.3081837194,
+				"spatialReference": {
+					"wkid": 102100,
+					"latestWkid": 3857
+				}
+			},
+			"tooltips": {
+				"scenario": { 
+					"control":"hazard",
+					"values": {
+						"sea_level_rise": { "popup": true, "width":600, "height":450, "url": "<img style='position:absolute;top:50%;left:50%;transform:translate(-50%, -50%);' src='PLUGIN-DIRECTORY/GA_FloodSLR.png'/>" }
+					}
+				},
+				"climate": "",
+				"stormSurge": ""
+			},
+			"controls": {
+				"select": {
+					"hazard": {
+						"options": [
+							{
+								"name": " -- ",
+								"value": ""
+							},
+							{
+								"name": "NOAA Sea Level Rise",
+								"value": "sea_level_rise",
+								"controls": { "slider": ["climate", "scenario"] },
+								"images": true
+							},
+							{
+								"name": "USGS Storm Surge",
+								"value": "storm_surge",
+								"controls": { 
+									"slider": ["stormSurge"],
+									"infoGraphic": true
+								}
+							}
+						]
+					}
+				},
+				"slider": {
+					"climate": { "disabled": false, "show": true, "labels":  ["2025", "2050", "2075", "2100"] },
+					"scenario": { "disabled": false, "show": true, "labels": ["Interm.", "Interm.<br>High", "High"]  },
+					"stormSurge": { "disabled": false, "show": true, "labels": ["1", "2", "3", "4", "5"]  }
+				},
+				"infoGraphic": {
+					"storm_surge": { "popup": false, "url":"https://ow-maps.s3.amazonaws.com/slr/FloodSLRApp_StormSurge_FactSheet.pdf" }
+				}
+			},
+			"download": {
+				"report": {
+					"sea_level_rise": "https://coast.noaa.gov/data/digitalcoast/pdf/slr-inundation-methods.pdf",
+					"storm_surge": "https://tnc.app.box.com/s/fiya9hirlr28a96b0rwfmdzpb55hcx1i",
+					"default": ""
+				},
+				"data":""
+			},
+			"images": {
+				"header": "Click a photo icon on the map to visualize what the selected scenario might look like at that location. The photo selected will be highlighted.",
+				"layer": { "type": "feature", "url": "https://dev-services.coastalresilience.org/arcgis/rest/services/Georgia/Flood_and_SLR/MapServer/0", "idField":"OBJECTID", "imageField":"SCENARIO" }
 			}
 		}
 	}
