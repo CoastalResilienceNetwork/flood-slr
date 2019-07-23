@@ -705,19 +705,33 @@
 			"sea_level_rise|2100|high": [9],
 			"sea_level_rise|2100|extr": [12]
 		},
-		"Snohomish County": {
-			"sea_level_rise|historic|low|10yr": [14],
-			"sea_level_rise|historic|low|100yr": [15],
-			"sea_level_rise|historic|high|10yr": [14],
-			"sea_level_rise|historic|high|100yr": [15],
-			"sea_level_rise|2040|low|10yr": [16],
-			"sea_level_rise|2040|high|10yr": [17],
-			"sea_level_rise|2040|low|100yr": [18],
-			"sea_level_rise|2040|high|100yr": [19],
-			"sea_level_rise|2080|low|10yr": [20],
-			"sea_level_rise|2080|high|10yr": [21],
-			"sea_level_rise|2080|low|100yr": [22],
-			"sea_level_rise|2080|high|100yr": [23]
+		"Snohomish Watershed": {
+			"sea_level_rise|1980s|low|2yr": [40],
+			"sea_level_rise|1980s|high|2yr": [40],
+			"sea_level_rise|1980s|low|10yr": [14],
+			"sea_level_rise|1980s|high|10yr": [14],
+			"sea_level_rise|1980s|low|25yr": [53],
+			"sea_level_rise|1980s|high|25yr": [53],
+			"sea_level_rise|1980s|low|100yr": [27],
+			"sea_level_rise|1980s|high|100yr": [27],
+			
+			"sea_level_rise|2050s|low|2yr": [42],
+			"sea_level_rise|2050s|high|2yr": [45],
+			"sea_level_rise|2050s|low|10yr": [16],
+			"sea_level_rise|2050s|high|10yr": [19],
+			"sea_level_rise|2050s|low|25yr": [55],
+			"sea_level_rise|2050s|high|25yr": [58],
+			"sea_level_rise|2050s|low|100yr": [29],
+			"sea_level_rise|2050s|high|100yr": [32],
+			
+			"sea_level_rise|2080s|low|2yr": [48],
+			"sea_level_rise|2080s|high|2yr": [51],
+			"sea_level_rise|2080s|low|10yr": [22],
+			"sea_level_rise|2080s|high|10yr": [25],
+			"sea_level_rise|2080s|low|25yr": [61],
+			"sea_level_rise|2080s|high|25yr": [64],
+			"sea_level_rise|2080s|low|100yr": [35],
+			"sea_level_rise|2080s|high|100yr": [38]
 		},
 		"Grenada": {
 			"sea_level_rise|none|100yr": [2],
@@ -823,6 +837,31 @@
 			"sea_level_rise_noaa|4": "slr_4ft",
 			"sea_level_rise_noaa|5": "slr_5ft",
 			"sea_level_rise_noaa|6": "slr_6ft"
+		},
+        "Camden County": {
+			"sea_level_rise|2025|interm.": [1],
+			"sea_level_rise|2025|interm.<br>high": [5],
+			"sea_level_rise|2025|high": [9],
+			
+			"sea_level_rise|2050|interm.": [2],
+			"sea_level_rise|2050|interm.<br>high": [6],
+			"sea_level_rise|2050|high": [10],
+			
+			"sea_level_rise|2075|interm.": [3],
+			"sea_level_rise|2075|interm.<br>high": [7],
+			"sea_level_rise|2075|high": [11],
+			
+			"sea_level_rise|2100|interm.": [4],
+			"sea_level_rise|2100|interm.<br>high": [8],
+			"sea_level_rise|2100|high": [12],
+			
+			
+			"storm_surge|1": [29],
+			"storm_surge|2": [28,29],
+			"storm_surge|3": [27,28,29],
+			"storm_surge|4": [26,27,28,29],
+			"storm_surge|5": [25,26,27,28,29]
+			
 		}
 	}
 }

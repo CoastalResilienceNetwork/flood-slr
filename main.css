@@ -512,3 +512,46 @@ stroke: #000000;
 .plugin-slr .x-axis-title {
 font: 10px sans-serif;
 }
+
+.plugin-slr .slr-images-container {
+position:relative;
+display: none;
+}
+
+.plugin-slr .slr-images-header {
+line-height: 1;
+text-align: left;
+padding: 20px 0px 10px 0px;
+}
+
+.plugin-slr .slr-images-content {
+line-height: 1;
+text-align: left;
+padding:0px;
+margin: 0px 0px 10px 0px;
+position: relative;
+}
+
+.plugin-slr .slr-images-content img {
+border: 1px solid #ccc;
+box-shadow: 0 2px 5px #bbb;
+}
+
+.plugin-slr .slr-images-close {
+position:absolute;
+width:16px;
+height:16px;
+top:5px;
+right:5px;
+color:#fff;
+text-align: center;
+line-height: 16px;
+cursor:pointer;
+}
+
+.plugin-slr .slr-partners-content {
+display: flex;
+flex-wrap: wrap;
+justify-content: space-between;
+padding: 10px;
+}
