@@ -308,11 +308,11 @@ define([
 						var mapLayer = new FeatureLayer(self._interface.region[region].images.layer.url, { id:layer, outFields:["*"] });
 						
 						var font = new Font("20pt", Font.STYLE_NORMAL, Font.VARIANT_NORMAL, Font.WEIGHT_BOLD,"FontAwesome");
-						var color = new Color("#000");
+						var color = new Color("#F2C744");
 						var symbol = new TextSymbol("?", font, color);
 						self.imageSymbol = dojo.clone(symbol);
 						
-						var color = new Color("#ed5854");
+						var color = new Color("#D94A4A");
 						var symbol = new TextSymbol("?", font, color);
 						self.imageHighlightSymbol = dojo.clone(symbol);
 						
@@ -321,7 +321,7 @@ define([
 						mapLayer.setRenderer(new esri.renderer.SimpleRenderer(self.imageSymbol));
 						
 						on(mapLayer,"graphic-draw",function(evt){
-							var color = (evt.graphic.attributes[self._interface.region[self._region].images.layer.idField] == self.imageHighlightId) ? new Color("#ed5854") : new Color("#000");
+							var color = (evt.graphic.attributes[self._interface.region[self._region].images.layer.idField] == self.imageHighlightId) ? new Color("#D94A4A") : new Color("#F2C744");
 							dojo.attr(evt.node, "fill", "rgb(" + color.r + ", " + color.g + ", " + color.b + ")");
 							query(evt.node).style("cursor", "pointer");
 						})
