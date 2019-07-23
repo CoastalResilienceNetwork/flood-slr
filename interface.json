@@ -412,11 +412,11 @@
 			}
 		},
 		"Virginia Eastern Shore": {
-            "url": "https://dev-services.coastalresilience.org/arcgis/rest/services/Virginia/Flood_SLR/MapServer",
+            "url": "https://services2.coastalresilience.org/arcgis/rest/services/Virginia/Flood_SLR/MapServer",
 			"layers": {
-				"main": "https://dev-services.coastalresilience.org/arcgis/rest/services/Virginia/Flood_SLR/MapServer",
-				"storm_surge": "https://dev-services.coastalresilience.org/arcgis/rest/services/Virginia/Flood_SLR/MapServer",
-				"model_storm": "https://dev-services.coastalresilience.org/arcgis/rest/services/Virginia/Flood_SLR/MapServer"
+				"main": "https://dev-services2.coastalresilience.org/arcgis/rest/services/Virginia/Flood_SLR/MapServer",
+				"storm_surge": "https://services2.coastalresilience.org/arcgis/rest/services/Virginia/Flood_SLR/MapServer",
+				"model_storm": "https://services2.coastalresilience.org/arcgis/rest/services/Virginia/Flood_SLR/MapServer"
 			},
 			"extent": {
 				"xmin": -8465603.278145544,
@@ -602,9 +602,9 @@
 			}
 		},
 		"California (statewide)": {
-			"url": "https://services.coastalresilience.org/arcgis/rest/services/California/California/MapServer",
+			"url": "https://services2.coastalresilience.org/arcgis/rest/services/California/California/MapServer",
 			"layers": {
-				"main": "https://services.coastalresilience.org/arcgis/rest/services/California/California/MapServer",
+				"main": "https://services2.coastalresilience.org/arcgis/rest/services/California/California/MapServer",
 				"slr_0ft": { "type": "tiled", "url": "https://maps1.coast.noaa.gov/arcgis/rest/services/dc_slr/slr_0ft/MapServer" },
 				"slr_1ft": { "type": "tiled", "url": "https://maps1.coast.noaa.gov/arcgis/rest/services/dc_slr/slr_1ft/MapServer" },
 				"slr_2ft": { "type": "tiled", "url": "https://maps1.coast.noaa.gov/arcgis/rest/services/dc_slr/slr_2ft/MapServer" },
@@ -659,10 +659,10 @@
 		
 		},
 		"Los Angeles": {
-			"url": "https://services.coastalresilience.org/arcgis/rest/services/California/Flood_Slr/MapServer",
+			"url": "https://services2.coastalresilience.org/arcgis/rest/services/California/Flood_Slr/MapServer",
 			"layers": {
-				"main": "https://services.coastalresilience.org/arcgis/rest/services/California/Flood_Slr/MapServer",
-				"risk": "https://services.coastalresilience.org/arcgis/rest/services/California/Flood_Slr/MapServer"
+				"main": "https://services2.coastalresilience.org/arcgis/rest/services/California/Flood_Slr/MapServer",
+				"risk": "https://services2.coastalresilience.org/arcgis/rest/services/California/Flood_Slr/MapServer"
 			},
 			"tooltips": {
 				"region": "Geographic areas where climate change/sea level rise vulnerability studies have been conducted.",
@@ -737,9 +737,9 @@
 			}
 		},
 		"Monterey": {
-			"url": "https://services.coastalresilience.org/arcgis/rest/services/California/Flood_Slr/MapServer",
+			"url": "https://services2.coastalresilience.org/arcgis/rest/services/California/Flood_Slr/MapServer",
 			"layers": {
-				"main": "https://services.coastalresilience.org/arcgis/rest/services/California/Flood_Slr/MapServer"
+				"main": "https://services2.coastalresilience.org/arcgis/rest/services/California/Flood_Slr/MapServer"
 			},
 			"tooltips": {
 				"region": "Geographic areas where climate change/sea level rise vulnerability studies have been conducted.",
@@ -831,9 +831,9 @@
 			}
 		},
 		"Santa Barbara": {
-			"url": "https://services.coastalresilience.org/arcgis/rest/services/California/Flood_Slr/MapServer",
+			"url": "https://services2.coastalresilience.org/arcgis/rest/services/California/Flood_Slr/MapServer",
 			"layers": {
-				"main": "https://services.coastalresilience.org/arcgis/rest/services/California/Flood_Slr/MapServer"
+				"main": "https://services2.coastalresilience.org/arcgis/rest/services/California/Flood_Slr/MapServer"
 			},
 			"tooltips": {
 				"region": "Geographic areas where climate change/sea level rise vulnerability studies have been conducted.",
@@ -927,9 +927,9 @@
 			}
 		},
 		"Ventura": {
-			"url": "https://services.coastalresilience.org/arcgis/rest/services/California/Flood_Slr/MapServer",
+			"url": "https://services2.coastalresilience.org/arcgis/rest/services/California/Flood_Slr/MapServer",
 			"layers": {
-				"main": "https://services.coastalresilience.org/arcgis/rest/services/California/Flood_Slr/MapServer"
+				"main": "https://services2.coastalresilience.org/arcgis/rest/services/California/Flood_Slr/MapServer"
 			},
 			"tooltips": {
 				"region": "Geographic areas where climate change/sea level rise vulnerability studies have been conducted.",
@@ -995,9 +995,9 @@
 			}
 		},
 		"New Jersey": {
-			"url": "https://services.coastalresilience.org/arcgis/rest/services/New_Jersey/Flood_SLR/MapServer",
+			"url": "https://services2.coastalresilience.org/arcgis/rest/services/New_Jersey/Flood_SLR/MapServer",
 			"layers": {
-				"main": "https://services.coastalresilience.org/arcgis/rest/services/New_Jersey/Flood_SLR/MapServer",
+				"main": "https://services2.coastalresilience.org/arcgis/rest/services/New_Jersey/Flood_SLR/MapServer",
 				"slr_0ft": { "type": "tiled", "url": "https://maps1.coast.noaa.gov/arcgis/rest/services/dc_slr/slr_0ft/MapServer" },
 				"slr_1ft": { "type": "tiled", "url": "https://maps1.coast.noaa.gov/arcgis/rest/services/dc_slr/slr_1ft/MapServer" },
 				"slr_2ft": { "type": "tiled", "url": "https://maps1.coast.noaa.gov/arcgis/rest/services/dc_slr/slr_2ft/MapServer" },
@@ -1063,9 +1063,9 @@
 			}
 		},
 		"Gray's Harbor County": {
-			"url": "https://services.coastalresilience.org/arcgis/rest/services/Washington/Flood_SLR/MapServer",
+			"url": "https://services2.coastalresilience.org/arcgis/rest/services/Washington/Flood_SLR/MapServer",
 			"layers": {
-				"main": "https://services.coastalresilience.org/arcgis/rest/services/Washington/Flood_SLR/MapServer"
+				"main": "https://services2.coastalresilience.org/arcgis/rest/services/Washington/Flood_SLR/MapServer"
 			},
 			"tooltips": {
 				"region": "Geographic areas where climate change/sea level rise vulnerability studies have been conducted.",
@@ -1117,9 +1117,9 @@
 			}
 		},
 		"Pacific County": {
-			"url": "https://services.coastalresilience.org/arcgis/rest/services/Washington/Flood_SLR/MapServer",
+			"url": "https://services2.coastalresilience.org/arcgis/rest/services/Washington/Flood_SLR/MapServer",
 			"layers": {
-				"main": "https://services.coastalresilience.org/arcgis/rest/services/Washington/Flood_SLR/MapServer"
+				"main": "https://services2.coastalresilience.org/arcgis/rest/services/Washington/Flood_SLR/MapServer"
 			},
 			"tooltips": {
 				"region": "Geographic areas where climate change/sea level rise vulnerability studies have been conducted.",
@@ -1171,9 +1171,9 @@
 			}
 		},
 		"Snohomish Watershed": {
-			"url": "https://dev-services.coastalresilience.org/arcgis/rest/services/Washington/Flood_SLR/MapServer",
+			"url": "https://services2.coastalresilience.org/arcgis/rest/services/Washington/Flood_SLR/MapServer",
 			"layers": {
-				"main": "https://dev-services.coastalresilience.org/arcgis/rest/services/Washington/Flood_SLR/MapServer"
+				"main": "https://services2.coastalresilience.org/arcgis/rest/services/Washington/Flood_SLR/MapServer"
 			},
 			"tooltips": {
 				"region": "Geographic areas where climate change vulnerability studies have been conducted on issues such as sea level rise, storm surges, and riverine flooding.",
@@ -1325,9 +1325,9 @@
 			}
 		},
 		"Grenada": {
-			"url": "https://services.coastalresilience.org/arcgis/rest/services/GSVG/Flood_SLR/MapServer",
+			"url": "https://services2.coastalresilience.org/arcgis/rest/services/GSVG/Flood_SLR/MapServer",
 			"layers": {
-				"main": "https://services.coastalresilience.org/arcgis/rest/services/GSVG/Flood_SLR/MapServer"
+				"main": "https://services2.coastalresilience.org/arcgis/rest/services/GSVG/Flood_SLR/MapServer"
 			},
 			"tooltips": {
 				"region": "Geographic areas where climate change/sea level rise vulnerability studies have been conducted.",
@@ -1453,9 +1453,9 @@
 			}
 		},
 		"St Vincent and the Grenadines": {
-			"url": "https://services.coastalresilience.org/arcgis/rest/services/GSVG/Flood_SLR/MapServer",
+			"url": "https://services2.coastalresilience.org/arcgis/rest/services/GSVG/Flood_SLR/MapServer",
 			"layers": {
-				"main": "https://services.coastalresilience.org/arcgis/rest/services/GSVG/Flood_SLR/MapServer"
+				"main": "https://services2.coastalresilience.org/arcgis/rest/services/GSVG/Flood_SLR/MapServer"
 			},
 			"tooltips": {
 				"region": "Geographic areas where climate change/sea level rise vulnerability studies have been conducted.",
@@ -1581,9 +1581,9 @@
 			}
 		},
 		"Mesoamerican Reef": {
-			"url": "https://services.coastalresilience.org/arcgis/rest/services/Meso_American_Reef/Flood_SLR/MapServer",
+			"url": "https://services2.coastalresilience.org/arcgis/rest/services/Meso_American_Reef/Flood_SLR/MapServer",
 			"layers": {
-				"main": "https://services.coastalresilience.org/arcgis/rest/services/Meso_American_Reef/Flood_SLR/MapServer"
+				"main": "https://services2.coastalresilience.org/arcgis/rest/services/Meso_American_Reef/Flood_SLR/MapServer"
 			},
 			"tooltips": {
 				"region": "Geographic areas where climate change/sea level rise vulnerability studies have been conducted.",
@@ -1652,9 +1652,9 @@
 			}
 		},
 		"Southeast Florida": {
-			"url": "https://services.coastalresilience.org/arcgis/rest/services/Florida/Flood_SLR/MapServer",
+			"url": "https://services2.coastalresilience.org/arcgis/rest/services/Florida/Flood_SLR/MapServer",
 			"layers": {
-				"main": "https://services.coastalresilience.org/arcgis/rest/services/Florida/Flood_SLR/MapServer",
+				"main": "https://services2.coastalresilience.org/arcgis/rest/services/Florida/Flood_SLR/MapServer",
 				"slr_0ft": { "type": "tiled", "url": "https://maps1.coast.noaa.gov/arcgis/rest/services/dc_slr/slr_0ft/MapServer" },
 				"slr_1ft": { "type": "tiled", "url": "https://maps1.coast.noaa.gov/arcgis/rest/services/dc_slr/slr_1ft/MapServer" },
 				"slr_2ft": { "type": "tiled", "url": "https://maps1.coast.noaa.gov/arcgis/rest/services/dc_slr/slr_2ft/MapServer" },
@@ -1764,9 +1764,9 @@
 			}
 		},
 		"Florida Keys": {
-			"url": "https://services.coastalresilience.org/arcgis/rest/services/Florida/Flood_SLR/MapServer",
+			"url": "https://services2.coastalresilience.org/arcgis/rest/services/Florida/Flood_SLR/MapServer",
 			"layers": {
-				"main": "https://services.coastalresilience.org/arcgis/rest/services/Florida/Flood_SLR/MapServer"
+				"main": "https://services2.coastalresilience.org/arcgis/rest/services/Florida/Flood_SLR/MapServer"
 			},
 			"tooltips": {
 				"region": "Geographic areas where climate change/sea level rise vulnerability studies have been conducted.",
@@ -1858,9 +1858,9 @@
 			}
 		},
 		"Connecticut": {
-			"url": "https://services.coastalresilience.org/arcgis/rest/services/Connecticut/Flood_SLR/MapServer",
+			"url": "https://services2.coastalresilience.org/arcgis/rest/services/Connecticut/Flood_SLR/MapServer",
 			"layers": {
-				"main": "https://services.coastalresilience.org/arcgis/rest/services/Connecticut/Flood_SLR/MapServer",
+				"main": "https://services2.coastalresilience.org/arcgis/rest/services/Connecticut/Flood_SLR/MapServer",
 				"slr_0ft": { "type": "tiled", "url": "https://maps1.coast.noaa.gov/arcgis/rest/services/dc_slr/slr_0ft/MapServer" },
 				"slr_1ft": { "type": "tiled", "url": "https://maps1.coast.noaa.gov/arcgis/rest/services/dc_slr/slr_1ft/MapServer" },
 				"slr_2ft": { "type": "tiled", "url": "https://maps1.coast.noaa.gov/arcgis/rest/services/dc_slr/slr_2ft/MapServer" },
@@ -2017,9 +2017,9 @@
 			}
 		},
         "Camden County": {
-			"url": "https://dev-services.coastalresilience.org/arcgis/rest/services/Georgia/Flood_and_SLR/MapServer",
+			"url": "https://services2.coastalresilience.org/arcgis/rest/services/Georgia/Flood_and_SLR/MapServer",
 			"layers": {
-				"main": "https://dev-services.coastalresilience.org/arcgis/rest/services/Georgia/Flood_and_SLR/MapServer"
+				"main": "https://services2.coastalresilience.org/arcgis/rest/services/Georgia/Flood_and_SLR/MapServer"
 			},
 			"extent": {
 				"xmin": -9150825.293802444,
@@ -2085,7 +2085,7 @@
 			},
 			"images": {
 				"header": "Click a photo icon on the map to visualize what the selected scenario might look like at that location. The photo selected will be highlighted.",
-				"layer": { "type": "feature", "url": "https://dev-services.coastalresilience.org/arcgis/rest/services/Georgia/Flood_and_SLR/MapServer/0", "idField":"OBJECTID", "imageField":"SCENARIO" }
+				"layer": { "type": "feature", "url": "https://services2.coastalresilience.org/arcgis/rest/services/Georgia/Flood_and_SLR/MapServer/0", "idField":"OBJECTID", "imageField":"URL" }
 			}
 		}
 	}
