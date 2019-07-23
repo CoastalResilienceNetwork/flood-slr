@@ -2222,8 +2222,8 @@ define([
 				
 				evt.graphic.setSymbol(self.imageHighlightSymbol);
 				
-				var src = this._plugin_directory + "/canvis.jpeg";
-				var html = "<img src='" + src + "'>"
+				var src = evt.graphic.attributes[self._interface.region[self._region].images.layer.imageField];
+				var html = "<img src='" + src + "' width='280'>";
 				this.imagesImage.innerHTML = html;
 			}
 			
