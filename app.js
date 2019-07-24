@@ -634,7 +634,7 @@ define([
 				
 				var regionSelectDiv = domConstruct.create("div", { 
 					className: "styled-select",
-					style:"width:calc(100% - 80px);display:inline-block;" 
+					style:"width:calc(100% - 85px);display:inline-block;" 
 				}, regionTd);
 				this.regionSelect = domConstruct.create("select", { name: "region"}, regionSelectDiv);
 				if (_.keys(this._interface.region).length > 1) {
@@ -662,7 +662,7 @@ define([
 							
 							if ((!_.isObject(self._interface.region[self._region].download.report) && self._interface.region[self._region].download.report != "") || (_.isObject(self._interface.region[self._region].download.report) && _.has(self._interface.region[self._region].download.report, "default") && self._interface.region[self._region].download.report.default != "") || (_.isObject(self._interface.region[self._region].download.report) && _.has(self._interface.region[self._region].download.report, self.hazardSelect.value))) {
 								
-								var width = domGeom.getMarginBox(self._container).w - 120 - 50;
+								var width = domGeom.getMarginBox(self._container).w - 125 - 47;
 								
 								coreFx.combine([
 								   xFx.wipeTo({ node: this, duration: 150, width: 80 }),
@@ -678,11 +678,11 @@ define([
 						if (!_.has(self._interface.region[self._region].controls.select, "datasource") || (_.has(self._interface.region[self._region].controls.select, "datasource") && self.dataSourceSelect.value != "")) {
 							if ((!_.isObject(self._interface.region[self._region].download.report) && self._interface.region[self._region].download.report != "") || (_.isObject(self._interface.region[self._region].download.report) && _.has(self._interface.region[self._region].download.report, "default") && self._interface.region[self._region].download.report.default != "") || (_.isObject(self._interface.region[self._region].download.report) && _.has(self._interface.region[self._region].download.report, self.hazardSelect.value))) {
 								
-								var width = domGeom.getMarginBox(self._container).w - 120;
+								var width = domGeom.getMarginBox(self._container).w - 125;
 								
 								coreFx.combine([
 								   xFx.wipeTo({ node: this, duration: 150, width: 33 }),
-								   xFx.wipeTo({ node: regionSelectDiv, duration: 150, width: width, onEnd: function() { domStyle.set(regionSelectDiv, "width", "calc(100% - 80px)"); } })
+								   xFx.wipeTo({ node: regionSelectDiv, duration: 150, width: width, onEnd: function() { domStyle.set(regionSelectDiv, "width", "calc(100% - 85px)"); } })
 							   ]).play();
 							   domStyle.set(this, "background", "#2B2E3B");
 							}
@@ -701,9 +701,9 @@ define([
 								url = url.replace("HOSTNAME-", href);
 								window.open(url, "_blank");
 								
-								var width = domGeom.getMarginBox(self._container).w - 120;
+								var width = domGeom.getMarginBox(self._container).w - 125;
 								
-								domStyle.set(regionSelectDiv, "width", "calc(100% - 80px)");
+								domStyle.set(regionSelectDiv, "width", "calc(100% - 85px)");
 							    domStyle.set(this, "background", "#2B2E3B");
 							}
 							
@@ -718,7 +718,7 @@ define([
 							
 							if ((!_.isObject(self._interface.region[self._region].download.data) && self._interface.region[self._region].download.data != "") || (_.isObject(self._interface.region[self._region].download.data) && _.has(self._interface.region[self._region].download.data, "default") && self._interface.region[self._region].download.data.default != "") || (_.isObject(self._interface.region[self._region].download.data) && _.has(self._interface.region[self._region].download.data, self.hazardSelect.value))) {
 								
-								var width = domGeom.getMarginBox(self._container).w - 120 - 45;
+								var width = domGeom.getMarginBox(self._container).w - 125 - 42;
 								
 								coreFx.combine([
 								   xFx.wipeTo({ node: this, duration: 150, width: 75 }),
