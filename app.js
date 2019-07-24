@@ -92,6 +92,7 @@ define([
 			this._map = this._plugin.map;
 			this._status = "close";
 			
+			
 			on(dom.byId(this._map.getMapId() + "_layers"), "click", function(evt) {
 				domStyle.set(self.mapTip, { "display": "none" });
 				if (self._status != "close") {
@@ -518,9 +519,12 @@ define([
 						
 			this.loadInterface = function() {
 				var self = this;
-				domStyle.set(this._container, { 
-					"overflow": "visible"
-				});
+				
+				if (!this._app.singlePluginMode) {
+					domStyle.set(this._container, { 
+						"overflow": "visible"
+					});
+				}
 				
 				//empty layout containers
 			    this.cp = new ContentPane({
@@ -630,7 +634,7 @@ define([
 				
 				var regionSelectDiv = domConstruct.create("div", { 
 					className: "styled-select",
-					style:"width:200px;display:inline-block;" 
+					style:"width:calc(100% - 80px);display:inline-block;" 
 				}, regionTd);
 				this.regionSelect = domConstruct.create("select", { name: "region"}, regionSelectDiv);
 				if (_.keys(this._interface.region).length > 1) {
@@ -657,9 +661,12 @@ define([
 						if (!_.has(self._interface.region[self._region].controls.select, "datasource") || (_.has(self._interface.region[self._region].controls.select, "datasource") && self.dataSourceSelect.value != "")) {
 							
 							if ((!_.isObject(self._interface.region[self._region].download.report) && self._interface.region[self._region].download.report != "") || (_.isObject(self._interface.region[self._region].download.report) && _.has(self._interface.region[self._region].download.report, "default") && self._interface.region[self._region].download.report.default != "") || (_.isObject(self._interface.region[self._region].download.report) && _.has(self._interface.region[self._region].download.report, self.hazardSelect.value))) {
+								
+								var width = domGeom.getMarginBox(self._container).w - 120 - 50;
+								
 								coreFx.combine([
 								   xFx.wipeTo({ node: this, duration: 150, width: 80 }),
-								   xFx.wipeTo({ node: regionSelectDiv, duration: 150, width: 153 })
+								   xFx.wipeTo({ node: regionSelectDiv, duration: 150, width: width })
 								]).play();
 								domStyle.set(this, "background", "#0096d6");
 							}
@@ -670,9 +677,12 @@ define([
 					if (self._region && self._region != "") {
 						if (!_.has(self._interface.region[self._region].controls.select, "datasource") || (_.has(self._interface.region[self._region].controls.select, "datasource") && self.dataSourceSelect.value != "")) {
 							if ((!_.isObject(self._interface.region[self._region].download.report) && self._interface.region[self._region].download.report != "") || (_.isObject(self._interface.region[self._region].download.report) && _.has(self._interface.region[self._region].download.report, "default") && self._interface.region[self._region].download.report.default != "") || (_.isObject(self._interface.region[self._region].download.report) && _.has(self._interface.region[self._region].download.report, self.hazardSelect.value))) {
+								
+								var width = domGeom.getMarginBox(self._container).w - 120;
+								
 								coreFx.combine([
 								   xFx.wipeTo({ node: this, duration: 150, width: 33 }),
-								   xFx.wipeTo({ node: regionSelectDiv, duration: 150, width: 200 })
+								   xFx.wipeTo({ node: regionSelectDiv, duration: 150, width: width, onEnd: function() { domStyle.set(regionSelectDiv, "width", "calc(100% - 80px)"); } })
 							   ]).play();
 							   domStyle.set(this, "background", "#2B2E3B");
 							}
@@ -690,6 +700,11 @@ define([
 								var href = window.location.origin + window.location.pathname;
 								url = url.replace("HOSTNAME-", href);
 								window.open(url, "_blank");
+								
+								var width = domGeom.getMarginBox(self._container).w - 120;
+								
+								domStyle.set(regionSelectDiv, "width", "calc(100% - 80px)");
+							    domStyle.set(this, "background", "#2B2E3B");
 							}
 							
 						}
@@ -702,9 +717,12 @@ define([
 						if (!_.has(self._interface.region[self._region].controls.select, "datasource") || (_.has(self._interface.region[self._region].controls.select, "datasource") && self.dataSourceSelect.value != "")) {
 							
 							if ((!_.isObject(self._interface.region[self._region].download.data) && self._interface.region[self._region].download.data != "") || (_.isObject(self._interface.region[self._region].download.data) && _.has(self._interface.region[self._region].download.data, "default") && self._interface.region[self._region].download.data.default != "") || (_.isObject(self._interface.region[self._region].download.data) && _.has(self._interface.region[self._region].download.data, self.hazardSelect.value))) {
+								
+								var width = domGeom.getMarginBox(self._container).w - 120 - 45;
+								
 								coreFx.combine([
 								   xFx.wipeTo({ node: this, duration: 150, width: 75 }),
-								   xFx.wipeTo({ node: regionSelectDiv, duration: 150, width: 158 })
+								   xFx.wipeTo({ node: regionSelectDiv, duration: 150, width: width })
 								]).play();
 							   domStyle.set(this, "background", "#0096d6");
 						   
@@ -716,9 +734,12 @@ define([
 					if (self._region && self._region != "") {
 						if (!_.has(self._interface.region[self._region].controls.select, "datasource") || (_.has(self._interface.region[self._region].controls.select, "datasource") && self.dataSourceSelect.value != "")) {
 							if ((!_.isObject(self._interface.region[self._region].download.data) && self._interface.region[self._region].download.data != "") || (_.isObject(self._interface.region[self._region].download.data) && _.has(self._interface.region[self._region].download.data, "default") && self._interface.region[self._region].download.data.default != "") || (_.isObject(self._interface.region[self._region].download.data) && _.has(self._interface.region[self._region].download.data, self.hazardSelect.value))) {
+								
+								var width = domGeom.getMarginBox(self._container).w - 120;
+								
 								coreFx.combine([
 								   xFx.wipeTo({ node: this, duration: 150, width: 33 }),
-								   xFx.wipeTo({ node: regionSelectDiv, duration: 150, width: 200 })
+								   xFx.wipeTo({ node: regionSelectDiv, duration: 150, width: width, onEnd: function() { domStyle.set(regionSelectDiv, "width", "calc(100% - 80px)"); } })
 								]).play();
 							   domStyle.set(this, "background", "#2B2E3B");
 							}
@@ -751,6 +772,9 @@ define([
 									var href = window.location.origin + window.location.pathname;
 									url = url.replace("HOSTNAME-", href);
 									window.open(url, "_blank");
+									
+									domStyle.set(regionSelectDiv, "width", "calc(100% - 80px)");
+									domStyle.set(this, "background", "#2B2E3B");
 								}
 								
 							}
@@ -786,7 +810,7 @@ define([
 				
 				var hazardSelectDiv = domConstruct.create("div", {
 					className: "styled-select",
-					style:"width:275px;display:block;margin-bottom:5px;"
+					style:"width:100%;display:block;margin-bottom:5px;"
 				}, hazardTd);
 				this.hazardSelect = domConstruct.create("select", { name: "hazard" }, hazardSelectDiv);
 				domConstruct.create("option", { innerHTML: " -- ", value: "" }, self.hazardSelect);
@@ -1004,7 +1028,7 @@ define([
 			        discreteValues: this._defaultLabels.climate.length,
 			        showButtons: false,
 					disabled: true,
-			        style: "width:160px; display:inline-block; margin:0px; background:none;",
+			        style: "width:calc(100% - 115px); display:inline-block; margin:0px; background:none;",
 			        onChange: function(value){
 						self.setControlDependency("slider", this.name, this.value);
 						if (self._region != "") {
@@ -1038,7 +1062,7 @@ define([
 			        discreteValues: this._defaultLabels.scenario.length,
 			        showButtons: false,
 					disabled: true,
-			        style: "width:160px; display:inline-block; margin:0px; background:none;",
+			        style: "width:calc(100% - 115px); display:inline-block; margin:0px; background:none;",
 			        onChange: function(value){
 						self.setControlDependency("slider", this.name, this.value);
 						if (self._region != "") {
@@ -1071,7 +1095,7 @@ define([
 			        discreteValues: this._defaultLabels.sealevelrise.length,
 			        showButtons: false,
 					disabled: true,
-			        style: "width:135px; display:inline-block; margin:0px; background:none;",
+			        style: "width:calc(100% - 140px); display:inline-block; margin:0px; background:none;",
 			        onChange: function(value){
 						if (self._region != "") {
 							self.updateMapLayers();
@@ -1101,7 +1125,7 @@ define([
 			        discreteValues: this._defaultLabels.hurricane.length,
 			        showButtons: false,
 					disabled: true,
-			        style: "width:160px; display:inline-block; margin:0px; background:none;",
+			        style: "width:calc(100% - 115px); display:inline-block; margin:0px; background:none;",
 			        onChange: function(value){
 						if (self._region != "") {
 							self.updateMapLayers();
@@ -1253,7 +1277,7 @@ define([
 			        discreteValues: this._defaultLabels.stormSurge.length,
 			        showButtons: false,
 					disabled: true,
-			        style: "width:160px; display:inline-block; margin:0px; background:none;",
+			        style: "width:calc(100% - 115px); display:inline-block; margin:0px; background:none;",
 			        onChange: function(value){
 						if (self._region != "") {
 							self.updateMapLayers();
@@ -2223,7 +2247,7 @@ define([
 				evt.graphic.setSymbol(self.imageHighlightSymbol);
 				
 				var src = evt.graphic.attributes[self._interface.region[self._region].images.layer.imageField];
-				var html = "<img src='" + src + "' width='280'>";
+				var html = "<img src='" + src + "'>";
 				this.imagesImage.innerHTML = html;
 			}
 			
