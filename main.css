@@ -537,6 +537,11 @@ border: 1px solid #ccc;
 box-shadow: 0 2px 5px #bbb;
 }
 
+.plugin-slr .slr-images-image img {
+max-width:100%;
+height:auto;
+}
+
 .plugin-slr .slr-images-close {
 position:absolute;
 width:16px;

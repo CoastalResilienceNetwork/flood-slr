@@ -9,6 +9,11 @@ require({
     // https://dojotoolkit.org/documentation/tutorials/1.7/cdn
     packages: [
         {
+        	name: "jquery",
+            location: "//ajax.googleapis.com/ajax/libs/jquery/1.9.0",
+            main: "jquery.min"
+        },
+		{
             name: "d3",
             location: "//d3js.org",
             main: "d3.v3.min"
@@ -39,13 +44,12 @@ define([
            return declare(PluginBase, {
                toolbarName: "Flood and Sea Level Rise",
 			   fullName: "Flood and Sea Level Rise",
-               toolbarType: "sidebar",
                hasHelp: false,
                showServiceLayersInLegend: true,
                allowIdentifyWhenActive: true,
                plugin_directory: "plugins/flood-slr",
-			   size:"custom",
-               width: 320,
+			   resizable: false,
+			   width: 425,
 			   _state: {},
 			   _firstLoad: true,
 			   _saveAndShare: true,
