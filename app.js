@@ -307,13 +307,13 @@ define([
 						var layer = "slr-image-layer-" + region.toLowerCase().replace(" ", "_");
 						var mapLayer = new FeatureLayer(self._interface.region[region].images.layer.url, { id:layer, outFields:["*"] });
 						
-						var font = new Font("20pt", Font.STYLE_NORMAL, Font.VARIANT_NORMAL, Font.WEIGHT_BOLD,"FontAwesome");
+						var font = new Font("18pt", Font.STYLE_NORMAL, Font.VARIANT_NORMAL, Font.WEIGHT_BOLD,"FontAwesome");
 						var color = new Color("#F2C744");
-						var symbol = new TextSymbol("?", font, color);
+						var symbol = new TextSymbol("\uf1c5", font, color);
 						self.imageSymbol = dojo.clone(symbol);
 						
 						var color = new Color("#D94A4A");
-						var symbol = new TextSymbol("?", font, color);
+						var symbol = new TextSymbol("\uf1c5", font, color);
 						self.imageHighlightSymbol = dojo.clone(symbol);
 						
 						self.imageHighlightId = null;
