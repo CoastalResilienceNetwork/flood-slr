@@ -56,6 +56,11 @@ define([
 
                activate: function () {
 					//console.log("activate");
+					if (this._firstLoad && this.app.singlePluginMode) {
+						$('#show-single-plugin-mode-help').click();
+						$('body').removeClass('pushy-open-left').removeClass('pushy-open-right');
+					}
+					
 					this.slr._status = "active";
 					if (_.isUndefined(this.map.getLayer("slr-layer-0"))) {
 						var plugin = this;
