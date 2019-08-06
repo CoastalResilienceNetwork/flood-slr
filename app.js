@@ -92,7 +92,6 @@ define([
 			this._map = this._plugin.map;
 			this._status = "close";
 			
-			
 			on(dom.byId(this._map.getMapId() + "_layers"), "click", function(evt) {
 				domStyle.set(self.mapTip, { "display": "none" });
 				if (self._status != "close") {
@@ -283,6 +282,7 @@ define([
 						var id = "slr-layer-" + i;
 						if (!_.isObject(self._interface.region[region].layers[layer])) {
 							var mapLayer = new DynamicMapServiceLayer(self._interface.region[region].layers[layer], { id:id });
+							mapLayer.setImageFormat("png32");
 							mapLayer.setVisibleLayers([]);
 							on(mapLayer,"update-start",function(){
 								domStyle.set(self.loadingDiv,"display", "block");
@@ -390,9 +390,11 @@ define([
 											});
 										}
 									} else {
-										var value = _.first(query(".plugin-slr .toggle-btn." + self._region.replace(/ /g,"_").toLowerCase() + "." + tb + " input:checked")).value;
-										if (!_.contains(parts, value)) {
-											parts.push(_.first(query(".plugin-slr .toggle-btn." + self._region.replace(/ /g,"_").toLowerCase() + "." + tb + " input:checked")).value);
+										if (_.contains(hazardOption.controls[key], tb)) {
+											var value = _.first(query(".plugin-slr .toggle-btn." + self._region.replace(/ /g,"_").toLowerCase() + "." + tb + " input:checked")).value;
+											if (!_.contains(parts, value)) {
+												parts.push(_.first(query(".plugin-slr .toggle-btn." + self._region.replace(/ /g,"_").toLowerCase() + "." + tb + " input:checked")).value);
+											}
 										}
 									}
 								})
@@ -1863,6 +1865,7 @@ define([
 					
 					domStyle.set(this.hazardCheckBox.parentNode, "display", "none");
 					domStyle.set(this.armorCheckBox.parentNode, "display", "none");
+					query(".toggle-div." + this._region.replace(/ /g,"_").toLowerCase()).style("display", "none");
 					
 					if (query(".storm-toggle").length > 0) {
 						domStyle.set(_.first(query(".storm-toggle")).parentNode, "display", "none");
@@ -1927,8 +1930,10 @@ define([
 								}
 							}
 							if (key == "togglebutton") {
-								domStyle.set(_.first(query(".toggle-div." + self._region.replace(/ /g,"_").toLowerCase() + "." + control)), "display", "block");
-								domStyle.set(_.first(query(".toggle-div." + self._region.replace(/ /g,"_").toLowerCase() + "." + control)).parentNode, "display", "block");
+								if (_.contains(hazardOption.controls[key], control)) {
+									domStyle.set(_.first(query(".toggle-div." + self._region.replace(/ /g,"_").toLowerCase() + "." + control)), "display", "block");
+									domStyle.set(_.first(query(".toggle-div." + self._region.replace(/ /g,"_").toLowerCase() + "." + control)).parentNode, "display", "block");
+								}
 							}
 							if (key == "tree") {
 								domStyle.set(_.first(query("." + control + "-toggle")).parentNode, "display", "block");
