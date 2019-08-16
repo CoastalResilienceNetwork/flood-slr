@@ -237,7 +237,7 @@ define([
 
 			this.showTool = function(){
 				//console.log("showTool");
-				this._firstLoad = false;
+				
 				if (!_.isEmpty(this._mapLayers_closeState)) {
 					array.forEach(_.keys(this._mapLayers_closeState), function(region) {
 						array.forEach(_.keys(self._mapLayers_closeState[region]), function(layer) {
@@ -247,8 +247,11 @@ define([
 						})
 					})
 				}
-				console.log('set extent');
-				this._map.setExtent(new Extent(this._extent));
+				
+				if (this._firstLoad) {
+					this._map.setExtent(new Extent(this._extent));
+					this._firstLoad = false;
+				}
 			} 
 
 			this.hideTool = function(){

@@ -34,13 +34,14 @@ define([
 		"dojo/dom-class",
 		"dojo/dom-style",
 		"dojo/dom-attr",
-		 "d3",
+		"esri/geometry/Extent",
+		"d3",
 		"underscore",
 		"./app",
 		"dojo/text!plugins/flood-slr/data.json",
 		"dojo/text!plugins/flood-slr/interface.json"
        ],
-       function (declare, PluginBase, parser, on, registry, array, domConstruct, query, dom, domClass, domStyle, domAttr, d3, _, slr, appData, appConfig) {
+       function (declare, PluginBase, parser, on, registry, array, domConstruct, query, dom, domClass, domStyle, domAttr, Extent, d3, _, slr, appData, appConfig) {
            return declare(PluginBase, {
                toolbarName: "Flood and Sea Level Rise",
 			   fullName: "Flood and Sea Level Rise",
@@ -56,7 +57,7 @@ define([
 
                activate: function () {
 					//console.log("activate");
-                    if(this._firstLoad && this.app.singlePluginMode) {
+                    if (this._firstLoad && this.app.singlePluginMode) {
                         $('#show-single-plugin-mode-help').click();
                         $('body').removeClass('pushy-open-left').removeClass('pushy-open-right');
                     }
@@ -292,7 +293,9 @@ define([
 				   if (_.has(this.slr._interface.region[this.slr._region], "chart")) {
 						state.chart = true;
 				   }
-				   //console.log(state);
+				   
+				   state.extent = this.slr._map.extent;
+				   console.log(state);
                    return state;
                 },
 
@@ -452,6 +455,13 @@ define([
 							plugin.updateChart();
 							plugin.highlightChart();
 						}, 500)						
+					 }
+					 
+					 if (_.has(this._state, "extent")) {
+						 var extent = new Extent(this._state.extent);
+						 window.setTimeout(function(){
+							plugin._map.setExtent(extent, true)
+						}, 500)
 					 }
 					 
 					 this._state = {};
