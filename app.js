@@ -237,7 +237,7 @@ define([
 
 			this.showTool = function(){
 				//console.log("showTool");
-				
+				this._firstLoad = false;
 				if (!_.isEmpty(this._mapLayers_closeState)) {
 					array.forEach(_.keys(this._mapLayers_closeState), function(region) {
 						array.forEach(_.keys(self._mapLayers_closeState[region]), function(layer) {
@@ -364,6 +364,7 @@ define([
 					parameters.stormSurge = (!_.has(this._interface.region[this._region].controls.slider, "stormSurge")) ? this.stormSurgeSlider.get("value") : (_.isObject(this._interface.region[this._region].controls.slider.stormSurge.labels) && _.has(this._interface.region[this._region].controls.slider.stormSurge.labels, parameters.hazard)) ? this._interface.region[this._region].controls.slider.stormSurge.labels[parameters.hazard][this.stormSurgeSlider.get("value")].toLowerCase() :(_.isArray(this._interface.region[this._region].controls.slider.stormSurge.labels)) ? this._interface.region[this._region].controls.slider.stormSurge.labels[this.stormSurgeSlider.get("value")].toLowerCase() : this.stormSurgeSlider.get("value");
 					
 					var parts = [parameters.hazard];
+					console.log(parameters);
 					array.forEach(_.keys(hazardOption.controls), function(key) {
 						array.forEach(hazardOption.controls[key], function(control) {
 							if (key == "slider") {
@@ -1989,7 +1990,23 @@ define([
 					if (_.has(hazardOption.controls, "infoGraphic") && hazardOption.controls.infoGraphic) {
 						domStyle.set(this.infoGraphicButton, "display", "block");
 						domAttr.set(this.infoGraphicButton, "data-popup", JSON.stringify(this._interface.region[this._region].controls.infoGraphic[hazard].popup));
-						domAttr.set(this.infoGraphicButton, "data-url", this._interface.region[this._region].controls.infoGraphic[hazard].url)
+						domAttr.set(this.infoGraphicButton, "data-url", this._interface.region[this._region].controls.infoGraphic[hazard].url);
+						
+						if (this._app.singlePluginMode) {
+							var node = query(".sidebar-nav .plugin-slr.info-graphic")[0].parentNode;
+							domClass.add(node, "slr-mobile-sidebar-nav");
+							var node = query(".sidebar-content.plugin-slr")[0];
+							domClass.add(node, "slr-mobile-sidebar-content");
+						}
+					} else {
+						if (this._app.singlePluginMode) {
+							var node = query(".slr-mobile-sidebar-nav")[0];
+							if (node) {
+								domClass.remove(node, "slr-mobile-sidebar-nav");
+								var node = query(".slr-mobile-sidebar-content")[0];
+								domClass.remove(node, "slr-mobile-sidebar-content");
+							}
+						}
 					}
 					
 					if (_.has(this._interface.region[this._region].controls, "tree") && _.has(this._interface.region[this._region].controls.tree, "storm")) {

@@ -560,3 +560,23 @@ flex-wrap: wrap;
 justify-content: space-between;
 padding: 10px;
 }
+
+.sidebar-nav.slr-mobile-sidebar-nav {
+display: flex;
+width: inherit;
+background-color: #fff;
+border-bottom: 1px solid #cdd5d5;
+padding: 2px 12px;
+position: fixed;
+-ms-flex-align: center;
+align-items: center;
+}
+
+.sidebar-nav.slr-mobile-sidebar-nav .nav-buttons {
+display: none;
+}
+
+.sidebar-content.slr-mobile-sidebar-content {
+height: calc(100% - 40px);
+margin-top: 40px;	
+}
