@@ -493,8 +493,7 @@ define([
 									self._mapLayers[self._region][layer].show();
 								});
 							});
-						}
-						
+						}	
 					}
 					
 					if (_.has(self._interface.region[self._region], "images")) {
@@ -822,6 +821,14 @@ define([
 				on(this.hazardSelect, "change", function() { 
 					self.updateControls();
 					self.updateMapLayers();
+
+					if(self._region == "New York") {
+						if(self.climateSlider.get("value") == 0) {
+							self.scenarioSlider.set("disabled", true);
+						} else {
+							self.scenarioSlider.set("disabled", false);
+						}
+					}
 				});
 				
 				this.hazardDescriptionDiv = domConstruct.create("div", {
@@ -1014,6 +1021,15 @@ define([
 									if (this.checked && self._region != "") {
 										self.updateMapLayers();
 									}
+
+									if(self._region == "New York") {
+										console.log(self.climateSlider);
+										if(self.climateSlider.get("value") == 0) {
+											self.scenarioSlider.set("disabled", true);
+										} else {
+											self.scenarioSlider.set("disabled", false);
+										}
+									}
 								});
 							}); 
 						});
@@ -1021,7 +1037,7 @@ define([
 				})
 				
 				//climate year slider
-			    var climateSliderLabel = domConstruct.create("div", {
+			  var climateSliderLabel = domConstruct.create("div", {
 					innerHTML: "<i class='fa fa-question-circle slr-" + this._map.id + "-climate'></i>&nbsp;<b><span class='slr-control-title climate'>" + this._defaultTitles.climate + "</span>: </b>",
 					style:"position:relative; width:110px; top:-10px; display:inline-block;"
 				}, climateTd);
@@ -1032,16 +1048,24 @@ define([
 			        maximum: this._defaultLabels.climate.length-1,
 			        discreteValues: this._defaultLabels.climate.length,
 			        showButtons: false,
-					disabled: true,
+							disabled: true,
 			        style: "width:calc(100% - 115px); display:inline-block; margin:0px; background:none;",
 			        onChange: function(value){
-						self.setControlDependency("slider", this.name, this.value);
-						if (self._region != "") {
-							if (_.has(self._interface.region[self._region], "chart")) {
-								self.highlightChart();
-							}
-							self.updateMapLayers();
-						}
+								self.setControlDependency("slider", this.name, this.value);
+								if (self._region != "") {
+									if (_.has(self._interface.region[self._region], "chart")) {
+										self.highlightChart();
+									}
+									self.updateMapLayers();
+								}
+
+								if(self._region == "New York") {
+									if(value == 0) {
+										self.scenarioSlider.set("disabled", true);
+									} else {
+										self.scenarioSlider.set("disabled", false);
+									}
+								}
 			        }
 			    });
 			    climateTd.appendChild(this.climateSlider.domNode);
@@ -1066,16 +1090,16 @@ define([
 			        maximum: this._defaultLabels.scenario.length-1,
 			        discreteValues: this._defaultLabels.scenario.length,
 			        showButtons: false,
-					disabled: true,
+						  disabled: true,
 			        style: "width:calc(100% - 115px); display:inline-block; margin:0px; background:none;",
 			        onChange: function(value){
-						self.setControlDependency("slider", this.name, this.value);
-						if (self._region != "") {
-							if (_.has(self._interface.region[self._region], "chart")) {
-								self.updateChart();
-							}
-							self.updateMapLayers();
-						}
+								self.setControlDependency("slider", this.name, this.value);
+								if (self._region != "") {
+									if (_.has(self._interface.region[self._region], "chart")) {
+										self.updateChart();
+									}
+									self.updateMapLayers();
+								}
 			        }
 			    });
 				scenarioTd.appendChild(this.scenarioSlider.domNode);
@@ -1434,6 +1458,7 @@ define([
 			}
 			
 			this.setControlDependency = function(c, name, value, sub) {
+
 				var sub = (_.isUndefined(sub)) ? null : sub;
 				var suffix = { "slider": "Slider", "radio": "RadioButton", "check": "CheckBox", "togglebutton":"ToggleButton" };
 				var category = { "slider": "slider", "radio": "radiocheck", "check": "radiocheck", "togglebutton":"togglebutton" };
@@ -1459,6 +1484,7 @@ define([
 										}
 										
 										var disabled = (_.has(p, "disabled")) ? p.disabled : false;
+										disabled = (p.blacklist.includes(self[control + suffix[type]].get('value')) ? true : disabled);
 										self[control + suffix[type]].set("disabled", disabled);
 									} else {
 										self[control + suffix[type]].set("disabled", false);
@@ -1502,8 +1528,12 @@ define([
 									if (!_.isUndefined(w) && w.length > 0 && _.indexOf(w, z) < 0) {
 										self[n].set("value", _.indexOf(labels, _.first(w)));
 									}
-									
-									var disabled = (_.has(y, "disabled")) ? y.disabled : false;
+								
+									var disabled = false;
+									if(!_.isUndefined(y.blacklist)) {
+										disabled = (y.blacklist.includes(self[n].get("value")) ? true : false);
+									}
+									disabled = (_.has(y, "disabled") && y.disable == true) ? y.disabled : disabled;
 									self[n].set("disabled", disabled);
 								});
 							}
