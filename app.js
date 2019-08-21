@@ -1484,7 +1484,6 @@ define([
 										}
 										
 										var disabled = (_.has(p, "disabled")) ? p.disabled : false;
-										disabled = (p.blacklist.includes(self[control + suffix[type]].get('value')) ? true : disabled);
 										self[control + suffix[type]].set("disabled", disabled);
 									} else {
 										self[control + suffix[type]].set("disabled", false);
@@ -1529,11 +1528,7 @@ define([
 										self[n].set("value", _.indexOf(labels, _.first(w)));
 									}
 								
-									var disabled = false;
-									if(!_.isUndefined(y.blacklist)) {
-										disabled = (y.blacklist.includes(self[n].get("value")) ? true : false);
-									}
-									disabled = (_.has(y, "disabled") && y.disable == true) ? y.disabled : disabled;
+									var disabled = (_.has(y, "disabled")) ? y.disabled : false;
 									self[n].set("disabled", disabled);
 								});
 							}
