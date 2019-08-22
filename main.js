@@ -120,6 +120,7 @@ define([
                    var plugin = this;
 				   var state = new Object();
 				   
+				   state.extent = {};
 				   state.controls = {};
 				   state.controls.selects = {};
 				   state.controls.sliders = {};
@@ -130,171 +131,131 @@ define([
 				   state.controls.selects.regionSelect = {
 						"value": this.slr.regionSelect.value
 				   }
-				   state.controls.selects.dataSourceSelect = {
-						"value": this.slr.dataSourceSelect.value,
-					   "display": domStyle.get(this.slr.dataSourceSelect.parentNode.parentNode, "display")
-				   }
-				   state.controls.selects.hazardSelect = {
-						"value": this.slr.hazardSelect.value
-				   }
 				   
-				   if (domStyle.get(this.slr.hazardDescriptionDiv, "display") == "block") {
-						state.controls.selects.hazardSelect.description = this.slr.hazardDescriptionDiv.innerHTML;
-					}
-					
-				   state.controls.sliders.climateSlider = {
-						"labels": this.slr.climateSliderLabels.labels,
-						"value": this.slr.climateSlider.get("value"),
-					   "disabled": this.slr.climateSlider.get("disabled"),
-					   "display": domStyle.get(this.slr.climateSlider.domNode.parentNode, "display")
+				   var region = this.slr.regionSelect.value;
+				   if (region != "") {				   
+					   state.controls.selects.hazardSelect = {
+							"value": this.slr.hazardSelect.value
+					   }
 					   
-				   }
-				   state.controls.sliders.scenarioSlider = {
-						"labels": this.slr.scenarioSliderLabels.labels,
-						"value": this.slr.scenarioSlider.get("value"),
-					   "disabled": this.slr.scenarioSlider.get("disabled"),
-					   "display": domStyle.get(this.slr.scenarioSlider.domNode.parentNode, "display")
+					   if (domStyle.get(this.slr.hazardDescriptionDiv, "display") == "block") {
+							state.controls.selects.hazardSelect.description = this.slr.hazardDescriptionDiv.innerHTML;
+						}
+						
+						if (!_.isUndefined(this.slr._interface.region[region].controls.slider)) {
+							array.forEach(_.keys(this.slr._interface.region[region].controls.slider), function(slider) {
+								state.controls.sliders[slider + "Slider"] = {
+									"labels": plugin.slr[slider + "SliderLabels"].labels,
+									"value": plugin.slr[slider + "Slider"].get("value"),
+									"disabled": plugin.slr[slider + "Slider"].get("disabled"),
+									"display": domStyle.get(plugin.slr[slider + "Slider"].domNode.parentNode, "display")
+								}
+							});
+						}
+					   state.controls.sliders.opacitySlider = {
+							"value": this.slr.opacitySlider.get("value"),
+						   "disabled": this.slr.opacitySlider.get("disabled")
+					   }
 					   
-				   }
-				   state.controls.sliders.sealevelriseSlider = {
-						"labels": this.slr.sealevelriseSliderLabels.labels,
-						"value": this.slr.sealevelriseSlider.get("value"),
-					   "disabled": this.slr.sealevelriseSlider.get("disabled"),
-					   "display": domStyle.get(this.slr.sealevelriseSlider.domNode.parentNode, "display")
-					   
-				   }
-				   state.controls.sliders.hurricaneSlider = {
-						"labels": this.slr.hurricaneSliderLabels.labels,
-						"value": this.slr.hurricaneSlider.get("value"),
-					   "disabled": this.slr.hurricaneSlider.get("disabled"),
-					   "display": domStyle.get(this.slr.hurricaneSlider.domNode.parentNode, "display")
-					   
-				   }
-				   state.controls.sliders.stormSurgeSlider = {
-						"labels": this.slr.stormSurgeSliderLabels.labels,
-						"value": this.slr.stormSurgeSlider.get("value"),
-					   "disabled": this.slr.stormSurgeSlider.get("disabled"),
-					   "display": domStyle.get(this.slr.stormSurgeSlider.domNode.parentNode, "display")
-					   
-				   }
-				   state.controls.sliders.opacitySlider = {
-						"value": this.slr.opacitySlider.get("value"),
-					   "disabled": this.slr.opacitySlider.get("disabled")
-				   }
-				   state.controls.checkbox.hazardCheckBox = {
-					   "checked": this.slr.hazardCheckBox.checked,
-					   "disabled": this.slr.hazardCheckBox.disabled,
-					   "value": this.slr.hazardCheckBox.value,
-					   "display": domStyle.get(this.slr.hazardCheckBox.parentNode.parentNode, "display"),
-					   "show": domStyle.get(this.slr.hazardCheckBox.parentNode, "display"),
-					   "label": this.slr.hazardCheckBoxLabel.innerHTML
-				   }
-				   state.controls.checkbox.armorCheckBox = {
-					   "checked": this.slr.armorCheckBox.checked,
-					   "disabled": this.slr.armorCheckBox.disabled,
-					   "value": this.slr.armorCheckBox.value,
-					   "display": domStyle.get(this.slr.armorCheckBox.parentNode.parentNode, "display"),
-					   "show": domStyle.get(this.slr.armorCheckBox.parentNode, "display"),
-					   "label": this.slr.armorCheckBoxLabel.innerHTML
-				   }
-				   state.controls.checkbox.otherCheckBox = {
-					   "checked": this.slr.otherCheckBox.checked,
-					   "disabled": this.slr.otherCheckBox.disabled,
-					   "value": this.slr.otherCheckBox.value,
-					   "display": domStyle.get(this.slr.otherCheckBox.parentNode.parentNode, "display"),
-					   "visibility": domStyle.get(this.slr.otherCheckBox.parentNode.parentNode, "visibility"),
-					   "label": this.slr.otherCheckBoxLabel.innerHTML
-				   }
-				   
-				   array.forEach(_.keys(this.slr._interface.region), function(key) { 
-					if (!_.isUndefined(plugin.slr._interface.region[key].controls.radiocheck)) {
-						var rbs = _.where(plugin.slr._interface.region[key].controls.radiocheck, { "type":"radio" });
-						array.forEach(rbs, function(rb) {
-							state.controls.radiobutton[rb.name + "RadioButton"] = {
-								"checked": plugin.slr[rb.name + "RadioButton"].checked,
-								"disabled": plugin.slr[rb.name + "RadioButton"].disabled,
-								"display": domStyle.get(plugin.slr[rb.name + "RadioButton"].parentNode.parentNode.parentNode, "display")
-							}
-						});
-					}
-				   });
-				   
-				   array.forEach(_.keys(this.slr._interface.region), function(key) { 
-					if (!_.isUndefined(plugin.slr._interface.region[key].controls.togglebutton)) {
-						array.forEach(_.keys(plugin.slr._interface.region[key].controls.togglebutton), function(group) {
-							array.forEach(_.keys(plugin.slr._interface.region[key].controls.togglebutton[group].controls), function(name) {
-								if (!_.isUndefined(plugin.slr[name + "ToggleButton"])) {
-									state.controls.togglebutton[name + "ToggleButton"] = {
-										"checked": plugin.slr[name + "ToggleButton"].checked,
-										"disabled": plugin.slr[name + "ToggleButton"].disabled,
-										"display": domStyle.get(plugin.slr[name + "ToggleButton"].parentNode.parentNode.parentNode, "display")
+					   if (!_.isUndefined(this.slr._interface.region[region].controls.radiocheck)) {
+							array.forEach(_.keys(plugin.slr._interface.region[region].controls.radiocheck), function(cb) {
+								
+								if (plugin.slr._interface.region[region].controls.radiocheck[cb].type == "check") {
+									state.controls.checkbox[cb + "CheckBox"] = {
+										"checked": plugin.slr[cb + "CheckBox"].checked,
+									   "disabled": plugin.slr[cb + "CheckBox"].disabled,
+									   "value": plugin.slr[cb + "CheckBox"].value,
+									   "display": domStyle.get(plugin.slr[cb + "CheckBox"].parentNode.parentNode, "display"),
+									   "show": domStyle.get(plugin.slr[cb + "CheckBox"].parentNode, "display"),
+									   "label": plugin.slr[cb + "CheckBoxLabel"].innerHTML
+									}
+								}
+								
+								if (plugin.slr._interface.region[region].controls.radiocheck[cb].type == "radio") {
+									state.controls.radiobutton[cb + "RadioButton"] = {
+										"checked": plugin.slr[cb + "RadioButton"].checked,
+										"disabled": plugin.slr[cb + "RadioButton"].disabled,
+										"display": domStyle.get(plugin.slr[cb + "RadioButton"].parentNode.parentNode.parentNode, "display")
 									}
 								}
 							});
-						});
-					}
-				   });
-				   
-				   var modelStorms = query("[id*=slr-model-storm-]");
-				   if (modelStorms.length > 0) { 
-						state.controls.storm = {};
-						state.controls.storm.container = {};
-						state.controls.storm.subitems = {};
-						
-						state.controls.storm.container["storm-toggle parentNode"] = { 
-							"display": domStyle.get(_.first(query(".storm-toggle")).parentNode, "display"),
-							"margin-bottom": domStyle.get(_.first(query(".storm-toggle")).parentNode, "margin-bottom")
 						}
-						
-						state.controls.storm.container["storm-toggle-header"] = { 
-							"toggleClass": domAttr.get(_.first(query(".storm-toggle-header i")),"class"),
-							"display": domStyle.get(_.first(query(".storm-toggle-header")), "display")
-						}
-						
-						state.controls.storm.container["storm-toggle-header-label"] = { 
-							"label": _.first(query(".storm-toggle-header-label")).innerHTML
-						}
-						
-						state.controls.storm.container["storm-toggle-container"] = { 
-							"display": domStyle.get(_.first(query(".storm-toggle-container")), "display")
-						}
-						
-						var subitems = query(".storm-toggle-subitem");
-						array.forEach(subitems, function(node) {
-							var id = domAttr.get(node, "class").split(" ").pop();
-							state.controls.storm.subitems[id] = { 
-								"css": { "display": domStyle.get(node, "display"), "padding-left": domStyle.get(node, "padding-left") }
-							}
-							
-							var textNode = _.first(query("div[class*=" + id +"] .storm-toggle-text"))
-							state.controls.storm.subitems[id]["storm-toggle-text"] = {
-								"css": { "display": domStyle.get(textNode, "display") },
-								"class": domAttr.get(textNode, "class")
-							}
-							
-							var tdNode = _.first(query("div[class*=" + id +"] .storm-toggle-td"))
-							state.controls.storm.subitems[id]["storm-toggle-td"] = {
-								"css": { "display": domStyle.get(tdNode, "display"), "padding-left": domStyle.get(tdNode, "padding-left") },
-								"firstChild": { "margin-left": domStyle.get(tdNode.firstChild, "display") }
-							}
-							
-							state.controls.storm.subitems[id].radiocheck = {}
-							array.forEach(modelStorms, function(input) {
-								if (input.id.indexOf(id.split("-").pop()) > -1) {
-									state.controls.storm.subitems[id].radiocheck[input.id] = {
-									   "checked": input.checked,
-									   "disabled": input.disabled
+					   
+						if (!_.isUndefined(plugin.slr._interface.region[region].controls.togglebutton)) {
+							array.forEach(_.keys(plugin.slr._interface.region[region].controls.togglebutton), function(group) {
+								array.forEach(_.keys(plugin.slr._interface.region[region].controls.togglebutton[group].controls), function(name) {
+									if (!_.isUndefined(plugin.slr[name + "ToggleButton"])) {
+										state.controls.togglebutton[name + "ToggleButton"] = {
+											"checked": plugin.slr[name + "ToggleButton"].checked,
+											"disabled": plugin.slr[name + "ToggleButton"].disabled,
+											"display": domStyle.get(plugin.slr[name + "ToggleButton"].parentNode.parentNode.parentNode, "display")
+										}
 									}
+								});
+							});
+						}
+					   
+					   var modelStorms = query("[id*=slr-model-storm-]");
+					   if (modelStorms.length > 0) { 
+							state.controls.storm = {};
+							state.controls.storm.container = {};
+							state.controls.storm.subitems = {};
+							
+							state.controls.storm.container["storm-toggle parentNode"] = { 
+								"display": domStyle.get(_.first(query(".storm-toggle")).parentNode, "display"),
+								"margin-bottom": domStyle.get(_.first(query(".storm-toggle")).parentNode, "margin-bottom")
+							}
+							
+							state.controls.storm.container["storm-toggle-header"] = { 
+								"toggleClass": domAttr.get(_.first(query(".storm-toggle-header i")),"class"),
+								"display": domStyle.get(_.first(query(".storm-toggle-header")), "display")
+							}
+							
+							state.controls.storm.container["storm-toggle-header-label"] = { 
+								"label": _.first(query(".storm-toggle-header-label")).innerHTML
+							}
+							
+							state.controls.storm.container["storm-toggle-container"] = { 
+								"display": domStyle.get(_.first(query(".storm-toggle-container")), "display")
+							}
+							
+							var subitems = query(".storm-toggle-subitem");
+							array.forEach(subitems, function(node) {
+								var id = domAttr.get(node, "class").split(" ").pop();
+								state.controls.storm.subitems[id] = { 
+									"css": { "display": domStyle.get(node, "display"), "padding-left": domStyle.get(node, "padding-left") }
 								}
+								
+								var textNode = _.first(query("div[class*=" + id +"] .storm-toggle-text"))
+								state.controls.storm.subitems[id]["storm-toggle-text"] = {
+									"css": { "display": domStyle.get(textNode, "display") },
+									"class": domAttr.get(textNode, "class")
+								}
+								
+								var tdNode = _.first(query("div[class*=" + id +"] .storm-toggle-td"))
+								state.controls.storm.subitems[id]["storm-toggle-td"] = {
+									"css": { "display": domStyle.get(tdNode, "display"), "padding-left": domStyle.get(tdNode, "padding-left") },
+									"firstChild": { "margin-left": domStyle.get(tdNode.firstChild, "display") }
+								}
+								
+								state.controls.storm.subitems[id].radiocheck = {}
+								array.forEach(modelStorms, function(input) {
+									if (input.id.indexOf(id.split("-").pop()) > -1) {
+										state.controls.storm.subitems[id].radiocheck[input.id] = {
+										   "checked": input.checked,
+										   "disabled": input.disabled
+										}
+									}
+								})
 							})
-						})
+					   }
+					   
+					   if (_.has(this.slr._interface.region[this.slr._region], "chart")) {
+							state.chart = true;
+					   }
+					   
+					   state.extent = this.slr._map.extent.toJson();
 				   }
-				   
-				   if (_.has(this.slr._interface.region[this.slr._region], "chart")) {
-						state.chart = true;
-				   }
-				   
-				   state.extent = this.slr._map.extent;
 				   console.log(state);
                    return state;
                 },

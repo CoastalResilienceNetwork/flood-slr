@@ -364,7 +364,6 @@ define([
 					parameters.stormSurge = (!_.has(this._interface.region[this._region].controls.slider, "stormSurge")) ? this.stormSurgeSlider.get("value") : (_.isObject(this._interface.region[this._region].controls.slider.stormSurge.labels) && _.has(this._interface.region[this._region].controls.slider.stormSurge.labels, parameters.hazard)) ? this._interface.region[this._region].controls.slider.stormSurge.labels[parameters.hazard][this.stormSurgeSlider.get("value")].toLowerCase() :(_.isArray(this._interface.region[this._region].controls.slider.stormSurge.labels)) ? this._interface.region[this._region].controls.slider.stormSurge.labels[this.stormSurgeSlider.get("value")].toLowerCase() : this.stormSurgeSlider.get("value");
 					
 					var parts = [parameters.hazard];
-					console.log(parameters);
 					array.forEach(_.keys(hazardOption.controls), function(key) {
 						array.forEach(hazardOption.controls[key], function(control) {
 							if (key == "slider") {
@@ -724,10 +723,14 @@ define([
 							
 							if ((!_.isObject(self._interface.region[self._region].download.data) && self._interface.region[self._region].download.data != "") || (_.isObject(self._interface.region[self._region].download.data) && _.has(self._interface.region[self._region].download.data, "default") && self._interface.region[self._region].download.data.default != "") || (_.isObject(self._interface.region[self._region].download.data) && _.has(self._interface.region[self._region].download.data, self.hazardSelect.value))) {
 								
-								var width = domGeom.getMarginBox(self._container).w - 125 - 42;
+								var title = (_.has(self._interface.region[self._region].download.data, self.hazardSelect.value) && _.isObject(self._interface.region[self._region].download.data[self.hazardSelect.value]) && _.has(self._interface.region[self._region].download.data[self.hazardSelect.value], "title")) ? self._interface.region[self._region].download.data[self.hazardSelect.value].title : "Data";
+								dojo.query(".slr-data .downloadText")[0].innerHTML = title;
+								
+								var w = (_.has(self._interface.region[self._region].download.data, self.hazardSelect.value) && _.isObject(self._interface.region[self._region].download.data[self.hazardSelect.value]) && _.has(self._interface.region[self._region].download.data[self.hazardSelect.value], "width")) ? self._interface.region[self._region].download.data[self.hazardSelect.value].width : 75;
+								var width = domGeom.getMarginBox(self._container).w - (w + 50) - 42;
 								
 								coreFx.combine([
-								   xFx.wipeTo({ node: this, duration: 150, width: 75 }),
+								   xFx.wipeTo({ node: this, duration: 150, width: w }),
 								   xFx.wipeTo({ node: regionSelectDiv, duration: 150, width: width })
 								]).play();
 							   domStyle.set(this, "background", "#0096d6");
@@ -776,6 +779,7 @@ define([
 									//query(".tbox .tinner").style("height", "auto");
 								} else {
 									var href = window.location.origin + window.location.pathname;
+									url = (_.isObject(url) && _.has(url, "url")) ? url.url : url;
 									url = url.replace("HOSTNAME-", href);
 									window.open(url, "_blank");
 									
@@ -1991,22 +1995,6 @@ define([
 						domStyle.set(this.infoGraphicButton, "display", "block");
 						domAttr.set(this.infoGraphicButton, "data-popup", JSON.stringify(this._interface.region[this._region].controls.infoGraphic[hazard].popup));
 						domAttr.set(this.infoGraphicButton, "data-url", this._interface.region[this._region].controls.infoGraphic[hazard].url);
-						
-						if (this._app.singlePluginMode) {
-							var node = query(".sidebar-nav .plugin-slr.info-graphic")[0].parentNode;
-							domClass.add(node, "slr-mobile-sidebar-nav");
-							var node = query(".sidebar-content.plugin-slr")[0];
-							domClass.add(node, "slr-mobile-sidebar-content");
-						}
-					} else {
-						if (this._app.singlePluginMode) {
-							var node = query(".slr-mobile-sidebar-nav")[0];
-							if (node) {
-								domClass.remove(node, "slr-mobile-sidebar-nav");
-								var node = query(".slr-mobile-sidebar-content")[0];
-								domClass.remove(node, "slr-mobile-sidebar-content");
-							}
-						}
 					}
 					
 					if (_.has(this._interface.region[this._region].controls, "tree") && _.has(this._interface.region[this._region].controls.tree, "storm")) {
