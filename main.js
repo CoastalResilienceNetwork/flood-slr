@@ -44,7 +44,7 @@ define([
        function (declare, PluginBase, parser, on, registry, array, domConstruct, query, dom, domClass, domStyle, domAttr, Extent, d3, _, slr, appData, appConfig) {
 				 var appConfigJSON = JSON.parse(appConfig);
            return declare(PluginBase, {
-               toolbarName: "Flood and Sea Level Rise",
+               toolbarName: (appConfigJSON.toolbarName ? appConfigJSON.toolbarName : "Flood and Sea Level Rise"),
 			   fullName: (appConfigJSON.fullName ? appConfigJSON.fullName : "Flood and Sea Level Rise"),
                hasHelp: false,
                showServiceLayersInLegend: true,
