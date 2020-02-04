@@ -48,7 +48,7 @@ define([
 			   fullName: (appConfigJSON.fullName ? appConfigJSON.fullName : "Flood and Sea Level Rise"),
                hasHelp: false,
                showServiceLayersInLegend: true,
-               allowIdentifyWhenActive: true,
+               allowIdentifyWhenActive: false,
                plugin_directory: "plugins/flood-slr",
 			   resizable: false,
 			   width: 425,
