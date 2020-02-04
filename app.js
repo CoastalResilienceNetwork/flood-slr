@@ -167,6 +167,7 @@ define([
 				sealevelrise:"Sea Level Rise (ft)",
 				stormSurge:"Storm Type"
 			}
+			this._image = "";
 
 			this.initialize = function(){
 				//console.log("initialize - container");
@@ -1045,6 +1046,9 @@ define([
 							if (_.has(self._interface.region[self._region], "chart")) {
 								self.highlightChart();
 							}
+							if (_.has(self._interface.region[self._region], "images")) {
+								self.setImage();
+							}
 							self.updateMapLayers();
 						}
 			        }
@@ -1079,6 +1083,9 @@ define([
 							if (_.has(self._interface.region[self._region], "chart")) {
 								self.updateChart();
 							}
+							if (_.has(self._interface.region[self._region], "images")) {
+								self.setImage();
+							}
 							self.updateMapLayers();
 						}
 			        }
@@ -1108,6 +1115,9 @@ define([
 			        style: "width:calc(100% - 140px); display:inline-block; margin:0px; background:none;",
 			        onChange: function(value){
 						if (self._region != "") {
+							if (_.has(self._interface.region[self._region], "images")) {
+								self.setImage();
+							}
 							self.updateMapLayers();
 						}
 					}
@@ -1138,6 +1148,9 @@ define([
 			        style: "width:calc(100% - 115px); display:inline-block; margin:0px; background:none;",
 			        onChange: function(value){
 						if (self._region != "") {
+							if (_.has(self._interface.region[self._region], "images")) {
+								self.setImage();
+							}
 							self.updateMapLayers();
 						}
 			        }
@@ -2247,24 +2260,42 @@ define([
 			}
 			
 			this.loadImageOnClick = function(evt) {
-				console.log(evt);
 				
 				this.imageHighlightId = evt.graphic.attributes[self._interface.region[self._region].images.layer.idField];
 				
-				var id = "slr-image-layer-" + this._region.toLowerCase().replace(" ", "_");
-				var mapLayer = this._mapLayers[this._region][id];
+				var layerId = "slr-image-layer-" + this._region.toLowerCase().replace(" ", "_");
+				var mapLayer = this._mapLayers[this._region][layerId];
 				dojo.forEach(mapLayer.graphics, function(graphic) {
 					graphic.setSymbol(self.imageSymbol);
 				});
 				
-				evt.graphic.setSymbol(self.imageHighlightSymbol);
+				evt.graphic.setSymbol(this.imageHighlightSymbol);
 				
-				var src = evt.graphic.attributes[self._interface.region[self._region].images.layer.imageField];
-				var html = "<img src='" + src + "'>";
-				this.imagesImage.innerHTML = html;
+				this._image = evt.graphic.attributes[this._interface.region[this._region].images.layer.imageField];
+				this.setImage();
+			}
+			
+			this.setImage = function() {
+				if (this._image != "") {
+					var layerId = "slr-image-layer-" + this._region.toLowerCase().replace(" ", "_");
+					var graphics = this._mapLayers[this._region][layerId].graphics;
+					
+					var locale = _.first(this._image.split("_"));
+					var climate = this._interface.region[this._region].images.image.climate[this.climateSlider.get("value")];
+					var scenario = this._interface.region[this._region].images.image.scenario[this.scenarioSlider.get("value")];
+					var imageId = locale + "_" + climate + "_" + scenario;
+					var imageIds = _.map(graphics, function(g) {
+						return g.attributes[self._interface.region[self._region].images.layer.imageField]; 
+					});
+					var src = graphics[_.indexOf(imageIds, imageId)].attributes[this._interface.region[this._region].images.layer.urlField];
+					
+					var html = "<img src='" + src + "'>";
+					this.imagesImage.innerHTML = html;
+				}
 			}
 			
 			this.closeImageOnClick = function() {
+				this._image = "";
 				this.imagesImage.innerHTML = "";
 				this.imageHighlightId = null;
 				
